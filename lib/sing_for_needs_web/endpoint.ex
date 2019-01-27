@@ -1,7 +1,9 @@
 defmodule SingForNeedsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :sing_for_needs
 
-  socket "/socket", SingForNeedsWeb.UserSocket
+  socket "/socket", SingForNeedsWeb.UserSocket,
+    websocket: true,
+    longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -25,7 +27,7 @@ defmodule SingForNeedsWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
   plug Plug.Head
