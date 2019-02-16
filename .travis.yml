@@ -22,5 +22,4 @@ before_install:
  - npm install npm@latest -g
 script:
   - mix test
-  - mix credo
   - cd assets && npm install
