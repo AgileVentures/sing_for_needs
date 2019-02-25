@@ -21,7 +21,7 @@ defmodule SingForNeedsWeb do
     quote do
       use Phoenix.Controller, namespace: SingForNeedsWeb
       import Plug.Conn
-      import SingForNeedsWeb.Router.Helpers
+      alias SingForNeedsWeb.Router.Helpers, as: Routes
       import SingForNeedsWeb.Gettext
     end
   end
@@ -37,7 +37,7 @@ defmodule SingForNeedsWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import SingForNeedsWeb.Router.Helpers
+      alias SingForNeedsWeb.Router.Helpers, as: Routes
       import SingForNeedsWeb.ErrorHelpers
       import SingForNeedsWeb.Gettext
     end
