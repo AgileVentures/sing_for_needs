@@ -41,7 +41,8 @@ defmodule SingForNeeds.Mixfile do
       {:jason, "~> 1.0"},
       {:plug, "~> 1.7"},
       {:ecto_sql, "~> 3.0"},
-      {:phoenix_ecto, "~> 4.0"}
+      {:phoenix_ecto, "~> 4.0"},
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
     ]
   end
 end
