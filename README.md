@@ -1,67 +1,128 @@
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/AgileVentures/sing_for_needs.svg?columns=all)](https://waffle.io/AgileVentures/sing_for_needs)
+# Sing-for-needs
 
-# SingForNeeds
+## Collaborating- Clone Repo
 
 ## Clone the repo
+At the command prompt type:
 ```
-git clone https://github.com/AgileVentures/sing_for_needs.git
-cd sing_for_needs
-```
-
-## Install Erlang and Elixir
-To work on this project, you will want to make sure you have Erlang and Elixir installed locally.
-A great way to manage dependencies is with `asdf`. 
-
-Follow the intructions found here for how to [Install asdf-vm](https://asdf-vm.com/#/core-manage-asdf-vm?id=install-asdf-vm)
-
-Don't forget to [Add asdf to your PATH](https://asdf-vm.com/#/core-manage-asdf-vm?id=add-to-your-shell) and restart your shell (opening a new terminal is the easiest way to restart).
-
-You can have a look at the `.tool-versions` file and you will see that the project is currently using `Elixir 1.6.4`, which is compatible with `Erlang 20.3`. 
-
-After you have `asdf` installed correctly, you can run:
-
-```
-$ asdf plugin-add elixir
-$ asdf plugin-add erlang
-$ asdf install
+$ git clone https://github.com/AgileVentures/sing_for_needs.git
 ```
 
-This will install the elixir and erlang versions indicated in the [.tool-versions](.tool-versions) file.
+Ask to be added as a collaborator
+	Email @federico with your Github username
 
-You can activate Erlang globally or locally.
 
-Activate globally with:
+## To start your Phoenix Server
+ 1. Install dependencies using 
+ ```
+ mix deps.get
+ ```
+ 2. Compile the dependencies using 
+ ```
+ mix deps.compile
+ ```
+ 3. Move to the root directory
+ ```
+cd ..
 ```
-    asdf global erlang 20.3
+ 4. Start Phoenix endpoint with 
+ ```
+ mix phx.server
+ ```
+* Visit 
 ```
-Activate locally in the current folder with:
-```
-    asdf local erlang 20.3
-```
-(If you're new to Elixir and asdf, activate globally. If you're an asdf & elixir pro, you might want to just activate locally for this project)
-
-
-Install local.hex and local.rebar:
-
-```
-mix local.hex --force
-mix local.rebar --force
+localhost:4000
 ```
 
-To start your Phoenix server:
+## Collaborating -use of WaffleBot
 
-  * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `cd .. && mix phx.server`
+Sing-For-Needs utilises ***Waffle.io*** for project management mainly because its easier to use and enables the developers/collaborators to cooperate efficiently
 
-Now you can visit [`localhost:8080`](http://localhost:8080) from your browser.
+Head over and check out ***Sing-For-Needs Board***
+ 
+The waffle board is divided into six columns
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+1. Inbox
+2. Backlog
+3. InProgress
+4. Review
+5. Done
+6. Deployed
 
-## Learn more
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+Issue numbers are displayed at the top left corner.Onclicking the numbers a short description of the issue is displayed.
+Once you pick an issue create a ***branch from the terminal*** with the issue and a short description eg.
+
+* **Be sure you create your branch from an up-to-date develop branch**
+
+* **Don't modify develop. Keep it clean & in sync with your repos**
+
+```
+$ git checkout develop
+```
+
+* To update develop branch
+```
+$ git pull
+```
+
+* To create feature branch
+```
+$ git checkout -b 17-add-logo
+```
+
+or you can create a branch directly from Github
+
+When creating it from your terminal, ***remember that you need to push the branch to the GitHub repo***
+for  Waffle to  knows you are working on that particular  issue  e.g. 
+```
+$ git push --set-upstream origin 17-add-logo
+```
+
+Now you're ready to change write  code, and because your branch starts with the **issue#**, WaffleBot will have automatically moved the issue card to the In Progress column, letting people know you are working on a specific issue.
+
+* **After you make your modifications, but before you make your last commit on your code, be sure to run the tests, to ensure no regressions have been introduced:**
+```
+chromedriver & mix test && pkill chromedriver
+```
+
+* Commit your changes:
+
+```
+$ git add -A && git commit -m "Add message describing my changes"
+```
+
+When you're ready to submit your changes in a pull-request, 
+
+1. first update your develop & your feature branch:
+```
+$ git checkout develop
+```
+```
+$ git pull
+```
+
+2. Switch back to your feature branch
+```
+$ git checkout 17-add-logo
+```
+
+3. Update your feature branch by merging develop
+```
+$ git merge develop
+```
+4. Double-check the site runs normally or as intended, in your browser on localhost:4000: 
+``` 
+$ mix phx.server
+````
+5. Push up your changes and submit your PR:
+``` shell
+$ git push
+```
+
+
+After submitting a pull-request with a keyword such as Fixes, Closes, or Resolves and the issue# in the PR description (for example, Fixes #17), WaffleBot moves the issue card once again to the right, into the Needs Review column, where another collaborator will need to review it.
+
+You can always edit and prepend Work-In-Progress to your PR title, to let the team know that your PR is not finished yet (e.g. [WIP] 17 add logo).
+
+Now you are fully setup and can join us as a collaborator :smile:
