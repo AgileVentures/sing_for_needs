@@ -48,6 +48,12 @@ config :sing_for_needs, SingForNeedsWeb.Endpoint,
     ]
   ]
 
+config :sing_for_needs, SingForNeeds.Repo,
+  database: "sing_for_needs_dev",
+  username: "globalprograms",
+  password: "",
+  hostname: "localhost"
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

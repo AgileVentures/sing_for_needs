@@ -1,4 +1,13 @@
 use Mix.Config
+# configure ecto
+use Mix.Config
+
+config :sing_for_needs, SingForNeeds.Repo,
+  username: "globalprograms",
+  password: "",
+  database: "sing_for_needs_test",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

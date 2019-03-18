@@ -8,8 +8,10 @@ defmodule SingForNeeds.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      # start the Ecto repository
+      supervisor(SingForNeeds.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(SingForNeedsWeb.Endpoint, []),
+      supervisor(SingForNeedsWeb.Endpoint, [])
       # Start your own worker by calling: SingForNeeds.Worker.start_link(arg1, arg2, arg3)
       # worker(SingForNeeds.Worker, [arg1, arg2, arg3]),
     ]

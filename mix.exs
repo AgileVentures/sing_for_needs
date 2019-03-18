@@ -6,9 +6,9 @@ defmodule SingForNeeds.Mixfile do
       app: :sing_for_needs,
       version: "0.0.1",
       elixir: "~> 1.4",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -25,7 +25,7 @@ defmodule SingForNeeds.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -42,7 +42,15 @@ defmodule SingForNeeds.Mixfile do
       {:plug, "~> 1.7"},
       {:ecto_sql, "~> 3.0"},
       {:phoenix_ecto, "~> 4.0"},
-      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:postgrex, ">= 0.0.0"},
+      {:httpoison, "~> 1.0"}
+    ]
+  end
+
+  defp aliases do
+    [
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end
