@@ -4,7 +4,7 @@ language: elixir
 otp_release:
   - 20.3
 elixir:
-  - 1.6.4
+  - 1.8.1
 addons:
   chrome: stable
 before_script:
@@ -18,8 +18,8 @@ before_script:
   - sudo mv chromedriver /usr/local/bin
   - nohup chromedriver &
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-before_install: 
- - npm install npm@latest -g
+before_install:
+  - npm install npm@latest -g
 script:
   - mix test
   - cd assets && npm install
