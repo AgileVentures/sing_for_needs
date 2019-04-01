@@ -44,7 +44,8 @@ config :sing_for_needs, SingForNeedsWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/sing_for_needs_web/views/.*(ex)$},
-      ~r{lib/sing_for_needs_web/templates/.*(eex)$}
+      ~r{lib/sing_for_needs_web/templates/.*(eex)$
+      ~r{lib/sing_for_needs_web/live/.*(ex)$}
     ]
   ]
 
