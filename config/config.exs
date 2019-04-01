@@ -7,8 +7,8 @@ use Mix.Config
 
 config :sing_for_needs, SingForNeeds.Repo,
   database: "sing_for_needs_repo",
-  username: "globalprograms",
-  password: "",
+  username: System.get_env("POSTGRES_USERNAME") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
   hostname: "localhost"
 
 # Configures the endpoint

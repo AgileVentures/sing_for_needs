@@ -28,3 +28,6 @@ npm-debug.log
 
 #.elixir_ls
 .elixir_ls/
+
+# Environment variables
+.env

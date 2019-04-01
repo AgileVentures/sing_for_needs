@@ -50,8 +50,8 @@ config :sing_for_needs, SingForNeedsWeb.Endpoint,
 
 config :sing_for_needs, SingForNeeds.Repo,
   database: "sing_for_needs_dev",
-  username: "globalprograms",
-  password: "",
+  username: System.get_env("POSTGRES_USERNAME") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
   hostname: "localhost"
 
 # Do not include metadata nor timestamps in development logs
