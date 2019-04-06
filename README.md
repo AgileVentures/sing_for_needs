@@ -1,92 +1,123 @@
-# Sing-for-needs
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/AgileVentures/sing_for_needs.svg?columns=all)](https://waffle.io/AgileVentures/sing_for_needs)
 
-## Collaborating- Clone Repo
+# Sing For Needs
 
-## Clone the repo
-At the command prompt type:
+## Collaborating - Clone Repo
+
+At the command prompt, type:
 ```
-$ git clone https://github.com/AgileVentures/sing_for_needs.git
-```
-
-Ask to be added as a collaborator
-	Email @federico with your Github username
-
-
-## To start your Phoenix Server
- 1. Install dependencies using 
- ```
- mix deps.get
- ```
- 2. Compile the dependencies using 
- ```
- mix deps.compile
- ```
- 3. Move to the root directory
- ```
-cd ..
-```
- 4. Start Phoenix endpoint with 
- ```
- mix phx.server
- ```
-* Visit 
-```
-localhost:4000
+$ git clone https://github.com/AgileVentures/sing_for_needs.git && cd sing_for_needs
 ```
 
-## Collaborating -use of WaffleBot
+  * Ask to be added as a collaborator:
+    * Email [federico](mailto:federico@championer.org?Subject=I%20want%20to%20collaborate%20on%20ChampionerOne) with your Github username, OR
+    * Ask @lara-t or @federico in our [AgileVentures.org Slack channel](https://agileventures.slack.com/messages/phoenix_one)
 
-Sing-For-Needs utilises ***Waffle.io*** for project management mainly because its easier to use and enables the developers/collaborators to cooperate efficiently
+## Install Erlang and Elixir
+To work on this project, you will want to make sure you have Erlang and Elixir installed locally.
+A great way to manage dependencies is with `asdf`. 
 
-Head over and check out ***Sing-For-Needs Board***
+Follow the intructions found here for how to [Install asdf-vm](https://asdf-vm.com/#/core-manage-asdf-vm?id=install-asdf-vm)
+
+Don't forget to [Add asdf to your PATH](https://asdf-vm.com/#/core-manage-asdf-vm?id=add-to-your-shell) and restart your shell (opening a new terminal is the easiest way to restart).
+
+You can have a look at the `.tool-versions` file and you will see that the project is currently using `Elixir 1.6.4`, which is compatible with `Erlang 20.3`.
+
+After you have `asdf` installed correctly, you can run:
+
+```
+$ asdf plugin-add elixir
+$ asdf plugin-add erlang
+$ asdf install
+```
+
+This will install the elixir and erlang versions indicated in the [.tool-versions](.tool-versions) file.
+
+You can activate Erlang globally or locally.
+
+Activate globally with:
+
+```
+$ asdf global erlang 20.3
+```
+
+Activate locally in the current folder with:
+
+```
+$ asdf local erlang 20.3
+```
+
+(If you're new to Elixir and asdf, activate globally. If you're an asdf & elixir pro, you might want to just activate locally for this project)
+
+Install local.hex and local.rebar:
+
+```
+$ mix local.hex --force
+$ mix local.rebar --force
+```
+
+## To start your Phoenix server:
+
+  * Install dependencies with `mix deps.get`
+  * Compile the dependencies with `mix deps.compile`
+  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+  * Install Node.js dependencies with `cd assets && npm ci`
+  * Move to the root directory with `cd ..` and start Phoenix endpoint with `mix phx.server`
+
+Now you can visit [`localhost:8080`](http://localhost:8080) from your browser.
+
+Now you are fully set up and can join us as a collaborator :smile:
+
+## Collaborating - Working on an Issue
+
+Sing For Needs utilises ***Zenhub.com*** for project management, mainly because it's easier to use and it enables the developers/collaborators to cooperate efficiently
+
+Head over and check out the [Sing For Needs's Zenhub Board](https://app.zenhub.com/workspaces/sing-for-needs-5c8d188a534a9b0a86cdc451/board?repos=108547295)
  
-The waffle board is divided into six columns
+The zenhub board is divided into six main pipelines
 
-1. Inbox
-2. Backlog
-3. InProgress
-4. Review
-5. Done
-6. Deployed
+1. New Issues
+2. Icebox
+3. Backlog
+4. In Progress
+5. Review
+6. Done & Closed
 
+<img width="1064" alt="Screenshot 2019-04-06 06 34 24" src="https://user-images.githubusercontent.com/11988089/55668942-6ce5f980-5836-11e9-8e0b-3d1d5cef3837.png">
 
-Issue numbers are displayed at the top left corner.Onclicking the numbers a short description of the issue is displayed.
-Once you pick an issue create a ***branch from the terminal*** with the issue and a short description eg.
+You'll want to **start by looking at the *Backlog*** column where there is a prioritized list of issue cards. The **Icebox** column is also prioritized, from top to bottom. It indicates prioritized tickets that can be worked on but have lower priority than the Backlog tickets that are more likely to be completed within the current 2-week sprint.
 
-* **Be sure you create your branch from an up-to-date develop branch**
+When clicking on the cards, a short description of the issue is displayed.
+**Once you pick an issue to work on,** from the *Backlog* or *Icebox* (look for the *Help Wanted* or *Good First Issue* tags), ***create a branch from the terminal*** with the issue and a short description, for example:
 
-* **Don't modify develop. Keep it clean & in sync with your repos**
-
-```
+```js
+//Be sure you create your branch from an up-to-date develop branch
+//Don't modify develop. Keep it clean & in sync with this Github repo's develop branch
 $ git checkout develop
-```
 
-* To update develop branch
-```
+//Update develop branch
 $ git pull
-```
 
-* To create feature branch
-```
+//Create feature branch
 $ git checkout -b 17-add-logo
 ```
 
-or you can create a branch directly from Github
+***Remember that you need to move the issue card to the In Progress column*** or add the `in progress` label, so that the team knows you are working on that particular issue.
 
-When creating it from your terminal, ***remember that you need to push the branch to the GitHub repo***
-for  Waffle to  knows you are working on that particular  issue  e.g. 
+It's also good practice to push the up the branch right away (this action used to move the issue automatically to `in progress`, with WaffleBot):
+
 ```
 $ git push --set-upstream origin 17-add-logo
 ```
 
-Now you're ready to change write  code, and because your branch starts with the **issue#**, WaffleBot will have automatically moved the issue card to the In Progress column, letting people know you are working on a specific issue.
+Now you're ready to write code.
 
-* **After you make your modifications, but before you make your last commit on your code, be sure to run the tests, to ensure no regressions have been introduced:**
+**After you make your modifications, but before you make your last commit on your code, be sure to run the tests, to ensure no regressions have been introduced:**
 ```
-chromedriver & mix test && pkill chromedriver
+$ mix test
 ```
 
-* Commit your changes:
+Commit your changes:
 
 ```
 $ git add -A && git commit -m "Add message describing my changes"
@@ -94,11 +125,11 @@ $ git add -A && git commit -m "Add message describing my changes"
 
 When you're ready to submit your changes in a pull-request, 
 
-1. first update your develop & your feature branch:
+1. first update your develop branch:
+
 ```
 $ git checkout develop
-```
-```
+ 
 $ git pull
 ```
 
@@ -111,7 +142,7 @@ $ git checkout 17-add-logo
 ```
 $ git merge develop
 ```
-4. Double-check the site runs normally or as intended, in your browser on localhost:4000: 
+4. Double-check the site runs normally or as intended, in your browser on [`localhost:8080`](http://localhost:8080): 
 ``` 
 $ mix phx.server
 ````
@@ -119,10 +150,6 @@ $ mix phx.server
 ``` shell
 $ git push
 ```
+![Make PR](https://dl.dropbox.com/s/j50pk714r3i872p/Screenshot%202018-06-07%2001.58.45.png)
 
-
-After submitting a pull-request with a keyword such as Fixes, Closes, or Resolves and the issue# in the PR description (for example, Fixes #17), WaffleBot moves the issue card once again to the right, into the Needs Review column, where another collaborator will need to review it.
-
-You can always edit and prepend Work-In-Progress to your PR title, to let the team know that your PR is not finished yet (e.g. [WIP] 17 add logo).
-
-Now you are fully setup and can join us as a collaborator :smile:
+After submitting a pull-request with a keyword such as *Fixes, Closes,* or *Resolves* and the issue # in the PR description (for example, `Fixes #17`), move the issue card once again to the right, into the *Review* column, where another collaborator will need to review it.
