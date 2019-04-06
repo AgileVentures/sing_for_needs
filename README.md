@@ -1,12 +1,17 @@
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/AgileVentures/sing_for_needs.svg?columns=all)](https://waffle.io/AgileVentures/sing_for_needs)
 
-# SingForNeeds
+# Sing For Needs
 
-## Clone the repo
+## Collaborating - Clone Repo
+
+At the command prompt, type:
 ```
-git clone https://github.com/AgileVentures/sing_for_needs.git
-cd sing_for_needs
+$ git clone https://github.com/AgileVentures/sing_for_needs.git && cd sing_for_needs
 ```
+
+  * Ask to be added as a collaborator:
+    * Email [federico](mailto:federico@championer.org?Subject=I%20want%20to%20collaborate%20on%20ChampionerOne) with your Github username, OR
+    * Ask @lara-t or @federico in our [AgileVentures.org Slack channel](https://agileventures.slack.com/messages/phoenix_one)
 
 ## Install Erlang and Elixir
 To work on this project, you will want to make sure you have Erlang and Elixir installed locally.
@@ -16,7 +21,7 @@ Follow the intructions found here for how to [Install asdf-vm](https://asdf-vm.c
 
 Don't forget to [Add asdf to your PATH](https://asdf-vm.com/#/core-manage-asdf-vm?id=add-to-your-shell) and restart your shell (opening a new terminal is the easiest way to restart).
 
-You can have a look at the `.tool-versions` file and you will see that the project is currently using `Elixir 1.8.1`, which is compatible with `Erlang 20.3`. 
+You can have a look at the `.tool-versions` file and you will see that the project is currently using `Elixir 1.8.1`, which is compatible with `Erlang 20.3`.
 
 After you have `asdf` installed correctly, you can run:
 
@@ -31,37 +36,120 @@ This will install the elixir and erlang versions indicated in the [.tool-version
 You can activate Erlang globally or locally.
 
 Activate globally with:
-```
-    asdf global erlang 20.3
-```
-Activate locally in the current folder with:
-```
-    asdf local erlang 20.3
-```
-(If you're new to Elixir and asdf, activate globally. If you're an asdf & elixir pro, you might want to just activate locally for this project)
 
+```
+$ asdf global erlang 20.3
+```
+
+Activate locally in the current folder with:
+
+```
+$ asdf local erlang 20.3
+```
+
+(If you're new to Elixir and asdf, activate globally. If you're an asdf & elixir pro, you might want to just activate locally for this project)
 
 Install local.hex and local.rebar:
 
 ```
-mix local.hex --force
-mix local.rebar --force
+$ mix local.hex --force
+$ mix local.rebar --force
 ```
 
-To start your Phoenix server:
+## To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `cd .. && mix phx.server`
+  * Compile the dependencies with `mix deps.compile`
+  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+  * Install Node.js dependencies with `cd assets && npm ci`
+  * Move to the root directory with `cd ..` and start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:8080`](http://localhost:8080) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+Now you are fully set up and can join us as a collaborator :smile:
 
-## Learn more
+## Collaborating - Working on an Issue
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+Sing For Needs utilises ***Zenhub.com*** for project management, mainly because it's easier to use and it enables the developers/collaborators to cooperate efficiently
+
+Head over and check out the [Sing For Needs's Zenhub Board](https://app.zenhub.com/workspaces/sing-for-needs-5c8d188a534a9b0a86cdc451/board?repos=108547295)
+ 
+The zenhub board is divided into six main pipelines
+
+1. New Issues
+2. Icebox
+3. Backlog
+4. In Progress
+5. Review
+6. Done & Closed
+
+<img width="1064" alt="Screenshot 2019-04-06 06 34 24" src="https://user-images.githubusercontent.com/11988089/55668942-6ce5f980-5836-11e9-8e0b-3d1d5cef3837.png">
+
+You'll want to **start by looking at the *Backlog*** column where there is a prioritized list of issue cards. The **Icebox** column is also prioritized, from top to bottom. It indicates prioritized tickets that can be worked on but have lower priority than the Backlog tickets that are more likely to be completed within the current 2-week sprint.
+
+When clicking on the cards, a short description of the issue is displayed.
+**Once you pick an issue to work on,** from the *Backlog* or *Icebox* (look for the *Help Wanted* or *Good First Issue* tags), ***create a branch from the terminal*** with the issue and a short description, for example:
+
+```js
+//Be sure you create your branch from an up-to-date develop branch
+//Don't modify develop. Keep it clean & in sync with this Github repo's develop branch
+$ git checkout develop
+
+//Update develop branch
+$ git pull
+
+//Create feature branch
+$ git checkout -b 17-add-logo
+```
+
+***Remember that you need to move the issue card to the In Progress column*** or add the `in progress` label, so that the team knows you are working on that particular issue.
+
+It's also good practice to push the up the branch right away (this action used to move the issue automatically to `in progress`, with WaffleBot):
+
+```
+$ git push --set-upstream origin 17-add-logo
+```
+
+Now you're ready to write code.
+
+**After you make your modifications, but before you make your last commit on your code, be sure to run the tests, to ensure no regressions have been introduced:**
+```
+$ mix test
+```
+
+Commit your changes:
+
+```
+$ git add -A && git commit -m "Add message describing my changes"
+```
+
+When you're ready to submit your changes in a pull-request, 
+
+1. first update your develop branch:
+
+```
+$ git checkout develop
+ 
+$ git pull
+```
+
+2. Switch back to your feature branch
+```
+$ git checkout 17-add-logo
+```
+
+3. Update your feature branch by merging develop
+```
+$ git merge develop
+```
+4. Double-check the site runs normally or as intended, in your browser on [`localhost:8080`](http://localhost:8080): 
+``` 
+$ mix phx.server
+````
+5. Push up your changes and submit your PR:
+``` shell
+$ git push
+```
+![Make PR](https://dl.dropbox.com/s/j50pk714r3i872p/Screenshot%202018-06-07%2001.58.45.png)
+
+After submitting a pull-request with a keyword such as *Fixes, Closes,* or *Resolves* and the issue # in the PR description (for example, `Fixes #17`), move the issue card once again to the right, into the *Review* column, where another collaborator will need to review it.
