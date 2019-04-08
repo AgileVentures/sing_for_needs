@@ -9,30 +9,30 @@ defmodule SingForNeedsTest.DataCase do
     inside a transaction which is reset at the beginning
     of the test unless the test case is marked as async.
     """
-  
-     use ExUnit.CaseTemplate
-  
-     using do
+
+    use ExUnit.CaseTemplate
+
+    using do
       quote do
         alias SingForNeedsTest.Repo
-  
-         import Ecto
+
+        import Ecto
         import Ecto.Changeset
         import Ecto.Query
         import SingForNeedsTest.DataCase
       end
     end
-  
-     setup tags do
-      :ok = Ecto.Adapters.SQL.Sandbox.checkout(SingForNeedsTest.Repo)
-  
+
+    setup tags do
+      :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+
        unless tags[:async] do
-        Ecto.Adapters.SQL.Sandbox.mode(SingForNeedsTest.Repo, {:shared, self()})
+        Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
       end
-  
+
        :ok
     end
-  
+
      @doc """
     A helper that transform changeset errors to a map of messages.
      assert {:error, changeset} = Accounts.create_user(%{password: "short"})

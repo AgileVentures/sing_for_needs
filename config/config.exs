@@ -28,5 +28,6 @@ config :logger, :console,
 import_config "#{Mix.env}.exs"
 config :phoenix, :json_library, Jason
 
+# add ecto repositories configuration
 config :sing_for_needs,
   ecto_repos: [SingForNeeds.Repo]

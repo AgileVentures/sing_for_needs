@@ -1,4 +1,7 @@
 defmodule SingForNeeds.Application do
+  @moduledoc """
+    Application module
+  """
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
