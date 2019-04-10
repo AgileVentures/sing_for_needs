@@ -1,8 +1,5 @@
 import css from '../css/app.css';
-import LiveSocket from "phoenix_live_view"
 
-let liveSocket = new LiveSocket("/live")
-liveSocket.connect()
 // Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
 // config.paths.watched in "brunch-config.js".
