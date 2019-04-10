@@ -5,11 +5,6 @@
 # is restricted to this project.
 use Mix.Config
 
-config :sing_for_needs, SingForNeeds.Repo,
-  database: "sing_for_needs_repo",
-  username: System.get_env("POSTGRES_USERNAME") || "postgres",
-  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
-  hostname: "localhost"
 # Configures the endpoint
 config :sing_for_needs, SingForNeedsWeb.Endpoint,
   url: [host: "localhost"],
