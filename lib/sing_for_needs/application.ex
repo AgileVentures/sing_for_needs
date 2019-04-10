@@ -1,4 +1,7 @@
 defmodule SingForNeeds.Application do
+  @moduledoc """
+    Application module
+  """
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
@@ -8,6 +11,8 @@ defmodule SingForNeeds.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      #start ecto repositories
+      supervisor(SingForNeeds.Repo, []),
       # Start the endpoint when the application starts
       supervisor(SingForNeedsWeb.Endpoint, []),
       # Start your own worker by calling: SingForNeeds.Worker.start_link(arg1, arg2, arg3)
