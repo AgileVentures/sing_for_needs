@@ -1,4 +1,4 @@
-defmodule SingForNeedsTest.DataCase do
+defmodule SingForNeeds.DataCase do
     @moduledoc """
     This module defines the setup for tests requiring
     access to the application's data layer.
@@ -14,12 +14,12 @@ defmodule SingForNeedsTest.DataCase do
 
     using do
       quote do
-        alias SingForNeedsTest.Repo
+        alias SingForNeeds.Repo
 
         import Ecto
         import Ecto.Changeset
         import Ecto.Query
-        import SingForNeedsTest.DataCase
+        import SingForNeeds.DataCase
       end
     end
 
