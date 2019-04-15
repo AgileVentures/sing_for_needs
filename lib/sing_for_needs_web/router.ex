@@ -20,7 +20,9 @@ defmodule SingForNeedsWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SingForNeedsWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SingForNeedsWeb do
+    pipe_through :api
+
+    resources "/artists", ArtistController, except: [:new, :edit]
+  end
 end
