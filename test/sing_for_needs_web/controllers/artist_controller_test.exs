@@ -1,6 +1,7 @@
 defmodule SingForNeedsWeb.ArtistControllerTest do
   use SingForNeedsWeb.ConnCase
 
+  alias SingForNeedsWeb.Router.Helpers, as: Routes
   alias SingForNeeds.Artists
   alias SingForNeeds.Artists.Artist
 

@@ -15,7 +15,6 @@ defmodule SingForNeeds.DataCase do
     using do
       quote do
         alias SingForNeeds.Repo
-
         import Ecto
         import Ecto.Changeset
         import Ecto.Query
@@ -24,10 +23,10 @@ defmodule SingForNeeds.DataCase do
     end
 
     setup tags do
-      :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+      :ok = Ecto.Adapters.SQL.Sandbox.checkout(SingForNeeds.Repo)
 
        unless tags[:async] do
-        Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
+        Ecto.Adapters.SQL.Sandbox.mode(SingForNeeds.Repo, {:shared, self()})
       end
 
        :ok
