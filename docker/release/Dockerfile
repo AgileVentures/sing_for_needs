@@ -25,3 +25,14 @@ RUN echo $LANG UTF-8 > /etc/locale.gen
 RUN locale-gen 
 RUN update-locale LANG=$LANG
 
+# Install local.hex and local.rebar
+RUN mix local.hex --force
+RUN mix local.rebar --force
+
+# Install phoenix dependencies
+RUN mix deps.get
+RUN mix deps.compile
+
+EXPOSE 8080
+
+CMD [ "mix", "phx.server" ]
