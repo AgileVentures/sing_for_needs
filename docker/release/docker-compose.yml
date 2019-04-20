@@ -5,9 +5,12 @@ services:
     image: postgres:latest
     ports:
       - "5432:5432"
+    expose:
+      - "5432"
     environment:
     - POSTGRES_PASSWORD="postgres"
     - POSTGRES_USER="postgres"
+    - POSTGRES_HOSTNAME="localhost"
     
   backend:
     image: sing_for_needs:test
