@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+  backend:
+    image: sing_for_needs:test
+    ports:
+      - "8080:8080"
+    command: 
+      - mix
+      - ecto.create
+    depends_on: 
+      - db
