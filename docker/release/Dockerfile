@@ -35,4 +35,4 @@ RUN mix deps.compile
 
 EXPOSE 8080
 
-CMD [ "mix", "phx.server" ]
+CMD [ "mix ecto.create && mix ecto.migrate", "mix phx.server" ]
