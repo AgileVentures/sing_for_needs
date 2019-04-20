@@ -1,3 +1,8 @@
+FROM node:alpine as js-dependencies
+WORKDIR /app
+COPY assets/package*.json /app/
+RUN  npm install
+
 FROM elixir:1.8.1
 LABEL application="sing_for_needs"
 
@@ -8,9 +13,10 @@ ENV TERM=xterm-256color
 ENV LANG="en_US.utf8"
 ENV LANGUAGE="en_US:"
 
-WORKDIR /app
-
-COPY . /app/
+WORKDIR /application
+COPY . /application/
+RUN  mkdir -p assets/node_modules
+COPY --from=js-dependencies ./app/node_modules assets/node_modules
 
 # Update locale
 RUN apt-get update && apt-get install -y --no-install-recommends locales
