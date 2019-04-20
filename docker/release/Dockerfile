@@ -7,4 +7,15 @@ ENV TERM=xterm-256color
 # Set the locale
 ENV LANG="en_US.utf8"
 ENV LANGUAGE="en_US:"
-ENV LC_ALL="en_US.UTF-8"  
+
+WORKDIR /app
+
+COPY . /app/
+
+# Update locale
+RUN apt-get update && apt-get install -y --no-install-recommends locales
+RUN export LANG=en_US.UTF-8 
+RUN echo $LANG UTF-8 > /etc/locale.gen 
+RUN locale-gen 
+RUN update-locale LANG=$LANG
+
