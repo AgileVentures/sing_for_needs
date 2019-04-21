@@ -42,4 +42,6 @@ RUN mix deps.compile
 
 EXPOSE 8080
 
-CMD [ "mix","phx.server" ]
+RUN chmod +x /application/docker/scripts/create_migrate_db.sh
+
+ENTRYPOINT ["/application/docker/scripts/create_migrate_db.sh"]
