@@ -1,20 +1,30 @@
-version: '3.6'
+version: '3.7'
 
 services:
-  db:
+  database:
+    container_name: pg_container
     image: postgres:latest
+    restart: "on-failure"
     ports:
-      - "5432:5432"
+     - "5432:5432"
     expose:
       - "5432"
     environment:
-    - POSTGRES_PASSWORD="postgres"
-    - POSTGRES_USER="postgres"
-    - POSTGRES_HOSTNAME="localhost"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+    volumes:
+       - pgdata:/var/lib/postgresql/data
     
   backend:
+    build: .
+    container_name: phoenix_server
     image: sing_for_needs:test
+    links:
+      - database
     ports:
       - "8080:8080"
-    depends_on: 
-      - db
+    depends_on:
+      - database
+      
+volumes:
+  pgdata: {}
