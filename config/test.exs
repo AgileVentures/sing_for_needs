@@ -11,8 +11,8 @@ config :logger, level: :warn
 
 # Configure your database
 config :sing_for_needs, SingForNeeds.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("POSTGRES_USERNAME") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
   database: "sing_for_needs_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
