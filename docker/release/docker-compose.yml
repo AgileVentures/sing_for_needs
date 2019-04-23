@@ -2,16 +2,14 @@ version: '3.7'
 
 services:
   database:
-    container_name: pg_container
+    container_name: postgres_container
     image: postgres:latest
     restart: "on-failure"
     ports:
      - "5432:5432"
-    expose:
-      - "5432"
     environment:
-      - "POSTGRES_USER=postgres"
-      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_USER=${POSTGRES_USERNAME}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
     volumes:
        - pgdata:/var/lib/postgresql/data
     
@@ -19,8 +17,10 @@ services:
     build: .
     container_name: phoenix_server
     image: sing_for_needs:test
-    links:
-      - database
+    environment:
+      - "POSTGRES_HOST=database"
+      - "POSTGRES_USERNAME=${POSTGRES_USERNAME}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
     ports:
       - "8080:8080"
     depends_on:
