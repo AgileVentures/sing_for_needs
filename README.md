@@ -5,17 +5,19 @@
 ## Collaborating - Clone Repo
 
 At the command prompt, type:
+
 ```
 $ git clone https://github.com/AgileVentures/sing_for_needs.git && cd sing_for_needs
 ```
 
-  * Ask to be added as a collaborator:
-    * Email [federico](mailto:federico@championer.org?Subject=I%20want%20to%20collaborate%20on%20ChampionerOne) with your Github username, OR
-    * Ask @lara-t or @federico in our [AgileVentures.org Slack channel](https://agileventures.slack.com/messages/phoenix_one)
+- Ask to be added as a collaborator:
+  - Email [federico](mailto:federico@championer.org?Subject=I%20want%20to%20collaborate%20on%20ChampionerOne) with your Github username, OR
+  - Ask @lara-t or @federico in our [AgileVentures.org Slack channel](https://agileventures.slack.com/messages/phoenix_one)
 
 ## Install Erlang and Elixir
+
 To work on this project, you will want to make sure you have Erlang and Elixir installed locally.
-A great way to manage dependencies is with `asdf`. 
+A great way to manage dependencies is with `asdf`.
 
 Follow the intructions found here for how to [Install asdf-vm](https://asdf-vm.com/#/core-manage-asdf-vm?id=install-asdf-vm)
 
@@ -58,22 +60,58 @@ $ mix local.rebar --force
 
 ## To start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Compile the dependencies with `mix deps.compile`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm ci`
-  * Move to the root directory with `cd ..` and start Phoenix endpoint with `mix phx.server`
+- Install dependencies with `mix deps.get`
+- Compile the dependencies with `mix deps.compile`
+- Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+- Install Node.js dependencies with `cd assets && npm ci`
+- Move to the root directory with `cd ..` and start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:8080`](http://localhost:8080) from your browser.
 
 Now you are fully set up and can join us as a collaborator :smile:
 
+
+## Docker Development Setup
+### Prerequisite
+* [Install docker](https://docs.docker.com/install/)
+* stop the local instances of *postgres* . 
+- In macos, this is achieved by:
+    - brew services stop postgres
+- In Ubuntu 18.04, this is achieved by:
+    - sudo service postgresql 
+
+### Setup
+ Change to the application directory.On the terminal run the following  commands:
+1. Create a `.env` file and populate the following Environment variables as database credentials
+ 
+ > POSTGRES_USERNAME
+
+ > POSTGRES_PASSWORD
+
+ Source the `.env` file by running command:
+ ```
+ $ source .env
+ ```
+
+2. Uncomment  [this line](https://github.com/andela/bp-esa-backend/blob/1828ebf586cf5a04cae00b5b92fda845f3825932/Dockerfile#L23) for  local development. Change  the  following Environment Variables:
+>REDIS_HOST=redis
+
+Ensure that you have a stable version of docker on your machine
+
+3. On terminal, run command ...
+- `docker build -f docker/release/Dockerfile -t sing_for_needs:develop . `
+
+4. After the application image has been created by the above command, start the application by running.
+- `docker-compose -f docker/release/docker-compose.yml up `
+
+5. Access the application from your browser on `http://localhost:8080`
+
 ## Collaborating - Working on an Issue
 
-Sing For Needs utilises ***Zenhub.com*** for project management, mainly because it's easier to use and it enables the developers/collaborators to cooperate efficiently
+Sing For Needs utilises **_Zenhub.com_** for project management, mainly because it's easier to use and it enables the developers/collaborators to cooperate efficiently
 
 Head over and check out the [Sing For Needs's Zenhub Board](https://app.zenhub.com/workspaces/sing-for-needs-5c8d188a534a9b0a86cdc451/board?repos=108547295)
- 
+
 The zenhub board is divided into six main pipelines
 
 1. New Issues
@@ -85,10 +123,10 @@ The zenhub board is divided into six main pipelines
 
 <img width="1064" alt="Screenshot 2019-04-06 06 34 24" src="https://user-images.githubusercontent.com/11988089/55668942-6ce5f980-5836-11e9-8e0b-3d1d5cef3837.png">
 
-You'll want to **start by looking at the *Backlog*** column where there is a prioritized list of issue cards. The **Icebox** column is also prioritized, from top to bottom. It indicates prioritized tickets that can be worked on but have lower priority than the Backlog tickets that are more likely to be completed within the current 2-week sprint.
+You'll want to **start by looking at the _Backlog_** column where there is a prioritized list of issue cards. The **Icebox** column is also prioritized, from top to bottom. It indicates prioritized tickets that can be worked on but have lower priority than the Backlog tickets that are more likely to be completed within the current 2-week sprint.
 
 When clicking on the cards, a short description of the issue is displayed.
-**Once you pick an issue to work on,** from the *Backlog* or *Icebox* (look for the *Help Wanted* or *Good First Issue* tags), ***create a branch from the terminal*** with the issue and a short description, for example:
+**Once you pick an issue to work on,** from the _Backlog_ or _Icebox_ (look for the _Help Wanted_ or _Good First Issue_ tags), **_create a branch from the terminal_** with the issue and a short description, for example:
 
 ```js
 //Be sure you create your branch from an up-to-date develop branch
@@ -102,7 +140,7 @@ $ git pull
 $ git checkout -b 17-add-logo
 ```
 
-***Remember that you need to move the issue card to the In Progress column*** or add the `in progress` label, so that the team knows you are working on that particular issue.
+**_Remember that you need to move the issue card to the In Progress column_** or add the `in progress` label, so that the team knows you are working on that particular issue.
 
 It's also good practice to push the up the branch right away (this action used to move the issue automatically to `in progress`, with WaffleBot):
 
@@ -113,6 +151,7 @@ $ git push --set-upstream origin 17-add-logo
 Now you're ready to write code.
 
 **After you make your modifications, but before you make your last commit on your code, be sure to run the tests, to ensure no regressions have been introduced:**
+
 ```
 $ mix test
 ```
@@ -123,33 +162,40 @@ Commit your changes:
 $ git add -A && git commit -m "Add message describing my changes"
 ```
 
-When you're ready to submit your changes in a pull-request, 
+When you're ready to submit your changes in a pull-request,
 
 1. first update your develop branch:
 
 ```
 $ git checkout develop
- 
+
 $ git pull
 ```
 
 2. Switch back to your feature branch
+
 ```
 $ git checkout 17-add-logo
 ```
 
 3. Update your feature branch by merging develop
+
 ```
 $ git merge develop
 ```
-4. Double-check the site runs normally or as intended, in your browser on [`localhost:8080`](http://localhost:8080): 
-``` 
+
+4. Double-check the site runs normally or as intended, in your browser on [`localhost:8080`](http://localhost:8080):
+
+```
 $ mix phx.server
-````
+```
+
 5. Push up your changes and submit your PR:
-``` shell
+
+```shell
 $ git push
 ```
+
 ![Make PR](https://dl.dropbox.com/s/j50pk714r3i872p/Screenshot%202018-06-07%2001.58.45.png)
 
-After submitting a pull-request with a keyword such as *Fixes, Closes,* or *Resolves* and the issue # in the PR description (for example, `Fixes #17`), move the issue card once again to the right, into the *Review* column, where another collaborator will need to review it.
+After submitting a pull-request with a keyword such as _Fixes, Closes,_ or _Resolves_ and the issue # in the PR description (for example, `Fixes #17`), move the issue card once again to the right, into the _Review_ column, where another collaborator will need to review it.
