@@ -74,34 +74,39 @@ Now you are fully set up and can join us as a collaborator :smile:
 ## Docker Development Setup
 ### Prerequisite
 * [Install docker](https://docs.docker.com/install/)
-* stop the local instances of *postgres* . 
-- In macos, this is achieved by:
+* stop the local instances of *postgres*. 
+- In macOS, this is achieved by:
     - brew services stop postgres
 - In Ubuntu 18.04, this is achieved by:
     - sudo service postgresql 
 
 ### Setup
- Change to the application directory.On the terminal run the following  commands:
-1. Create a `.env` file and populate the following Environment variables as database credentials
+ Change to the project root directory.
+
+1. Create a `.env` file and populate the following Environment variables as database credentials:
  
  > POSTGRES_USERNAME
 
  > POSTGRES_PASSWORD
 
- Source the `.env` file by running command:
+For example:
+```
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=postgres
+```
+
+ 2. Source the `.env` file by running command:
  ```
  $ source .env
  ```
 
-2. Uncomment  [this line](https://github.com/andela/bp-esa-backend/blob/1828ebf586cf5a04cae00b5b92fda845f3825932/Dockerfile#L23) for  local development. Change  the  following Environment Variables:
->REDIS_HOST=redis
 
 Ensure that you have a stable version of docker on your machine
 
-3. On terminal, run command ...
+3. In the terminal, run this command:
 - `docker build -f docker/release/Dockerfile -t sing_for_needs:develop . `
 
-4. After the application image has been created by the above command, start the application by running.
+4. After the application image has been created by the above command, start the application by running:
 - `docker-compose -f docker/release/docker-compose.yml up `
 
 5. Access the application from your browser on `http://localhost:4000`
