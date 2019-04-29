@@ -14,13 +14,15 @@ defmodule SingForNeedsWeb.Router do
   end
 
   scope "/", SingForNeedsWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SingForNeedsWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SingForNeedsWeb do
+    pipe_through :api
+
+    resources "/artists", ArtistController, except: [:new, :edit]
+  end
 end

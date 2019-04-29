@@ -20,26 +20,28 @@ defmodule SingForNeedsWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: SingForNeedsWeb
+
       import Plug.Conn
-      alias SingForNeedsWeb.Router.Helpers, as: Routes
       import SingForNeedsWeb.Gettext
+      alias SingForNeedsWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/sing_for_needs_web/templates",
-                        namespace: SingForNeedsWeb
+      use Phoenix.View,
+        root: "lib/sing_for_needs_web/templates",
+        namespace: SingForNeedsWeb
 
       # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
+      import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      alias SingForNeedsWeb.Router.Helpers, as: Routes
       import SingForNeedsWeb.ErrorHelpers
       import SingForNeedsWeb.Gettext
+      alias SingForNeedsWeb.Router.Helpers, as: Routes
     end
   end
 
