@@ -66,7 +66,7 @@ $ mix local.rebar --force
 - Install Node.js dependencies with `cd assets && npm ci`
 - Move to the root directory with `cd ..` and start Phoenix endpoint with `mix phx.server`
 
-Now you can visit [`localhost:8080`](http://localhost:8080) from your browser.
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Now you are fully set up and can join us as a collaborator :smile:
 
@@ -104,7 +104,7 @@ Ensure that you have a stable version of docker on your machine
 4. After the application image has been created by the above command, start the application by running.
 - `docker-compose -f docker/release/docker-compose.yml up `
 
-5. Access the application from your browser on `http://localhost:8080`
+5. Access the application from your browser on `http://localhost:4000`
 
 ## Collaborating - Working on an Issue
 
@@ -184,7 +184,7 @@ $ git checkout 17-add-logo
 $ git merge develop
 ```
 
-4. Double-check the site runs normally or as intended, in your browser on [`localhost:8080`](http://localhost:8080):
+4. Double-check the site runs normally or as intended, in your browser on [`localhost:4000`](http://localhost:4000):
 
 ```
 $ mix phx.server

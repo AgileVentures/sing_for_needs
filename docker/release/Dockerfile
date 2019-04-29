@@ -40,7 +40,7 @@ RUN mix local.rebar --force
 RUN mix deps.get
 RUN mix deps.compile                                    
 
-EXPOSE 8080
+EXPOSE 4000
 
 RUN chmod +x /application/docker/scripts/create_migrate_db.sh
 

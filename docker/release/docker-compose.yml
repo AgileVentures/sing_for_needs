@@ -22,7 +22,7 @@ services:
       - "POSTGRES_USERNAME=${POSTGRES_USERNAME}"
       - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
     ports:
-      - "8080:8080"
+      - "4000:4000"
     depends_on:
       - database
       
