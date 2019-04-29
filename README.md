@@ -23,6 +23,8 @@ Follow the intructions found here for how to [Install asdf-vm](https://asdf-vm.c
 
 Don't forget to [Add asdf to your PATH](https://asdf-vm.com/#/core-manage-asdf-vm?id=add-to-your-shell) and restart your shell (opening a new terminal is the easiest way to restart).
 
+You may also need to add asdf to your PATH, in your `.bash_profile` instead of your `.bashrc`, as instructed in the link.
+
 You can have a look at the `.tool-versions` file and you will see that the project is currently using `Elixir 1.8.1`, which is compatible with `Erlang 20.3`.
 
 After you have `asdf` installed correctly, you can run:
