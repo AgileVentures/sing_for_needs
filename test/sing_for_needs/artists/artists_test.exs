@@ -6,9 +6,9 @@ defmodule SingForNeeds.ArtistsTest do
   describe "artists" do
     alias SingForNeeds.Artists.Artist
 
-    @valid_attrs %{name: "some name"}
-    @update_attrs %{name: "some updated name"}
-    @invalid_attrs %{name: nil}
+    @valid_attrs %{name: "some name", about: "about an awesome artist"}
+    @update_attrs %{name: "some updated name", about: "update an awesome artist"}
+    @invalid_attrs %{name: nil, about: nil}
 
     def artist_fixture(attrs \\ %{}) do
       {:ok, artist} =
@@ -32,6 +32,7 @@ defmodule SingForNeeds.ArtistsTest do
     test "create_artist/1 with valid data creates a artist" do
       assert {:ok, %Artist{} = artist} = Artists.create_artist(@valid_attrs)
       assert artist.name == "some name"
+      assert artist.about == "about an awesome artist"
     end
 
     test "create_artist/1 with invalid data returns error changeset" do
@@ -41,7 +42,9 @@ defmodule SingForNeeds.ArtistsTest do
     test "update_artist/2 with valid data updates the artist" do
       artist = artist_fixture()
       assert {:ok, %Artist{} = artist} = Artists.update_artist(artist, @update_attrs)
+      require IEx; IEx.pry
       assert artist.name == "some updated name"
+      assert artist.about == "update an awesome artist"
     end
 
     test "update_artist/2 with invalid data returns error changeset" do
