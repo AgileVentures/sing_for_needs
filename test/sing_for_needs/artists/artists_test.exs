@@ -42,7 +42,6 @@ defmodule SingForNeeds.ArtistsTest do
     test "update_artist/2 with valid data updates the artist" do
       artist = artist_fixture()
       assert {:ok, %Artist{} = artist} = Artists.update_artist(artist, @update_attrs)
-      require IEx; IEx.pry
       assert artist.name == "some updated name"
       assert artist.about == "update an awesome artist"
     end
