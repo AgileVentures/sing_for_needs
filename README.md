@@ -1,5 +1,3 @@
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/AgileVentures/sing_for_needs.svg?columns=all)](https://waffle.io/AgileVentures/sing_for_needs)
-
 # Sing For Needs
 
 ## Collaborating - Clone Repo
@@ -59,7 +57,22 @@ Install local.hex and local.rebar:
 $ mix local.hex --force
 $ mix local.rebar --force
 ```
-
+## SET UP .env
+Feel free to skip to the next section if you are using the default postgres username and password as you do not have to set this up.
+If you are not using the default postgres username and password, please follow the steps below:
+The postgres database Username and Password are configured using a .env file. First copy the content of the .env.dev file in your root directory to a .env file as below
+```
+cp .env.dev .env
+```
+ Update the values with the correct username and password, for instance, if the username for my database is `correct_username` and password is `correct_password` I would update as below
+```
+export POSTGRES_USERNAME="correct_username"
+export POSTGRES_PASSWORD="correct_password"
+```
+ To make the the environmental variabes available on your shell, run the command below:
+```
+source .env
+```
 ## To start your Phoenix server:
 
 - Install dependencies with `mix deps.get`
