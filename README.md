@@ -83,6 +83,11 @@ source .env
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+- If another application is already running in your port 4000, you can set your port dynamically by adding it to the .env file, for example, if you want your application to run on port 5000, you can add the following to your .env
+    ```export PORT=5000```
+- Reload the .env by running `source .env` in your terminal
+- Run the server using command `mix phx.server` and access the app using [`localhost:5000`](http://localhost:5000) 
+
 Now you are fully set up and can join us as a collaborator :smile:
 
 
