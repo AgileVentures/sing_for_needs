@@ -13,12 +13,17 @@ defmodule SingForNeedsWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", SingForNeedsWeb do
-    pipe_through :browser
+  scope "/" do
+    pipe_through :api
 
-    get "/", PageController, :index
+    forward "/api", Absinthe.Plug,
+      schema: SingForNeedsWeb.Schema.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: SingForNeedsWeb.Schema.Schema,
+      socket: SingForNeedsWeb.UserSocket,
+      interface: :simple
   end
-
   # Other scopes may use custom stacks.
   scope "/api", SingForNeedsWeb do
     pipe_through :api
