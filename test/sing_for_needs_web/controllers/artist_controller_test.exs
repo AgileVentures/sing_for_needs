@@ -1,4 +1,5 @@
 defmodule SingForNeedsWeb.ArtistControllerTest do
+  @moduledoc false
   use SingForNeedsWeb.ConnCase
 
   alias SingForNeeds.Artists
