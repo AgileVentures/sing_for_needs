@@ -10,6 +10,7 @@ defmodule SingForNeedsWeb.Router do
   end
 
   pipeline :api do
+    plug CORSPlug, origin: ["http://localhost:4000", "http://127.0.0.1:4000"]
     plug :accepts, ["json"]
   end
 
@@ -24,5 +25,6 @@ defmodule SingForNeedsWeb.Router do
     pipe_through :api
 
     resources "/artists", ArtistController, except: [:new, :edit]
+    options "/artists", ArtistController, :options
   end
 end
