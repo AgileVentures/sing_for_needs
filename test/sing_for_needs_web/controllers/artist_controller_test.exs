@@ -5,7 +5,8 @@ defmodule SingForNeedsWeb.ArtistControllerTest do
   alias SingForNeeds.Artists.Artist
 
   @create_attrs %{
-    name: "some name"
+    name: "some name",
+    bio: "Awesome artist's bio"
   }
   @update_attrs %{
     name: "some updated name"

@@ -5,14 +5,14 @@ defmodule SingForNeeds.Artists.Artist do
 
   schema "artists" do
     field :name, :string
-
+    field :bio, :string
     timestamps()
   end
 
   @doc false
   def changeset(artist, attrs) do
     artist
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :bio])
+    |> validate_required([:name, :bio])
   end
 end
