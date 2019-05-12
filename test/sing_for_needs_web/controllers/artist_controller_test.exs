@@ -6,7 +6,7 @@ defmodule SingForNeedsWeb.ArtistControllerTest do
 
   @create_attrs %{
     name: "some name",
-    about: "about an awesome artist"
+    bio: "Awesome artist's bio"
   }
   @update_attrs %{
     name: "some updated name"
