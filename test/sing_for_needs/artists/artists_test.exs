@@ -1,4 +1,5 @@
 defmodule SingForNeeds.ArtistsTest do
+  @moduledoc false
   use SingForNeeds.DataCase
 
   alias SingForNeeds.Artists
@@ -6,9 +7,9 @@ defmodule SingForNeeds.ArtistsTest do
   describe "artists" do
     alias SingForNeeds.Artists.Artist
 
-    @valid_attrs %{name: "some name"}
-    @update_attrs %{name: "some updated name"}
-    @invalid_attrs %{name: nil}
+    @valid_attrs %{name: "some name", bio: "An awesome artist's bio"}
+    @update_attrs %{name: "some updated name", bio: "update an awesome artist's bio"}
+    @invalid_attrs %{name: nil, bio: nil}
 
     def artist_fixture(attrs \\ %{}) do
       {:ok, artist} =
@@ -32,6 +33,7 @@ defmodule SingForNeeds.ArtistsTest do
     test "create_artist/1 with valid data creates a artist" do
       assert {:ok, %Artist{} = artist} = Artists.create_artist(@valid_attrs)
       assert artist.name == "some name"
+      assert artist.bio == "An awesome artist's bio"
     end
 
     test "create_artist/1 with invalid data returns error changeset" do
@@ -42,6 +44,7 @@ defmodule SingForNeeds.ArtistsTest do
       artist = artist_fixture()
       assert {:ok, %Artist{} = artist} = Artists.update_artist(artist, @update_attrs)
       assert artist.name == "some updated name"
+      assert artist.bio == "update an awesome artist's bio"
     end
 
     test "update_artist/2 with invalid data returns error changeset" do

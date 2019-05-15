@@ -83,6 +83,11 @@ source .env
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+- If you get an error that another application is already running in your port 4000, you can set your port dynamically by adding it to the .env file, for example, if you want your application to run on port 5000, you can add the following to your .env
+    ```export PORT=5000```
+- Reload the .env by running `source .env` in your terminal
+- Run the server using command `mix phx.server` and access the app using [`localhost:5000`](http://localhost:5000) 
+
 Now you are fully set up and can join us as a collaborator :smile:
 
 
@@ -130,7 +135,7 @@ Ensure that you have a stable version of docker on your machine
 
 Sing For Needs utilises **_Zenhub.com_** for project management, mainly because it's easier to use and it enables the developers/collaborators to cooperate efficiently
 
-Head over and check out the [Sing For Needs's Zenhub Board](https://app.zenhub.com/workspaces/sing-for-needs-5c8d188a534a9b0a86cdc451/board?repos=108547295)
+Head over and check out the [Sing For Needs' Zenhub Board](https://app.zenhub.com/workspaces/sing-for-needs-5c8d188a534a9b0a86cdc451/board?repos=108547295)
 
 The zenhub board is divided into six main pipelines
 
@@ -139,7 +144,7 @@ The zenhub board is divided into six main pipelines
 3. Backlog
 4. In Progress
 5. Review
-6. Done & Closed
+6. Closed
 
 <img width="1064" alt="Screenshot 2019-04-06 06 34 24" src="https://user-images.githubusercontent.com/11988089/55668942-6ce5f980-5836-11e9-8e0b-3d1d5cef3837.png">
 
