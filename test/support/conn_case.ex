@@ -20,7 +20,7 @@ defmodule SingForNeedsWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       alias SingForNeedsWeb.Router.Helpers, as: Routes
-
+      import SingForNeeds.TestHelpers
       # The default endpoint for testing
       @endpoint SingForNeedsWeb.Endpoint
     end
