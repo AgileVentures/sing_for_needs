@@ -7,17 +7,20 @@ defmodule SingForNeeds.TestHelpers do
     artist1 =
       %Artist{
         name: "Artist 1",
-      } |> Repo.insert!
+      }
+    Repo.insert!(artist1)
 
     artist2 =
       %Artist{
         name: "Artist 2",
-      } |> Repo.insert!
+      }
+    Repo.insert!(artist2)
+
     artist3 =
       %Artist{
         name: "Artist 3",
-      } |> Repo.insert!
-
+      }
+    Repo.insert!(artist3)
     [artist1, artist2, artist3]
   end
 end

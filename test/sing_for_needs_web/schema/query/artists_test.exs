@@ -23,5 +23,5 @@ defmodule SingForNeeds.Schema.Query.ArtistsTest do
       ]
       }
     } = json_response(conn, 200)
-  end   
+  end
 end
