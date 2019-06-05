@@ -1,16 +1,13 @@
 defmodule SingForNeedsWeb.Schema.Schema do
     @moduledoc false
     use Absinthe.Schema
+    import_types SingForNeedsWeb.Schema.ArtistTypes
+    alias SingForNeeds.Resolvers.Artist
 
   query do
     @desc "get list of artists"
     field :artists, list_of(:artist) do
-      resolve &SingForNeeds.Resolvers.Artist.artists/3
-    end    
-  end
-
-  object :artist do
-    field :id, :id
-    field :name, :string
+      resolve &Artist.artists/3
+    end
   end
 end
