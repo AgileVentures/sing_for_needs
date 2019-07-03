@@ -11,7 +11,7 @@ defmodule SingForNeeds.Schema.Query.ArtistsTest do
   """
   test "artists query returns all artists" do
     artists_fixture()
-
+    import IEx; IEx.pry
     conn = build_conn()
     conn = get conn, "/api", query: @query
 
