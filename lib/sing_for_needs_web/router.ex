@@ -25,5 +25,6 @@ defmodule SingForNeedsWeb.Router do
     pipe_through :api
 
     resources "/artists", ArtistController, except: [:new, :edit]
+    resources "/causes", CauseController, except: [:new, :edit]
   end
 end
