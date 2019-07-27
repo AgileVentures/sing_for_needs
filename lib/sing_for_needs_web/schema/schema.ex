@@ -1,5 +1,7 @@
 defmodule SingForNeedsWeb.Schema.Schema do
-    @moduledoc false
+    @moduledoc """
+      Uses GraphQL Absinthe schema to query resources from the database
+    """
     use Absinthe.Schema
     import_types SingForNeedsWeb.Schema.ArtistTypes
     alias SingForNeeds.Resolvers.Artist
