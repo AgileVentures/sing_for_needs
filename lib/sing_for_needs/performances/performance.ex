@@ -18,7 +18,7 @@ defmodule SingForNeeds.Performances.Performance do
   @doc false
   def changeset(performance, attrs) do
     performance
-    |> cast(attrs, [:name, :detail, :amount_raised, :artist_id ])
+    |> cast(attrs, [:name, :detail, :amount_raised ])
     |> validate_required([:name, :detail])
   end
 
