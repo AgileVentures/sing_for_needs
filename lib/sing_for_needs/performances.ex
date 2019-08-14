@@ -31,6 +31,15 @@ defmodule SingForNeeds.Performances do
  end
 
  @doc """
+ create a performance with artists
+ """
+ def create_performance(performance \\ %{}, artists) do
+    performance
+    |> Performance.changeset_update_artists(artists)
+    |> Repo.insert()
+ end
+
+ @doc """
   create a performance with many artitsts
  """
 #  def upsert_performance_artisits(performance, artist_ids) do
@@ -48,4 +57,10 @@ defmodule SingForNeeds.Performances do
 #     end
 #  end
 
+  @doc """
+    List of all Performances
+   """
+  def list_performances do
+    Repo.all(Performance)
+  end
 end

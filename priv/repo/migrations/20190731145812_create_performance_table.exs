@@ -8,7 +8,7 @@ defmodule SingForNeeds.Repo.Migrations.CreatePerformanceTable do
     create table(:performances) do
       add :name, :string
       add :detail, :string
-      add :amount_raised, :float
+      add :amount_raised, :decimal
       references(:artists)
       timestamps()
     end
