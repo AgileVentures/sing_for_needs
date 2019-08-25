@@ -1,4 +1,4 @@
-defmodule SingForNeeds.Artists.Artist do
+defmodule SingForNeeds.Schema.Artist do
   @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
