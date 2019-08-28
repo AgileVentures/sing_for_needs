@@ -2,7 +2,6 @@ defmodule SingForNeeds.Performances do
  @moduledoc """
     Context for the performance schema
  """
- alias SingForNeeds.Artist
  alias SingForNeeds.Performances.Performance
  alias SingForNeeds.Repo
 
@@ -30,24 +29,21 @@ defmodule SingForNeeds.Performances do
       |> Repo.insert()
  end
 
- @doc """
- create a performance with artists
- """
- def create_performance(performance \\ %{}, artists) do
-    performance
-    |> Performance.changeset_update_artists(artists)
+  def create_performance_with_artist(attrs \\ %{}) do
+    %Performance{}
+    |> Performance.changeset_update_artists(attrs)
     |> Repo.insert()
- end
+  end
 
- @doc """
-  create a performance with many artitsts
- """
+#  @doc """
+#   create a performance with many artitsts
+#  """
 #  def upsert_performance_artisits(performance, artist_ids) do
-#     artists = 
+#     artists =
 #             Artist
 #             |> where([artist], artist_id in ^artist_ids)
 #             |> Repo.all()
-#     with {:ok, _struct } <- 
+#     with {:ok, _struct } <-
 #         performance
 #         |> Performance.changeset_update_artists(artists)
 #         |> Repo.update() do

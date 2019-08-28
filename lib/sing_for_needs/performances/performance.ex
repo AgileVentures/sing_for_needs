@@ -25,9 +25,9 @@ defmodule SingForNeeds.Performances.Performance do
   @doc """
     insert performance with artist
   """
-  def changeset_update_artists(performance, artists) do
+  def changeset_update_artists(performance, attrs) do
     performance
-    |> cast(%{}, [:name, :detail ])
-    |> put_assoc(:artists, artists)
+    |> cast(attrs, [:name, :detail, :amount_raised ])
+    |> put_assoc(:artists, attrs.artists)
   end
 end
