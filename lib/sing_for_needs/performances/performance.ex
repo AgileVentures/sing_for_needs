@@ -10,7 +10,7 @@ defmodule SingForNeeds.Performances.Performance do
     field :name, :string
     field :detail, :string
     field :amount_raised, :decimal
-    many_to_many(:artists, Artist , join_through: :artists_performances, on_replace: :delete)
+    many_to_many(:artists, Artist , join_through: "artists_performances", on_replace: :delete)
 
     timestamps()
   end

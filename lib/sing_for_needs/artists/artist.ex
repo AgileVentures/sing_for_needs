@@ -7,7 +7,7 @@ defmodule SingForNeeds.Artists.Artist do
   schema "artists" do
     field :name, :string
     field :bio, :string
-    many_to_many(:performances, Performance, join_through: :artists_performances, on_replace: :delete)
+    many_to_many(:performances, Performance, join_through: "artists_performances", on_replace: :delete)
     timestamps()
   end
 
