@@ -6,7 +6,6 @@ defmodule SingForNeeds.Repo.Migrations.AddArtistPerformance do
       add(:artist_id, references(:artists, on_delete: :delete_all), primary_key: true)
       add(:performance_id, references(:performances, on_delete: :delete_all), primary_key: true)
 
-      timestamps()
     end
 
     create(index(:artists_performances, [:artist_id]))

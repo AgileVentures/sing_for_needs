@@ -15,7 +15,9 @@ defmodule SingForNeeds.Performances.Performance do
     timestamps()
   end
 
-  @doc false
+  @doc """
+  changeset to create performance
+  """
   def changeset(performance, attrs) do
     performance
     |> cast(attrs, [:name, :detail, :amount_raised ])
@@ -23,7 +25,7 @@ defmodule SingForNeeds.Performances.Performance do
   end
 
   @doc """
-    insert performance with artist
+    change set insert performance with artist (while creating the relationship)
   """
   def changeset_update_artists(performance, attrs) do
     performance

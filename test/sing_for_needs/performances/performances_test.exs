@@ -25,7 +25,7 @@ defmodule SingForNeeds.PerformancesTest do
     {:ok, %Performance{artists: related_artists}} =  Performances.create_performance_with_artist(valid_attrs_with_artists)
 
     assert Enum.count(related_artists) == 2
-    # assert related_artists = [artist_1, artist_2]
+    assert related_artists == [artist_1, artist_2]
   end
 
   # test "list_performances/0 returns a list of all performances" do
