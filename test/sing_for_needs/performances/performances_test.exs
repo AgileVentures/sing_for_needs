@@ -4,7 +4,8 @@ defmodule SingForNeeds.PerformancesTest do
   """
   use SingForNeeds.DataCase
 
-  alias SingForNeeds.{Artists, Performances}
+  alias SingForNeeds.Artists
+  alias SingForNeeds.Performances
   alias SingForNeeds.Performances.Performance
 
   @valid_attrs %{name: "Awesome Performance A", detail: "Details about an awesome performance", amount_raised: 50 }

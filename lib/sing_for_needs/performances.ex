@@ -23,35 +23,26 @@ defmodule SingForNeeds.Performances do
   %Performance{name: "Awesome Performance", detail: "some detail", amount_raised: 59}
 
  """
- def create_performance(attrs \\ %{}) do
+  def create_performance(attrs \\ %{}) do
     %Performance{}
       |> Performance.changeset(attrs)
       |> Repo.insert()
- end
+  end
 
+  @doc """
+    Create new performance with artists
+    ## Parameters
+    - attrs: a map that represents the attributes
+
+    ## Examples
+    iex> Performances.create_performance(%{name: "Awesome Performance", detail: "some detail", amount_raised: 59, artists: [id: 1, name: "awesome artist", bio: "awesone"]})
+    %Performance{id: 1, name: "Awesome Performance", detail: "some detail", amount_raised: 59, artists: [id: 1, name: "awesome artist", bio: "awesone"]}
+  """
   def create_performance_with_artist(attrs \\ %{}) do
     %Performance{}
     |> Performance.changeset_update_artists(attrs)
     |> Repo.insert()
   end
-
-#  @doc """
-#   create a performance with many artitsts
-#  """
-#  def upsert_performance_artisits(performance, artist_ids) do
-#     artists =
-#             Artist
-#             |> where([artist], artist_id in ^artist_ids)
-#             |> Repo.all()
-#     with {:ok, _struct } <-
-#         performance
-#         |> Performance.changeset_update_artists(artists)
-#         |> Repo.update() do
-#             {:ok, get_performance(performance.id)}
-#     else error <-
-#         error
-#     end
-#  end
 
   @doc """
     List of all Performances

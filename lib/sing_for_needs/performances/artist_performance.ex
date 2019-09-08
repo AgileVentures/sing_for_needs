@@ -10,7 +10,7 @@ defmodule SingForNeeds.Performances.ArtistPerformance do
       schema "artists_performances" do
         belongs_to :artists, Artist
         belongs_to :performances, Performance
-        
+
         timestamps()
       end
 end
