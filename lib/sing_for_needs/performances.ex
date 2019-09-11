@@ -48,6 +48,8 @@ defmodule SingForNeeds.Performances do
     List of all Performances
    """
   def list_performances do
-    Repo.all(Performance)
+    Performance
+      |>Repo.all()
+      |> Repo.preload(:artists)
   end
 end

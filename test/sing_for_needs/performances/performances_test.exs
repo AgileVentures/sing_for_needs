@@ -10,6 +10,15 @@ defmodule SingForNeeds.PerformancesTest do
 
   @valid_attrs %{name: "Awesome Performance A", detail: "Details about an awesome performance", amount_raised: 50 }
 
+  @doc """
+  performance_fixture/0 creates samlple performences in the database
+  """
+  def performance_fixture do
+    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
+    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
+    Performances.create_performance_with_artist(%{name: "Awesome performance 1", detail: "Details about an awesome performance", amount_raised: Decimal.new(50), artists: [artist_1, artist_2]})
+  end
+
   test "create_performance/1 creates a new performance" do
     {:ok, %Performance{} = performance} = Performances.create_performance(@valid_attrs)
     assert performance.name == "Awesome Performance A"
@@ -29,10 +38,12 @@ defmodule SingForNeeds.PerformancesTest do
     assert related_artists == [artist_1, artist_2]
   end
 
-  # test "list_performances/0 returns a list of all performances" do
-  #   {:ok, performance } = Performances.create_performance(@valid_attrs)
-  #   [%Performance{} = performance_1] = Performances.list_performances()
-  #   assert performance == performance_1
-  #   assert performance.name == performance_1.name
-  # end
+  @doc """
+  list_performence/0 gets list of all the performences in the database
+  """
+  test "list_performances/0 returns a list of all performances" do
+    {:ok, performance } = performance_fixture()
+    performances = Performances.list_performances()
+    assert [performance] = performances
+   end
 end
