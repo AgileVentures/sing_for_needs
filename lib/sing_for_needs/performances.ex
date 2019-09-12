@@ -7,6 +7,12 @@ defmodule SingForNeeds.Performances do
 
  @doc """
   get performance by id
+
+  ## Examples 
+  iex> Performances.get_performance(1)
+  %Performance{}
+  iex> Performances.get_performance(1000)
+  ** (Ecto.NoResultsError)
  """
  def get_performance(performance_id) do
     Performance
@@ -53,5 +59,20 @@ defmodule SingForNeeds.Performances do
     Performance
       |>Repo.all()
       |> Repo.preload(:artists)
+  end
+
+  @doc """
+  update_performances/2 updates values of a performance
+  ## Examples
+
+    iex> Performances.update_performance(%Performance{}, %{field: good_value})
+    {:ok, %Performance{}}
+    iex> Performances.update_performance(%Performance{}, %{field: bad_value})
+    {:error: %Ecto.Changeset{}}
+  """
+  def update_performance(performance \\ %Performance{}, attrs \\ %{}) do
+    performance
+      |> Performance.changeset_update_artists(attrs)
+      |> Repo.update()
   end
 end
