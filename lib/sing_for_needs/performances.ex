@@ -24,11 +24,11 @@ defmodule SingForNeeds.Performances do
   create new performance
 
   ## Parameters
-  - attrs: A map that represents the attributes
+    - attrs: A map that represents the attributes
 
-  ## Examples
-  iex> Performances.create_performance(%{name: "Awesome Performance", detail: "some detail", amount_raised: 59})
-  %Performance{name: "Awesome Performance", detail: "some detail", amount_raised: 59}
+    ## Examples
+    iex> Performances.create_performance(%{name: "Awesome Performance", detail: "some detail", amount_raised: 59})
+    %Performance{name: "Awesome Performance", detail: "some detail", amount_raised: 59}
 
  """
   def create_performance(attrs \\ %{}) do
@@ -38,11 +38,11 @@ defmodule SingForNeeds.Performances do
   end
 
   @doc """
-    Create new performance with artists
-    ## Parameters
+  Create new performance with artists
+  ## Parameters
     - attrs: a map that represents the attributes
 
-    ## Examples
+  ## Examples
     iex> Performances.create_performance(%{name: "Awesome Performance", detail: "some detail", amount_raised: 59, artists: [id: 1, name: "awesome artist", bio: "awesone"]})
     %Performance{id: 1, name: "Awesome Performance", detail: "some detail", amount_raised: 59, artists: [id: 1, name: "awesome artist", bio: "awesone"]}
   """
