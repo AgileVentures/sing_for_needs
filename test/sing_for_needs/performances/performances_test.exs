@@ -13,10 +13,8 @@ defmodule SingForNeeds.PerformancesTest do
   @doc """
   performance_fixture/0 creates samlple performences in the database
   """
-  def performance_fixture do
-    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
-    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
-    Performances.create_performance_with_artist(%{name: "Awesome performance 1", detail: "Details about an awesome performance", amount_raised: Decimal.new(50), artists: [artist_1, artist_2]})
+  def performance_fixture(attrs \\ %{}) do
+    Performances.create_performance_with_artist(attrs)
   end
 
   test "create_performance/1 creates a new performance" do
@@ -42,8 +40,23 @@ defmodule SingForNeeds.PerformancesTest do
   list_performence/0 gets list of all the performences in the database
   """
   test "list_performances/0 returns a list of all performances" do
-    {:ok, performance } = performance_fixture()
+    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
+    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
+    valid_attrs_with_artist = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
+    {:ok, performance } = performance_fixture(valid_attrs_with_artist)
     performances = Performances.list_performances()
     assert [performance] = performances
    end
+
+   @doc """
+   get_performance/:id gets a performance by id
+   """
+  test "get_performance/:id gets a performance by id" do
+    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
+    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
+    valid_attrs_with_artist = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
+    {:ok, performance } = performance_fixture(valid_attrs_with_artist)
+    %Performance{id: id} = performance
+    assert performance == Performances.get_performance(id)
+  end
 end

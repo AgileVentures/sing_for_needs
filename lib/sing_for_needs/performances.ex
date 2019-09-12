@@ -9,7 +9,9 @@ defmodule SingForNeeds.Performances do
   get performance by id
  """
  def get_performance(performance_id) do
-    Repo.get(Performace, performance_id)
+    Performance
+    |> Repo.get(performance_id)
+    |> Repo.preload(:artists)
  end
 
  @doc """
@@ -45,7 +47,7 @@ defmodule SingForNeeds.Performances do
   end
 
   @doc """
-    List of all Performances
+    gets a list of all Performances
    """
   def list_performances do
     Performance
