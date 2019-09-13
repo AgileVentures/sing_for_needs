@@ -1,40 +1,40 @@
 defmodule SingForNeeds.Performances do
- @moduledoc """
-    Context for the performance schema
- """
- alias SingForNeeds.Performances.Performance
- alias SingForNeeds.Repo
+  @moduledoc """
+     Context for the performance schema
+  """
+  alias SingForNeeds.Performances.Performance
+  alias SingForNeeds.Repo
 
- @doc """
-  get performance by id
+  @doc """
+   get performance by id
 
-  ## Examples 
-  iex> Performances.get_performance(1)
-  %Performance{}
-  iex> Performances.get_performance(1000)
-  ** (Ecto.NoResultsError)
- """
- def get_performance(performance_id) do
+   ## Examples 
+   iex> Performances.get_performance(1)
+   %Performance{}
+   iex> Performances.get_performance(1000)
+   ** (Ecto.NoResultsError)
+  """
+  def get_performance(performance_id) do
     Performance
     |> Repo.get(performance_id)
     |> Repo.preload(:artists)
- end
+  end
 
- @doc """
-  create new performance
+  @doc """
+   create new performance
 
-  ## Parameters
-    - attrs: A map that represents the attributes
+   ## Parameters
+     - attrs: A map that represents the attributes
 
-    ## Examples
-    iex> Performances.create_performance(%{name: "Awesome Performance", detail: "some detail", amount_raised: 59})
-    %Performance{name: "Awesome Performance", detail: "some detail", amount_raised: 59}
+     ## Examples
+     iex> Performances.create_performance(%{name: "Awesome Performance", detail: "some detail", amount_raised: 59})
+     %Performance{name: "Awesome Performance", detail: "some detail", amount_raised: 59}
 
- """
+  """
   def create_performance(attrs \\ %{}) do
     %Performance{}
-      |> Performance.changeset(attrs)
-      |> Repo.insert()
+    |> Performance.changeset(attrs)
+    |> Repo.insert()
   end
 
   @doc """
@@ -53,12 +53,12 @@ defmodule SingForNeeds.Performances do
   end
 
   @doc """
-    gets a list of all Performances
-   """
+   gets a list of all Performances
+  """
   def list_performances do
     Performance
-      |>Repo.all()
-      |> Repo.preload(:artists)
+    |> Repo.all()
+    |> Repo.preload(:artists)
   end
 
   @doc """
@@ -72,7 +72,7 @@ defmodule SingForNeeds.Performances do
   """
   def update_performance(performance \\ %Performance{}, attrs \\ %{}) do
     performance
-      |> Performance.changeset_update_artists(attrs)
-      |> Repo.update()
+    |> Performance.changeset_update_artists(attrs)
+    |> Repo.update()
   end
 end
