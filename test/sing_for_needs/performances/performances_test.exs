@@ -84,4 +84,16 @@ defmodule SingForNeeds.PerformancesTest do
     assert updated_performance.name == "Updated Awesome Performance"
     assert updated_performance.amount_raised == Decimal.new(100)
   end
+
+  @doc """
+  delete_performance/1  deletes a single performance
+  """
+  test "delete_performance/1 deletes a performance" do
+    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
+    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
+    valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
+    performance = performance_fixture(valid_attrs_with_artists)
+    {:ok, deleted_performance} = Performances.delete_performance(performance)
+    assert length(Performances.list_performances()) == 0
+  end
 end

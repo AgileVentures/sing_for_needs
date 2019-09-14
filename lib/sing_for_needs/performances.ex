@@ -75,4 +75,11 @@ defmodule SingForNeeds.Performances do
     |> Performance.changeset_update_artists(attrs)
     |> Repo.update()
   end
+
+  @doc """
+  delete_performance/:id takes id and deletes a performance
+  """
+  def delete_performance(%Performance{} = performance) do
+    Repo.delete(performance)
+  end
 end
