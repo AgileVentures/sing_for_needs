@@ -95,5 +95,6 @@ defmodule SingForNeeds.PerformancesTest do
     performance = performance_fixture(valid_attrs_with_artists)
     {:ok, deleted_performance} = Performances.delete_performance(performance)
     assert length(Performances.list_performances()) == 0
+    assert length(Artists.list_artists()) == 2
   end
 end
