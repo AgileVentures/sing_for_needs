@@ -64,6 +64,7 @@ defmodule SingForNeeds.CausesTest do
       assert length(cause.artists) == 2
       assert cause.name == "Go Blue on World Children's Day"
       assert cause.target_amount == Decimal.new(30_000)
+      assert cause.artists == [artist_1, artist_2]
     end
 
     test "create_cause/1 with invalid data returns error changeset" do
