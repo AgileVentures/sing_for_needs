@@ -3,10 +3,11 @@ defmodule SingForNeeds.Repo.Migrations.ArtistsCauses do
   Migration for join table between artists and causes
   """
   use Ecto.Migration
+
   def change do
     create table(:artists_causes) do
       add :artist_id, references(:artists)
-      add :causes_id, references(:causes)
+      add :cause_id, references(:causes)
     end
   end
 end

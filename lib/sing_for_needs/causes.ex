@@ -56,6 +56,15 @@ defmodule SingForNeeds.Causes do
   end
 
   @doc """
+  create_cause_with_artists/1 creates a cause with many artists
+  """
+  def create_cause_with_artists(attrs \\ %{}) do
+    %Cause{}
+    |> Cause.changeset_for_many_artists(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
   Updates a cause.
 
   ## Examples
