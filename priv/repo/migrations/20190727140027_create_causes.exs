@@ -10,8 +10,8 @@ defmodule SingForNeeds.Repo.Migrations.CreateCauses do
       add :description, :string
       add :end_date, :naive_datetime
       add :start_date, :naive_datetime
-      add :amount_raised, :integer
-      add :target_amount, :integer
+      add :amount_raised, :decimal
+      add :target_amount, :decimal
       add :sponsor, :string
       timestamps()
     end

@@ -4,15 +4,22 @@ defmodule SingForNeeds.Causes.Cause do
   """
   use Ecto.Schema
   import Ecto.Changeset
+  alias SingForNeeds.Artists.Artist
 
   schema "causes" do
     field :description, :string
     field :end_date, :naive_datetime
     field :name, :string
     field :start_date, :naive_datetime
-    field :amount_raised, :integer
-    field :target_amount, :integer
+    field :amount_raised, :decimal
+    field :target_amount, :decimal
     field :sponsor, :string
+    # add supporting artists relationship (many to many)
+    many_to_many :artists, Artist, join_through: "artist_causes"
+    # add related causes relationship
+    # add recent donors relationship
+    # add organization relationship
+
     timestamps()
   end
 
