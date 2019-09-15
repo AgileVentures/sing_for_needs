@@ -6,14 +6,16 @@ defmodule SingForNeeds.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
       SingForNeeds.Repo,
       # Start the endpoint when the application starts
-      SingForNeedsWeb.Endpoint
+      SingForNeedsWeb.Endpoint,
       # Starts a worker by calling: SingForNeeds.Worker.start_link(arg)
       # {SingForNeeds.Worker, arg},
+      supervisor(Absinthe.Subscription, [SingForNeedsWeb.Endpoint])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
