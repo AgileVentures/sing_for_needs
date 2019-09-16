@@ -35,6 +35,12 @@ defmodule SingForNeeds.CausesTest do
       cause
     end
 
+    def create_artists() do
+      Artists.create_artist(%{name: "Awesome Artist 1", bio: "Awesome Artist 1 bio"})
+      Artists.create_artist(%{name: "Awesome Artist 2", bio: "Awesome Artist 2 bio"})
+      Artists.list_artists()
+    end
+
     test "list_causes/0 returns all causes" do
       cause = cause_fixture()
       assert Causes.list_causes() == [cause]
@@ -53,18 +59,13 @@ defmodule SingForNeeds.CausesTest do
     end
 
     test "create_cause/1 creates a cause with many artists" do
-      {:ok, artist_1} =
-        Artists.create_artist(%{name: "Awesome Artist 1", bio: "Awesome Artist 1 bio"})
-
-      {:ok, artist_2} =
-        Artists.create_artist(%{name: "Awesome Artist 2", bio: "Awesome Artist 2 bio"})
-
-      valid_attrs_with_artists = Map.put(@valid_attrs, :artists, Artists.list_artists())
+      artists = create_artists()
+      valid_attrs_with_artists = Map.put(@valid_attrs, :artists, artists)
       {:ok, cause} = Causes.create_cause_with_artists(valid_attrs_with_artists)
       assert length(cause.artists) == 2
       assert cause.name == "Go Blue on World Children's Day"
       assert cause.target_amount == Decimal.new(30_000)
-      assert cause.artists == [artist_1, artist_2]
+      assert cause.artists == artists
     end
 
     test "create_cause/1 with invalid data returns error changeset" do
@@ -97,7 +98,6 @@ defmodule SingForNeeds.CausesTest do
     end
 
     test "start date should be less than end date" do
-      # "TODO: Need to figure out the date comparison"
       cause = cause_fixture()
       invalid_date_attrs = %{end_date: ~N[2007-08-18 15:01:01]}
       assert {:error, %Ecto.Changeset{}} = Causes.update_cause(cause, invalid_date_attrs)
