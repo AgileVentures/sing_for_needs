@@ -9,5 +9,7 @@ defmodule SingForNeeds.Repo.Migrations.ArtistsCauses do
       add :artist_id, references(:artists)
       add :cause_id, references(:causes)
     end
+
+    create unique_index(:artists_causes, [:artist_id, :cause_id])
   end
 end
