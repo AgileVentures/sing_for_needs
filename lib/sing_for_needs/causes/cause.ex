@@ -65,7 +65,7 @@ defmodule SingForNeeds.Causes.Cause do
 
     case changeset.valid? do
       true ->
-        case start_date < end_date do
+        case Date.compare(start_date, end_date) == :lt do
           true -> changeset
           _ -> add_error(changeset, :start_date, "Start Date should be less than End Date")
         end

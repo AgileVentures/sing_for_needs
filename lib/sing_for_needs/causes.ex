@@ -77,6 +77,7 @@ defmodule SingForNeeds.Causes do
 
   """
   def update_cause(%Cause{} = cause, attrs) do
+    # require IEx; IEx.pry
     cause
     |> Cause.changeset(attrs)
     |> Repo.update()

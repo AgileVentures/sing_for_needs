@@ -96,11 +96,10 @@ defmodule SingForNeeds.CausesTest do
       assert %Ecto.Changeset{} = Causes.change_cause(cause)
     end
 
-    @tag :skip
     test "start date should be less than end date" do
       # "TODO: Need to figure out the date comparison"
       cause = cause_fixture()
-      invalid_date_attrs = %{end_date: ~N[2010-08-18 15:01:01]}
+      invalid_date_attrs = %{end_date: ~N[2007-08-18 15:01:01]}
       assert {:error, %Ecto.Changeset{}} = Causes.update_cause(cause, invalid_date_attrs)
       assert cause == Causes.get_cause!(cause.id)
     end
