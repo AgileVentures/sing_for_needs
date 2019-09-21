@@ -35,7 +35,7 @@ defmodule SingForNeeds.CausesTest do
       cause
     end
 
-    def create_artists() do
+    def create_artists do
       Artists.create_artist(%{name: "Awesome Artist 1", bio: "Awesome Artist 1 bio"})
       Artists.create_artist(%{name: "Awesome Artist 2", bio: "Awesome Artist 2 bio"})
       Artists.list_artists()
