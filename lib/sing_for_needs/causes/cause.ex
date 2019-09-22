@@ -8,9 +8,9 @@ defmodule SingForNeeds.Causes.Cause do
 
   schema "causes" do
     field :description, :string
-    field :end_date, :naive_datetime
+    field :end_date, :date
     field :name, :string
-    field :start_date, :naive_datetime
+    field :start_date, :date
     field :amount_raised, :decimal
     field :target_amount, :decimal
     field :sponsor, :string

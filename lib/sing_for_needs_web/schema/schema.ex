@@ -27,10 +27,10 @@ defmodule SingForNeedsWeb.Schema.Schema do
       arg :end_date, non_null(:date)
       arg :start_date, non_null(:date)
       arg :target_amount, non_null(:decimal)
-      arg :raised_amount, :decimal
+      arg :amount_raised, :decimal
       arg :sponsor, non_null(:string)
       arg :name, non_null(:string)
-      resolve &Resolvers.Cause.create_cause/3
+      resolve &Cause.create_cause/3
     end
   end
 end

@@ -31,8 +31,8 @@ defmodule SingForNeeds.TestHelpers do
     cause_1 =
       %Cause{
         description: "Awesome cause 1 description",
-        end_date: ~N[2010-10-17 14:00:00],
-        start_date: ~N[2010-09-17 14:00:00],
+        end_date: ~D[2010-10-17],
+        start_date: ~D[2010-09-17],
         target_amount: 30_000,
         amount_raised: 3000,
         sponsor: "Awesome sponsor 1",
@@ -44,8 +44,8 @@ defmodule SingForNeeds.TestHelpers do
     cause_2 =
       %Cause{
         description: "Awesome cause 2 description",
-        end_date: ~N[2010-10-17 14:00:00],
-        start_date: ~N[2010-09-17 14:00:00],
+        end_date: ~D[2010-10-17],
+        start_date: ~D[2010-09-17],
         target_amount: 30_000,
         amount_raised: 3000,
         sponsor: "Awesome sponsor 2",

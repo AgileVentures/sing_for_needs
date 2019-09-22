@@ -11,9 +11,9 @@ defmodule SingForNeeds.CausesTest do
     alias SingForNeeds.Causes.Cause
 
     @valid_attrs %{
-      description: "some description",
-      end_date: ~N[2010-10-17 14:00:00],
-      start_date: ~N[2010-09-17 14:00:00],
+      description: "Go Blue description",
+      end_date: "2010-10-17",
+      start_date: "2010-09-17",
       target_amount: 30_000,
       raised_amount: 3000,
       sponsor: "unicef",
@@ -21,7 +21,7 @@ defmodule SingForNeeds.CausesTest do
     }
     @update_attrs %{
       description: "some updated description",
-      end_date: ~N[2011-05-18 15:01:01],
+      end_date: "2011-05-18",
       name: "some updated name"
     }
     @invalid_attrs %{description: nil, end_date: nil, name: nil}
@@ -53,8 +53,8 @@ defmodule SingForNeeds.CausesTest do
 
     test "create_cause/1 with valid data creates a cause" do
       assert {:ok, %Cause{} = cause} = Causes.create_cause(@valid_attrs)
-      assert cause.description == "some description"
-      assert cause.end_date == ~N[2010-10-17 14:00:00]
+      assert cause.description == "Go Blue description"
+      assert cause.end_date == ~D[2010-10-17]
       assert cause.name == "Go Blue on World Children's Day"
     end
 
@@ -64,6 +64,7 @@ defmodule SingForNeeds.CausesTest do
       {:ok, cause} = Causes.create_cause_with_artists(valid_attrs_with_artists)
       assert length(cause.artists) == 2
       assert cause.name == "Go Blue on World Children's Day"
+      assert cause.description == "Go Blue description"
       assert cause.target_amount == Decimal.new(30_000)
       assert cause.artists == artists
     end
@@ -76,7 +77,7 @@ defmodule SingForNeeds.CausesTest do
       cause = cause_fixture()
       assert {:ok, %Cause{} = cause} = Causes.update_cause(cause, @update_attrs)
       assert cause.description == "some updated description"
-      assert cause.end_date == ~N[2011-05-18 15:01:01]
+      assert cause.end_date == ~D[2011-05-18]
       assert cause.name == "some updated name"
     end
 
@@ -99,7 +100,7 @@ defmodule SingForNeeds.CausesTest do
 
     test "start date should be less than end date" do
       cause = cause_fixture()
-      invalid_date_attrs = %{end_date: ~N[2007-08-18 15:01:01]}
+      invalid_date_attrs = %{end_date: "2007-08-18"}
       assert {:error, %Ecto.Changeset{}} = Causes.update_cause(cause, invalid_date_attrs)
       assert cause == Causes.get_cause!(cause.id)
     end
