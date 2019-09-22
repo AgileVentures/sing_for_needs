@@ -23,14 +23,14 @@ defmodule SingForNeedsWeb.Schema.Schema do
     create a cause
     """
     field :create_cause, :cause do
-      arg :description, non_null(:string)
-      arg :end_date, non_null(:date)
-      arg :start_date, non_null(:date)
-      arg :target_amount, non_null(:decimal)
-      arg :amount_raised, :decimal
-      arg :sponsor, non_null(:string)
-      arg :name, non_null(:string)
-      resolve &Cause.create_cause/3
+      arg(:description, non_null(:string))
+      arg(:end_date, non_null(:date))
+      arg(:start_date, non_null(:date))
+      arg(:target_amount, non_null(:decimal))
+      arg(:amount_raised, :decimal)
+      arg(:sponsor, non_null(:string))
+      arg(:name, non_null(:string))
+      resolve(&Cause.create_cause/3)
     end
   end
 end
