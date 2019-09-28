@@ -1,5 +1,6 @@
 defmodule SingForNeedsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :sing_for_needs
+  use Absinthe.Phoenix.Endpoint
 
   socket "/socket", SingForNeedsWeb.UserSocket,
     websocket: true,

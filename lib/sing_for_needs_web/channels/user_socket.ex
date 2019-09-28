@@ -1,5 +1,6 @@
 defmodule SingForNeedsWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket, schema: MyAppWeb.Schema
 
   ## Channels
   # channel "room:*", SingForNeedsWeb.RoomChannel
