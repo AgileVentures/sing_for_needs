@@ -90,6 +90,9 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Now you are fully set up and can join us as a collaborator :smile:
 
+## Debugging on the shell
+
+- We have added the file `.iex.exs` for use to declare variables, aliases, imports and anything else just like you would do on an IEx, Elixir’s REPL or in a module. When you fire up your IEx, you’ll have access to whatever it is you declared in the .iex.exs, be it a variable, alias or import. This will facilitate access to modules on IEx shell for faster debugging :) .Ensure you leave it as clean as you found it :)
 
 ## Docker Development Setup
 ### Prerequisite
