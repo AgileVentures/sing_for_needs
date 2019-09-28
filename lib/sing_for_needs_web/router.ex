@@ -17,13 +17,13 @@ defmodule SingForNeedsWeb.Router do
   scope "/" do
     pipe_through :api
 
-    forward "/api", Absinthe.Plug,
-      schema: SingForNeedsWeb.Schema.Schema
+    forward "/api", Absinthe.Plug, schema: SingForNeedsWeb.Schema.Schema
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: SingForNeedsWeb.Schema.Schema,
       socket: SingForNeedsWeb.UserSocket,
       interface: :simple
   end
+
   # Other scopes may use custom stacks.
 end
