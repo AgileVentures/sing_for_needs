@@ -11,7 +11,7 @@ defmodule SingForNeeds.Repo.Migrations.CreateCauses do
       add :end_date, :date
       add :start_date, :date, null: false
       add :amount_raised, :decimal
-      add :target_amount, :decimal, null: false
+      add :target_amount, :decimal
       add :sponsor, :string
       timestamps()
     end

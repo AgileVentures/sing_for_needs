@@ -26,7 +26,7 @@ defmodule SingForNeeds.CausesTest do
     }
     @invalid_attrs %{description: nil, end_date: nil, name: nil}
 
-    def cause_fixture(attrs \\ %{}) do
+    def cause_setup(attrs \\ %{}) do
       {:ok, cause} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -42,20 +42,20 @@ defmodule SingForNeeds.CausesTest do
     end
 
     test "list_causes/0 returns all causes" do
-      cause = cause_fixture()
+      cause = cause_setup()
       assert Causes.list_causes() == [cause]
     end
 
     test "get_cause!/1 returns the cause with given id" do
-      cause = cause_fixture()
+      cause = cause_setup()
       assert Causes.get_cause!(cause.id) == cause
     end
 
     test "create_cause/1 with valid data creates a cause" do
       assert {:ok, %Cause{} = cause} = Causes.create_cause(@valid_attrs)
-      assert cause.description == "Go Blue description"
+      assert cause.description == @valid_attrs.description
       assert cause.end_date == ~D[2010-10-17]
-      assert cause.name == "Go Blue on World Children's Day"
+      assert cause.name == @valid_attrs.name
     end
 
     test "create_cause/1 creates a cause with many artists" do
@@ -63,9 +63,9 @@ defmodule SingForNeeds.CausesTest do
       valid_attrs_with_artists = Map.put(@valid_attrs, :artists, artists)
       {:ok, cause} = Causes.create_cause_with_artists(valid_attrs_with_artists)
       assert length(cause.artists) == 2
-      assert cause.name == "Go Blue on World Children's Day"
-      assert cause.description == "Go Blue description"
-      assert cause.target_amount == Decimal.new(30_000)
+      assert cause.name == @valid_attrs.name
+      assert cause.description == @valid_attrs.description
+      assert cause.target_amount == Decimal.new(@valid_attrs.target_amount)
       assert cause.artists == artists
     end
 
@@ -74,32 +74,32 @@ defmodule SingForNeeds.CausesTest do
     end
 
     test "update_cause/2 with valid data updates the cause" do
-      cause = cause_fixture()
+      cause = cause_setup()
       assert {:ok, %Cause{} = cause} = Causes.update_cause(cause, @update_attrs)
-      assert cause.description == "some updated description"
+      assert cause.description == @update_attrs.description
       assert cause.end_date == ~D[2011-05-18]
-      assert cause.name == "some updated name"
+      assert cause.name == @update_attrs.name
     end
 
     test "update_cause/2 with invalid data returns error changeset" do
-      cause = cause_fixture()
+      cause = cause_setup()
       assert {:error, %Ecto.Changeset{}} = Causes.update_cause(cause, @invalid_attrs)
       assert cause == Causes.get_cause!(cause.id)
     end
 
     test "delete_cause/1 deletes the cause" do
-      cause = cause_fixture()
+      cause = cause_setup()
       assert {:ok, %Cause{}} = Causes.delete_cause(cause)
       assert_raise Ecto.NoResultsError, fn -> Causes.get_cause!(cause.id) end
     end
 
     test "change_cause/1 returns a cause changeset" do
-      cause = cause_fixture()
+      cause = cause_setup()
       assert %Ecto.Changeset{} = Causes.change_cause(cause)
     end
 
     test "start date should be less than end date" do
-      cause = cause_fixture()
+      cause = cause_setup()
       invalid_date_attrs = %{end_date: "2007-08-18"}
       assert {:error, %Ecto.Changeset{}} = Causes.update_cause(cause, invalid_date_attrs)
       assert cause == Causes.get_cause!(cause.id)

@@ -14,12 +14,7 @@ defmodule SingForNeeds.Causes.Cause do
     field :amount_raised, :decimal
     field :target_amount, :decimal
     field :sponsor, :string
-    # add supporting artists relationship (many to many)
     many_to_many :artists, Artist, join_through: "artists_causes"
-    # add related causes relationship
-    # add recent donors relationship
-    # add organization relationship
-
     timestamps()
   end
 
