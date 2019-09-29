@@ -19,7 +19,7 @@ defmodule SingForNeeds.PerformancesTest do
   @doc """
   performance_fixture/0 creates samlple performences in the database
   """
-  def performance_fixture(attrs \\ %{}) do
+  def performance_setup(attrs \\ %{}) do
     {:ok, performance} = Performances.create_performance_with_artist(attrs)
     performance
   end
@@ -50,7 +50,7 @@ defmodule SingForNeeds.PerformancesTest do
     {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
     {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
     valid_attrs_with_artist = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-    performance = performance_fixture(valid_attrs_with_artist)
+    performance = performance_setup(valid_attrs_with_artist)
     performances = Performances.list_performances()
     assert [performance] = performances
   end
@@ -62,8 +62,8 @@ defmodule SingForNeeds.PerformancesTest do
     {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
     {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
     valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-    performance = performance_fixture(valid_attrs_with_artists)
-    %Performance{id: id} = performance
+    performance = performance_setup(valid_attrs_with_artists)
+    assert %Performance{id: id} = performance
     assert performance == Performances.get_performance(id)
   end
 
@@ -74,7 +74,7 @@ defmodule SingForNeeds.PerformancesTest do
     {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
     {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
     valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-    performance = performance_fixture(valid_attrs_with_artists)
+    performance = performance_setup(valid_attrs_with_artists)
     update_performance_with_artist = Map.put(@update_attrs, :artists, [artist_1, artist_2])
 
     {:ok, updated_performance} =
@@ -92,9 +92,9 @@ defmodule SingForNeeds.PerformancesTest do
     {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
     {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
     valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-    performance = performance_fixture(valid_attrs_with_artists)
+    performance = performance_setup(valid_attrs_with_artists)
     {:ok, deleted_performance} = Performances.delete_performance(performance)
-    assert length(Performances.list_performances()) == 0
+    assert Enum.empty?(Performances.list_performances()) == true
     assert length(Artists.list_artists()) == 2
   end
 end
