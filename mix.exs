@@ -47,7 +47,8 @@ defmodule SingForNeeds.MixProject do
       {:absinthe, "~> 1.4.2"},
       {:absinthe_plug, "~> 1.4.0"},
       {:absinthe_phoenix, "~> 1.4.0"},
-      {:cors_plug, "~> 1.5"}
+      {:cors_plug, "~> 1.5"},
+      {:dataloader, "~> 1.0.0"}
     ]
   end
 
