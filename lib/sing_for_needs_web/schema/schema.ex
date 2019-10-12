@@ -3,6 +3,7 @@ defmodule SingForNeedsWeb.Schema.Schema do
     Uses GraphQL Absinthe schema to query resources from the database
   """
   use Absinthe.Schema
+  import_types(Absinthe.Type.Custom)
   import_types(SingForNeedsWeb.Schema.{ArtistTypes, CauseTypes})
   alias SingForNeeds.Resolvers.{Artist, Cause}
 

@@ -21,6 +21,34 @@ defmodule SingForNeeds.Causes do
     Repo.all(Cause)
   end
 
+  @doc"""
+  list_causes/1 returns a list of cause based on some given
+  criteria(passed as a map)
+  Returns an empty array if there is no cause
+
+  ## Parameters
+  criteria - A map of criteria
+
+  ## Examples
+  iex> Causes.list_causes(%{ order: :desc})
+  [%Cause{}, %Cause{}]
+  iex> Causes.list_causes(%{ order: :desc})
+  []
+
+  """
+  def list_causes(criteria) do
+    criteria
+    |> causes_query
+    |> Repo.all
+  end
+
+  defp causes_query(criteria) do
+    Enum.reduce(criteria, Cause, fn
+      {:order, order}, query ->
+        query |> order_by({^order, :name})
+      end)
+  end
+
   @doc """
   Gets a single cause.
 
@@ -109,5 +137,20 @@ defmodule SingForNeeds.Causes do
   """
   def change_cause(%Cause{} = cause) do
     Cause.changeset(cause, %{})
+  end
+
+  @doc"""
+  Dataloader
+  """
+  def datasource do
+    Dataloader.Ecto.new(Repo, query: &query/2)
+  end
+
+  def query(Cause, criteria) do
+    causes_query(criteria)
+  end
+
+  def query(queryable, _) do
+    queryable
   end
 end
