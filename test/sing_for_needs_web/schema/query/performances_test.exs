@@ -1,4 +1,4 @@
-defmodule SingForNeeds.Schema.Query.CauseTest do
+defmodule SingForNeeds.Schema.Query.PerformancesTest do
   @moduledoc """
   Test all the queries for Performance schema
   """
