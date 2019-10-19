@@ -1,14 +1,19 @@
 defmodule SingForNeedsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :sing_for_needs
+  use Absinthe.Phoenix.Endpoint
 
-  socket "/socket", SingForNeedsWeb.UserSocket
+  socket "/socket", SingForNeedsWeb.UserSocket,
+    websocket: true,
+    longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
   #
-  # You should set gzip to true if you are running phoenix.digest
+  # You should set gzip to true if you are running phx.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :sing_for_needs, gzip: false,
+    at: "/",
+    from: :sing_for_needs,
+    gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -25,7 +30,7 @@ defmodule SingForNeedsWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
   plug Plug.Head
@@ -36,22 +41,7 @@ defmodule SingForNeedsWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_sing_for_needs_key",
-    signing_salt: "G3q1BIk5"
+    signing_salt: "3VQu1D8i"
 
   plug SingForNeedsWeb.Router
-
-  @doc """
-  Callback invoked for dynamically configuring the endpoint.
-
-  It receives the endpoint configuration and checks if
-  configuration should be loaded from the system environment.
-  """
-  def init(_key, config) do
-    if config[:load_from_system_env] do
-      port = System.get_env("PORT") || raise "expected the PORT environment variable to be set"
-      {:ok, Keyword.put(config, :http, [:inet6, port: port])}
-    else
-      {:ok, config}
-    end
-  end
 end

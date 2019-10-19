@@ -1,12 +1,9 @@
 defmodule SingForNeedsWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket, schema: MyAppWeb.Schema
 
   ## Channels
   # channel "room:*", SingForNeedsWeb.RoomChannel
-
-  ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
-  # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -19,7 +16,7 @@ defmodule SingForNeedsWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
+  def connect(_params, socket, _connect_info) do
     {:ok, socket}
   end
 

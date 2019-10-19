@@ -10,17 +10,20 @@ defmodule SingForNeedsWeb.Router do
   end
 
   pipeline :api do
+    plug CORSPlug, origin: ["http://localhost:3000", "http://127.0.0.1:3000"]
     plug :accepts, ["json"]
   end
 
-  scope "/", SingForNeedsWeb do
-    pipe_through :browser # Use the default browser stack
+  scope "/" do
+    pipe_through :api
 
-    get "/", PageController, :index
+    forward "/api", Absinthe.Plug, schema: SingForNeedsWeb.Schema.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: SingForNeedsWeb.Schema.Schema,
+      socket: SingForNeedsWeb.UserSocket,
+      interface: :simple
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SingForNeedsWeb do
-  #   pipe_through :api
-  # end
 end
