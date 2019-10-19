@@ -8,6 +8,7 @@ defmodule SingForNeedsWeb.Schema.ArtistTypes do
     object :artist do
       field :id, :id
       field :name, :string
+      field :causes, list_of(:cause), resolve: dataloader(Causes)
     end
 
     def dataloader do

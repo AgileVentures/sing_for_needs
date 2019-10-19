@@ -3,7 +3,7 @@ defmodule SingForNeedsWeb.Schema.CauseTypes do
   All types for causes
   """
   use Absinthe.Schema.Notation
-  import Absinthe.Resolution.Helpers, only: [dataloader: 1, dataloader: 3]
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   alias SingForNeeds.Resolvers.Artist
 
   object :cause do

@@ -6,6 +6,7 @@ defmodule SingForNeeds.Causes do
   import Ecto.Query, warn: false
   alias SingForNeeds.Repo
 
+  alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
 
   @doc """
@@ -18,7 +19,9 @@ defmodule SingForNeeds.Causes do
 
   """
   def list_causes do
-    Repo.all(Cause)
+    Repo.all(
+      from c in Cause, join: a in assoc(c, :artists), preload: [artists: a]
+    )
   end
 
   @doc"""
