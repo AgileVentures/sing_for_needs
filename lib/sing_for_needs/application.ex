@@ -1,17 +1,21 @@
 defmodule SingForNeeds.Application do
-  use Application
-
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
+  @moduledoc false
+
+  use Application
+
   def start(_type, _args) do
     import Supervisor.Spec
-
-    # Define workers and child supervisors to be supervised
+    # List all child processes to be supervised
     children = [
+      # Start the Ecto repository
+      SingForNeeds.Repo,
       # Start the endpoint when the application starts
-      supervisor(SingForNeedsWeb.Endpoint, []),
-      # Start your own worker by calling: SingForNeeds.Worker.start_link(arg1, arg2, arg3)
-      # worker(SingForNeeds.Worker, [arg1, arg2, arg3]),
+      SingForNeedsWeb.Endpoint,
+      # Starts a worker by calling: SingForNeeds.Worker.start_link(arg)
+      # {SingForNeeds.Worker, arg},
+      supervisor(Absinthe.Subscription, [SingForNeedsWeb.Endpoint])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
