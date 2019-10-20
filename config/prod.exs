@@ -16,12 +16,12 @@ config :sing_for_needs, SingForNeedsWeb.Endpoint,
   server: true,
   root: ".",
   version: Application.spec(:phoenix_distillery, :vsn),
-  secret_key_base: "${SECRET_KEY_BASE}"
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # configure database
 config :sing_for_needs, SingForNeeds.Repo,
   adapter: Ecto.Adapters.Postgress,
-  url: "${DATABASE_URL}",
+  url: System.get_env("DATABASE_URL"),
   database: "",
   ssl: true,
   pool_size: 1
