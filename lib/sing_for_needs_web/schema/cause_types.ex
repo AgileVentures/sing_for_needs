@@ -6,6 +6,7 @@ defmodule SingForNeedsWeb.Schema.CauseTypes do
   import_types(Absinthe.Type.Custom)
 
   object :cause do
+    field :id, :id
     field :description, :string
     field :end_date, :date
     field :name, :string
