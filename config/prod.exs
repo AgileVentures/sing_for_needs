@@ -11,9 +11,17 @@ use Mix.Config
 # before starting your production server.
 config :sing_for_needs, SingForNeedsWeb.Endpoint,
   http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: "localhost", port: System.get_env("PORT") || 80 ],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true,
+  root: ".",
+  version: Application.spec(:phoenix_distillery, :vsn)
+  secret_key_base: "${SECRET_KEY_BASE}"
 
+# configure database
+config :sing_for_needs, SingForNeeds.Repo,
+  adapter: Ecto.Adapters.Postgress
+  url: "${DATABASE_URL}"
 # Do not print debug messages in production
 config :logger, level: :info
 
@@ -68,4 +76,4 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which should be versioned
 # separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
