@@ -21,7 +21,10 @@ config :sing_for_needs, SingForNeedsWeb.Endpoint,
 # configure database
 config :sing_for_needs, SingForNeeds.Repo,
   adapter: Ecto.Adapters.Postgress,
-  url: "${DATABASE_URL}"
+  url: "${DATABASE_URL}",
+  database: "",
+  ssl: true,
+  pool_size: 1
 # Do not print debug messages in production
 config :logger, level: :info
 
