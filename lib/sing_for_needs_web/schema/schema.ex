@@ -3,8 +3,8 @@ defmodule SingForNeedsWeb.Schema.Schema do
     Uses GraphQL Absinthe schema to query resources from the database
   """
   use Absinthe.Schema
-  import_types(SingForNeedsWeb.Schema.{ArtistTypes, CauseTypes})
-  alias SingForNeeds.Resolvers.{Artist, Cause}
+  import_types(SingForNeedsWeb.Schema.{ArtistTypes, CauseTypes, PerformanceTypes})
+  alias SingForNeeds.Resolvers.{Artist, Cause, Performance}
 
   query do
     @desc "get list of artists"
@@ -15,6 +15,11 @@ defmodule SingForNeedsWeb.Schema.Schema do
     @desc "get list of all causes"
     field :causes, list_of(:cause) do
       resolve(&Cause.causes/3)
+    end
+
+    @desc "get list of all performances"
+    field :performances, list_of(:performance) do
+      resolve(&Performance.performances/3)
     end
   end
 
