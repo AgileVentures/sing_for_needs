@@ -16,7 +16,7 @@ defmodule SingForNeeds.Resolvers.Cause do
   create_cause/3 creates a cause
   """
   def create_cause(_, args, _) do
-    case Causes.create_cause(args) do
+    case Causes.create_cause_with_artists(args) do
       {:error, changeset} ->
         {:error, message: "Could not create cause", details: changeset}
       {:ok, cause} ->

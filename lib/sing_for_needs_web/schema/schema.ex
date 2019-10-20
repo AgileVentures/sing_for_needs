@@ -36,6 +36,7 @@ defmodule SingForNeedsWeb.Schema.Schema do
       arg(:amount_raised, :decimal)
       arg(:sponsor, non_null(:string))
       arg(:name, non_null(:string))
+      arg(:artists, list_of(:id))
       resolve(&Cause.create_cause/3)
     end
   end
