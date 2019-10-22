@@ -20,7 +20,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   Test get /api query returns json response of all causes
   """
   test "causes query returns all causes" do
-    causes = causes_fixture()
+    causes_fixture()
     conn = build_conn()
     conn = get conn, "/api", query: @query
 

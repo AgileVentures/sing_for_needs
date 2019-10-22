@@ -50,9 +50,9 @@ defmodule SingForNeeds.PerformancesTest do
     {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
     {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
     valid_attrs_with_artist = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-    performance = performance_setup(valid_attrs_with_artist)
+    created_performances = performance_setup(valid_attrs_with_artist)
     performances = Performances.list_performances()
-    assert [performance] = performances
+    assert [created_performances] == performances
   end
 
   @doc """
@@ -93,7 +93,7 @@ defmodule SingForNeeds.PerformancesTest do
     {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
     valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
     performance = performance_setup(valid_attrs_with_artists)
-    {:ok, deleted_performance} = Performances.delete_performance(performance)
+    {:ok, _deleted_performance} = Performances.delete_performance(performance)
     assert Enum.empty?(Performances.list_performances()) == true
     assert length(Artists.list_artists()) == 2
   end
