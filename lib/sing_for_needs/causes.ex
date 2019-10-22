@@ -19,12 +19,10 @@ defmodule SingForNeeds.Causes do
 
   """
   def list_causes do
-    Repo.all(
-      from c in Cause, join: a in assoc(c, :artists), preload: [artists: a]
-    )
+    Repo.all(from(c in Cause, preload: [:artists], select: c))
   end
 
-  @doc"""
+  @doc """
   list_causes/1 returns a list of cause based on some given
   criteria(passed as a map)
   Returns an empty array if there is no cause
@@ -42,14 +40,14 @@ defmodule SingForNeeds.Causes do
   def list_causes(criteria) do
     criteria
     |> causes_query
-    |> Repo.all
+    |> Repo.all()
   end
 
   defp causes_query(criteria) do
     Enum.reduce(criteria, Cause, fn
       {:order, order}, query ->
         query |> order_by({^order, :name})
-      end)
+    end)
   end
 
   @doc """
@@ -142,7 +140,7 @@ defmodule SingForNeeds.Causes do
     Cause.changeset(cause, %{})
   end
 
-  @doc"""
+  @doc """
   Dataloader
   """
   def datasource do

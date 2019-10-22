@@ -1,4 +1,4 @@
-defmodule SingForNeeds.Resolvers.Artist do
+defmodule SingForNeedsWeb.Resolvers.Artist do
   @moduledoc false
   alias SingForNeeds.Artists
   import Absinthe.Resolution.Helpers, only: [on_load: 2]
@@ -11,8 +11,8 @@ defmodule SingForNeeds.Resolvers.Artist do
     loader
     |> Dataloader.load_many(Artists, {:artists, criteria}, cause)
     |> on_load(fn loader ->
-        artists = Dataloader.get_many(loader, Artists, {:artists, criteria}, cause)
-        {:ok, artists}
-      end)
+      artists = Dataloader.get_many(loader, Artists, {:artists, criteria}, cause)
+      {:ok, artists}
+    end)
   end
 end

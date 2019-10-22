@@ -4,7 +4,8 @@ defmodule SingForNeedsWeb.Schema.CauseTypes do
   """
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
-  alias SingForNeeds.Resolvers.Artist
+  alias SingForNeeds.Causes
+  alias SingForNeedsWeb.Resolvers.Cause
 
   object :cause do
     field :id, :id
@@ -15,21 +16,6 @@ defmodule SingForNeedsWeb.Schema.CauseTypes do
     field :amount_raised, :decimal
     field :target_amount, :decimal
     field :sponsor, :string
-    field :artists, list_of(:artist), resolve: dataloader(Artists)
-  end
-
-  def dataloader do
-    alias SingForNeeds.{Artists, Causes}
-    loader = Dataloader.new
-    |> Dataloader.add_source(Causes, Causes.datasource())
-    |> Dataloader.add_source(Artists, Artists.datasource())
-  end
-
-  def context(ctx) do
-    Map.put(ctx, :loader, dataloader())
-  end
-
-  def plugins do
-    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
+    field :artists, list_of(:artist), resolve: dataloader(Causes)
   end
 end

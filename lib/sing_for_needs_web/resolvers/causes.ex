@@ -1,4 +1,4 @@
-defmodule SingForNeeds.Resolvers.Cause do
+defmodule SingForNeedsWeb.Resolvers.Cause do
   @moduledoc """
   Resolves for causes
   """
@@ -19,6 +19,7 @@ defmodule SingForNeeds.Resolvers.Cause do
     case Causes.create_cause_with_artists(args) do
       {:error, changeset} ->
         {:error, message: "Could not create cause", details: changeset}
+
       {:ok, cause} ->
         {:ok, cause}
     end
@@ -27,13 +28,12 @@ defmodule SingForNeeds.Resolvers.Cause do
   @doc """
   artist_for_cause/3 gets a list of artist for each cause
   """
-  def causes_for_artist(artist, _, %{context: %{loader: loader}}) do
+  def artists_for_cause(cause, _, %{context: %{loader: loader}}) do
     loader
-     |> Dataloader.load_many(Causes, :causes, artist)
-     |> on_load(
-       fn loader ->
-        causes = Dataloader.get_many(loader, Causes, :causes, artist)
-        {:ok, causes}
-       end   )
+    |> Dataloader.load_many(Causes, :causes, cause)
+    |> on_load(fn loader ->
+      artists = Dataloader.get_many(loader, Causes, :artists, cause)
+      {:ok, artists}
+    end)
   end
 end
