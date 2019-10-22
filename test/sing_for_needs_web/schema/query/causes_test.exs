@@ -7,7 +7,11 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   @query """
     query {
         causes {
+            id
             name
+            artists {
+              name
+            }
         }
     }
   """
@@ -16,15 +20,15 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   Test get /api query returns json response of all causes
   """
   test "causes query returns all causes" do
-    causes_fixture()
+    causes = causes_fixture()
     conn = build_conn()
     conn = get conn, "/api", query: @query
 
     assert %{
              "data" => %{
                "causes" => [
-                 %{"name" => "Awesome cause 1"},
-                 %{"name" => "Awesome cause 2"}
+                 %{"name" => "Awesome cause 1", "artists" =>  [%{"name" => "Artist 1"}, %{"name" => "Artist 2"}, %{"name" => "Artist 3"}]},
+                 %{"name" => "Awesome cause 2",  "artists" => [%{"name" => "Artist 1"}]}
                ]
              }
            } = json_response(conn, 200)
