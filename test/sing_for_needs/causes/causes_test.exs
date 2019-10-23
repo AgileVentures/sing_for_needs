@@ -30,7 +30,7 @@ defmodule SingForNeeds.CausesTest do
       {:ok, cause} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Causes.create_cause()
+        |> Causes.create_cause_with_artists()
 
       cause
     end
@@ -42,6 +42,7 @@ defmodule SingForNeeds.CausesTest do
     end
 
     test "list_causes/0 returns all causes" do
+
       cause = cause_setup()
       assert Causes.list_causes() == [cause]
     end
@@ -60,7 +61,8 @@ defmodule SingForNeeds.CausesTest do
 
     test "create_cause/1 creates a cause with many artists" do
       artists = create_artists()
-      valid_attrs_with_artists = Map.put(@valid_attrs, :artists, artists)
+      artist_ids = Enum.map(artists, fn artist -> artist.id end)
+      valid_attrs_with_artists = Map.put(@valid_attrs, :artists, artist_ids)
       {:ok, cause} = Causes.create_cause_with_artists(valid_attrs_with_artists)
       assert length(cause.artists) == 2
       assert cause.name == @valid_attrs.name
