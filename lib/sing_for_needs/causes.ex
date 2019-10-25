@@ -64,7 +64,11 @@ defmodule SingForNeeds.Causes do
       ** (Ecto.NoResultsError)
 
   """
-  def get_cause!(id), do: Repo.get!(Cause, id)
+  def get_cause!(id) do
+    Cause
+    |>preload(:artists)
+    |>Repo.get!(id)
+  end
 
   @doc """
   Creates a cause.

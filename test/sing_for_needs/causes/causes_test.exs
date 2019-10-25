@@ -27,11 +27,10 @@ defmodule SingForNeeds.CausesTest do
     @invalid_attrs %{description: nil, end_date: nil, name: nil}
 
     def cause_setup(attrs \\ %{}) do
+
       {:ok, cause} =
         attrs
-        |> Enum.into(@valid_attrs)
         |> Causes.create_cause_with_artists()
-
       cause
     end
 
@@ -42,13 +41,16 @@ defmodule SingForNeeds.CausesTest do
     end
 
     test "list_causes/0 returns all causes" do
-
-      cause = cause_setup()
+      artist_ids = Enum.map(create_artists(), fn artist -> artist.id end)
+      valid_attrs = Map.put(@valid_attrs, :artists, artist_ids)
+      cause = cause_setup(valid_attrs)
       assert Causes.list_causes() == [cause]
     end
 
     test "get_cause!/1 returns the cause with given id" do
-      cause = cause_setup()
+      artist_ids = Enum.map(create_artists(), fn artist -> artist.id end)
+      valid_attrs = Map.put(@valid_attrs, :artists, artist_ids)
+      cause = cause_setup(valid_attrs)
       assert Causes.get_cause!(cause.id) == cause
     end
 
@@ -90,7 +92,10 @@ defmodule SingForNeeds.CausesTest do
     end
 
     test "delete_cause/1 deletes the cause" do
-      cause = cause_setup()
+      artist_ids = Enum.map(create_artists(), fn artist -> artist.id end)
+      valid_attrs = Map.put(@valid_attrs, :artists, artist_ids)
+      cause = cause_setup(valid_attrs)
+      require IEx; IEx.pry
       assert {:ok, %Cause{}} = Causes.delete_cause(cause)
       assert_raise Ecto.NoResultsError, fn -> Causes.get_cause!(cause.id) end
     end
