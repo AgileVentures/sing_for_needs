@@ -3,8 +3,25 @@ defmodule SingForNeedsWeb.Schema.Schema do
     Uses GraphQL Absinthe schema to query resources from the database
   """
   use Absinthe.Schema
+  import_types(Absinthe.Type.Custom)
   import_types(SingForNeedsWeb.Schema.{ArtistTypes, CauseTypes, PerformanceTypes})
-  alias SingForNeeds.Resolvers.{Artist, Cause, Performance}
+  alias SingForNeedsWeb.Resolvers.{Artist, Cause, Performance}
+
+  def dataloader do
+    alias SingForNeeds.{Artists, Causes}
+
+    Dataloader.new()
+    |> Dataloader.add_source(Causes, Causes.datasource())
+    |> Dataloader.add_source(Artists, Artists.datasource())
+  end
+
+  def context(ctx) do
+    Map.put(ctx, :loader, dataloader())
+  end
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
+  end
 
   query do
     @desc "get list of artists"
@@ -35,6 +52,7 @@ defmodule SingForNeedsWeb.Schema.Schema do
       arg(:amount_raised, :decimal)
       arg(:sponsor, non_null(:string))
       arg(:name, non_null(:string))
+      arg(:artists, list_of(:id))
       resolve(&Cause.create_cause/3)
     end
   end

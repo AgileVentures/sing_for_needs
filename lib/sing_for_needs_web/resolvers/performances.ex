@@ -1,4 +1,4 @@
-defmodule SingForNeeds.Resolvers.Performance do
+defmodule SingForNeedsWeb.Resolvers.Performance do
   @moduledoc """
   Resolves for performances
   """

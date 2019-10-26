@@ -5,15 +5,30 @@ defmodule SingForNeeds.TestHelpers do
   alias SingForNeeds.Performances.Performance
   alias SingForNeeds.Repo
 
+  @spec artists_fixture :: [...]
   def artists_fixture do
+    cause_attrs = %Cause{
+      description: "Awesome cause 0 description",
+      end_date: ~D[2010-10-17],
+      start_date: ~D[2010-09-17],
+      target_amount: 30_000,
+      amount_raised: 3000,
+      sponsor: "Awesome sponsor 0",
+      name: "Awesome cause 0"
+    }
+
+    cause = Repo.insert!(cause_attrs)
+
     artist1 = %Artist{
-      name: "Artist 1"
+      name: "Artist 1",
+      causes: [cause]
     }
 
     artist1 = Repo.insert!(artist1)
 
     artist2 = %Artist{
-      name: "Artist 2"
+      name: "Artist 2",
+      causes: [cause]
     }
 
     artist2 = Repo.insert!(artist2)

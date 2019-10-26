@@ -18,7 +18,35 @@ defmodule SingForNeeds.Causes do
 
   """
   def list_causes do
-    Repo.all(Cause)
+    Repo.all(from(c in Cause, preload: [:artists], select: c))
+  end
+
+  @doc """
+  list_causes/1 returns a list of cause based on some given
+  criteria(passed as a map)
+  Returns an empty array if there is no cause
+
+  ## Parameters
+  criteria - A map of criteria
+
+  ## Examples
+  iex> Causes.list_causes(%{ order: :desc})
+  [%Cause{}, %Cause{}]
+  iex> Causes.list_causes(%{ order: :desc})
+  []
+
+  """
+  def list_causes(criteria) do
+    criteria
+    |> causes_query
+    |> Repo.all()
+  end
+
+  defp causes_query(criteria) do
+    Enum.reduce(criteria, Cause, fn
+      {:order, order}, query ->
+        order_by(query, {^order, :name})
+    end)
   end
 
   @doc """
@@ -35,7 +63,11 @@ defmodule SingForNeeds.Causes do
       ** (Ecto.NoResultsError)
 
   """
-  def get_cause!(id), do: Repo.get!(Cause, id)
+  def get_cause!(id) do
+    Cause
+    |> preload(:artists)
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a cause.
@@ -59,9 +91,12 @@ defmodule SingForNeeds.Causes do
   create_cause_with_artists/1 creates a cause with many artists
   """
   def create_cause_with_artists(attrs \\ %{}) do
-    %Cause{}
-    |> Cause.changeset_for_many_artists(attrs)
-    |> Repo.insert()
+    cause =
+      %Cause{}
+      |> Cause.changeset_for_many_artists(attrs)
+      |> Repo.insert()
+
+    cause
   end
 
   @doc """
@@ -109,5 +144,20 @@ defmodule SingForNeeds.Causes do
   """
   def change_cause(%Cause{} = cause) do
     Cause.changeset(cause, %{})
+  end
+
+  @doc """
+  Dataloader
+  """
+  def datasource do
+    Dataloader.Ecto.new(Repo, query: &query/2)
+  end
+
+  def query(Cause, criteria) do
+    causes_query(criteria)
+  end
+
+  def query(queryable, _) do
+    queryable
   end
 end

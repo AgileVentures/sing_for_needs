@@ -1,7 +1,8 @@
-defmodule SingForNeeds.Resolvers.Cause do
+defmodule SingForNeedsWeb.Resolvers.Cause do
   @moduledoc """
   Resolves for causes
   """
+  import Absinthe.Resolution.Helpers, only: [on_load: 2]
   alias SingForNeeds.Causes
 
   @doc """
@@ -15,11 +16,24 @@ defmodule SingForNeeds.Resolvers.Cause do
   create_cause/3 creates a cause
   """
   def create_cause(_, args, _) do
-    case Causes.create_cause(args) do
+    case Causes.create_cause_with_artists(args) do
       {:error, changeset} ->
         {:error, message: "Could not create cause", details: changeset}
+
       {:ok, cause} ->
         {:ok, cause}
     end
+  end
+
+  @doc """
+  artist_for_cause/3 gets a list of artist for each cause
+  """
+  def artists_for_cause(cause, _, %{context: %{loader: loader}}) do
+    loader
+    |> Dataloader.load_many(Causes, :causes, cause)
+    |> on_load(fn loader ->
+      artists = Dataloader.get_many(loader, Causes, :artists, cause)
+      {:ok, artists}
+    end)
   end
 end

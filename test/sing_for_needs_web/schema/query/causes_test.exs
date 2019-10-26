@@ -7,7 +7,11 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   @query """
     query {
         causes {
+            id
             name
+            artists {
+              name
+            }
         }
     }
   """
@@ -23,8 +27,19 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     assert %{
              "data" => %{
                "causes" => [
-                 %{"name" => "Awesome cause 1"},
-                 %{"name" => "Awesome cause 2"}
+                 %{
+                   "name" => "Awesome cause 0",
+                   "artists" => [%{"name" => "Artist 1"}, %{"name" => "Artist 2"}]
+                 },
+                 %{
+                   "name" => "Awesome cause 1",
+                   "artists" => [
+                     %{"name" => "Artist 1"},
+                     %{"name" => "Artist 2"},
+                     %{"name" => "Artist 3"}
+                   ]
+                 },
+                 %{"name" => "Awesome cause 2", "artists" => [%{"name" => "Artist 1"}]}
                ]
              }
            } = json_response(conn, 200)
