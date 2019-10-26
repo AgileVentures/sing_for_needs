@@ -116,8 +116,8 @@ Now you are fully set up and can join us as a collaborator :smile:
 
 For example:
 ```
-POSTGRES_USERNAME=postgres
-POSTGRES_PASSWORD=postgres
+export POSTGRES_USERNAME="your-postgres-username"
+export POSTGRES_PASSWORD="your-postgres-password"
 ```
 
  2. Source the `.env` file by running command:
