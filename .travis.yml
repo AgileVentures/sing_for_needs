@@ -6,4 +6,4 @@ otp_release:
 elixir:
   - 1.8.1
 script:
-  - mix coveralls
+  - MIX_ENV=test mix coveralls.travis
