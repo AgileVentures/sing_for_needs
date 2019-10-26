@@ -12,7 +12,12 @@ defmodule SingForNeeds.MixProject do
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -52,6 +57,7 @@ defmodule SingForNeeds.MixProject do
       {:cors_plug, "~> 1.5"},
       {:dataloader, "~> 1.0.0"},
       {:distillery, "~> 2.0", runtime: false},
+      {:ex_machina, "~> 2.3", only: :test},
       {:excoveralls, "~> 0.10", only: :test}
     ]
   end
