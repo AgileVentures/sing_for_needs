@@ -7,17 +7,17 @@ defmodule SingForNeeds.TestHelpers do
 
   @spec artists_fixture :: [...]
   def artists_fixture do
-    cause =
-      %Cause{
-        description: "Awesome cause 0 description",
-        end_date: ~D[2010-10-17],
-        start_date: ~D[2010-09-17],
-        target_amount: 30_000,
-        amount_raised: 3000,
-        sponsor: "Awesome sponsor 0",
-        name: "Awesome cause 0"
-      }
-      |> Repo.insert!()
+    cause_attrs = %Cause{
+      description: "Awesome cause 0 description",
+      end_date: ~D[2010-10-17],
+      start_date: ~D[2010-09-17],
+      target_amount: 30_000,
+      amount_raised: 3000,
+      sponsor: "Awesome sponsor 0",
+      name: "Awesome cause 0"
+    }
+
+    cause = Repo.insert!(cause_attrs)
 
     artist1 = %Artist{
       name: "Artist 1",
