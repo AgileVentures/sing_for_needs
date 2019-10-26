@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/AgileVentures/sing_for_needs/badge.svg?branch=develop)](https://coveralls.io/github/AgileVentures/sing_for_needs?branch=develop)
+
 # Sing For Needs
 
 ## Collaborating - Clone Repo
