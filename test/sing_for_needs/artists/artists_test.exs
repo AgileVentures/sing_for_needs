@@ -21,7 +21,8 @@ defmodule SingForNeeds.ArtistsTest do
     end
 
     test "list_artists/0 returns all artists" do
-      artist = artist_fixture()
+      import SingForNeeds.Factory
+      artist = insert(:artist)
       assert Artists.list_artists() == [artist]
     end
 
