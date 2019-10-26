@@ -4,6 +4,7 @@ defmodule SingForNeedsWeb.Schema.ArtistTypes do
   """
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+  alias SingForNeeds.Causes
 
   object :artist do
     field :id, :id

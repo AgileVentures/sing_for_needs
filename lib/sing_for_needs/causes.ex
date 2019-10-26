@@ -6,7 +6,6 @@ defmodule SingForNeeds.Causes do
   import Ecto.Query, warn: false
   alias SingForNeeds.Repo
 
-  alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
 
   @doc """
