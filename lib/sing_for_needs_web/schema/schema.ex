@@ -10,10 +10,9 @@ defmodule SingForNeedsWeb.Schema.Schema do
   def dataloader do
     alias SingForNeeds.{Artists, Causes}
 
-    loader =
-      Dataloader.new()
-      |> Dataloader.add_source(Causes, Causes.datasource())
-      |> Dataloader.add_source(Artists, Artists.datasource())
+    Dataloader.new()
+    |> Dataloader.add_source(Causes, Causes.datasource())
+    |> Dataloader.add_source(Artists, Artists.datasource())
   end
 
   def context(ctx) do

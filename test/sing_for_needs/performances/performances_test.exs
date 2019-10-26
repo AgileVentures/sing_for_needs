@@ -13,7 +13,7 @@ defmodule SingForNeeds.PerformancesTest do
     detail: "Details about an awesome performance",
     amount_raised: 50
   }
-  @invalid_atts %{name: nil, detail: nil, amount_raised: nil}
+  @invalid_attrs %{name: nil, detail: nil, amount_raised: nil}
   @update_attrs %{name: "Updated Awesome Performance", amount_raised: Decimal.new(100)}
 
   @doc """

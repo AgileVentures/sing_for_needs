@@ -3,7 +3,7 @@ defmodule SingForNeedsWeb.Schema.ArtistTypes do
   All types for artists
   """
   use Absinthe.Schema.Notation
-  import Absinthe.Resolution.Helpers, only: [dataloader: 1, dataloader: 3]
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   object :artist do
     field :id, :id

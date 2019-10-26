@@ -5,7 +5,6 @@ defmodule SingForNeedsWeb.Schema.CauseTypes do
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   alias SingForNeeds.Causes
-  alias SingForNeedsWeb.Resolvers.Cause
 
   object :cause do
     field :id, :id
