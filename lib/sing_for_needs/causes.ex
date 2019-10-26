@@ -46,7 +46,7 @@ defmodule SingForNeeds.Causes do
   defp causes_query(criteria) do
     Enum.reduce(criteria, Cause, fn
       {:order, order}, query ->
-        query |> order_by({^order, :name})
+        order_by(query, {^order, :name})
     end)
   end
 
@@ -66,8 +66,8 @@ defmodule SingForNeeds.Causes do
   """
   def get_cause!(id) do
     Cause
-    |>preload(:artists)
-    |>Repo.get!(id)
+    |> preload(:artists)
+    |> Repo.get!(id)
   end
 
   @doc """
@@ -92,9 +92,12 @@ defmodule SingForNeeds.Causes do
   create_cause_with_artists/1 creates a cause with many artists
   """
   def create_cause_with_artists(attrs \\ %{}) do
-    %Cause{}
-    |> Cause.changeset_for_many_artists(attrs)
-    |> Repo.insert()
+    cause =
+      %Cause{}
+      |> Cause.changeset_for_many_artists(attrs)
+      |> Repo.insert()
+
+    cause
   end
 
   @doc """

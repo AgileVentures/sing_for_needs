@@ -27,10 +27,7 @@ defmodule SingForNeeds.CausesTest do
     @invalid_attrs %{description: nil, end_date: nil, name: nil}
 
     def cause_setup(attrs \\ %{}) do
-      {:ok, cause} =
-        attrs
-        |> Causes.create_cause_with_artists()
-
+      {:ok, cause} = Causes.create_cause_with_artists(attrs)
       cause
     end
 

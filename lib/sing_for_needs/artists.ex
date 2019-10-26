@@ -21,7 +21,7 @@ defmodule SingForNeeds.Artists do
     Repo.all(Artist)
   end
 
-  @doc"""
+  @doc """
   list_artists/1 filters artists by given filter criteria
   """
   def list_artists(criteria) do
@@ -31,7 +31,7 @@ defmodule SingForNeeds.Artists do
   defp artists_query(criteria) do
     Enum.reduce(criteria, Artist, fn
       {:order, order}, query ->
-        query |> order_by({^order, :name})
+        order_by(query, {^order, :name})
     end)
   end
 
