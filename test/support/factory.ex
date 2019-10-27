@@ -21,7 +21,7 @@ defmodule SingForNeeds.Factory do
   def cause_factory do
     %Cause{
       name: sequence(:name, &"Awesome cause #{&1}"),
-      description: sequence(:name, &"Awesome cause description #{&1}"),
+      description: sequence(:name, &"Awesome cause #{&1} Description"),
       start_date: ~D[2019-06-07]
     }
   end

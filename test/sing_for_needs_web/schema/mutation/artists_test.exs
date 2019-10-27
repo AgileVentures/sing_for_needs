@@ -23,12 +23,23 @@ defmodule SingForNeedsWeb.Schema.Mutation.ArtistsTest do
     cause = insert(:cause)
 
     input = %{
-      name: "Lebron James",
+      name: "Lebron Jamess",
       bio: "Greatest basketball player",
       causes: [cause.id]
     }
 
+    expected_result = %{
+      "data" => %{
+        "createArtist" => %{
+          "bio" => "Greatest basketball player",
+          "causes" => [%{"id" => "1", "name" => "Awesome cause 0"}],
+          "id" => "1",
+          "name" => "Lebron Jamess"
+        }
+      }
+    }
+
     conn = post conn, "/api", query: @create_artist_mutation, variables: input
-    assert input = json_response(conn, 200)
+    assert expected_result == json_response(conn, 200)
   end
 end

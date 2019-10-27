@@ -2,7 +2,7 @@ defmodule SingForNeeds.ArtistsTest do
   @moduledoc false
   use SingForNeeds.DataCase
   import SingForNeeds.Factory
-  alias SingForNeeds.Artists
+  alias SingForNeeds.{Artists, Causes}
 
   describe "artists" do
     alias SingForNeeds.Artists.Artist
@@ -41,10 +41,15 @@ defmodule SingForNeeds.ArtistsTest do
     end
 
     test "create_artist/1 creates an artist with cause if cause is in attrs" do
-      causes = insert_list(:cause, 4)
-      require IEx; IEx.pry
-      valid_attrs = Map.put(@valid_attrs, :causes, causes)
-      valid_attrs
+      insert_list(4, :cause)
+      causes = Causes.list_causes()
+      valid_attrs = Map.put(@valid_attrs, :causes, Enum.map(causes, fn cause -> cause.id end))
+
+      assert {:ok, %Artist{causes: associated_causes} = artist} =
+               Artists.create_artist(valid_attrs)
+
+      assert associated_causes == causes
+      assert artist.name == valid_attrs.name
     end
 
     test "update_artist/2 with valid data updates the artist" do
