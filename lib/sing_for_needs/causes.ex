@@ -42,6 +42,11 @@ defmodule SingForNeeds.Causes do
     |> Repo.all()
   end
 
+  defp causes_query(%{limit: limit}) do
+    Cause
+    |>limit(^limit)
+  end
+
   defp causes_query(criteria) do
     Enum.reduce(criteria, Cause, fn
       {:order, order}, query ->

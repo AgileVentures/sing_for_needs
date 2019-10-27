@@ -12,7 +12,6 @@ defmodule SingForNeedsWeb.Resolvers.Cause do
     if args == %{} do
       {:ok, Causes.list_causes()}
     else
-      require IEx; IEx.pry
       {:ok, Causes.list_causes(args)}
     end
   end
