@@ -4,6 +4,7 @@ defmodule SingForNeeds.CausesTest do
   """
   use SingForNeeds.DataCase
 
+  import SingForNeeds.Factory
   alias SingForNeeds.Artists
   alias SingForNeeds.Causes
 
@@ -42,6 +43,12 @@ defmodule SingForNeeds.CausesTest do
       valid_attrs = Map.put(@valid_attrs, :artists, artist_ids)
       cause = cause_setup(valid_attrs)
       assert Causes.list_causes() == [cause]
+    end
+
+    test "list_causes/1 returns causes filtered by a given filter" do
+      causes = insert_list(5, :cause)
+      assert Enum.take(causes, 2) == Causes.list_causes(%{limit: 2})
+      assert Enum.take(causes, 3) == Causes.list_causes(%{limit: 3})
     end
 
     test "get_cause!/1 returns the cause with given id" do

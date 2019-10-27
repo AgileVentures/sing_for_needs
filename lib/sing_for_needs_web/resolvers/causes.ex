@@ -8,8 +8,12 @@ defmodule SingForNeedsWeb.Resolvers.Cause do
   @doc """
   Resolver function for getting a list of causes
   """
-  def causes(_parent, _args, _resolution) do
-    {:ok, Causes.list_causes()}
+  def causes(_parent, args, _resolution) do
+    if args == %{} do
+      {:ok, Causes.list_causes()}
+    else
+      {:ok, Causes.list_causes(args)}
+    end
   end
 
   @doc """
