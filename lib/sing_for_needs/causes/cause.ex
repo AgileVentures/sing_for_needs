@@ -4,6 +4,7 @@ defmodule SingForNeeds.Causes.Cause do
   """
   use Ecto.Schema
   import Ecto.Changeset
+  alias SingForNeeds.Artists
   alias SingForNeeds.Artists.Artist
 
   schema "causes" do
@@ -50,7 +51,7 @@ defmodule SingForNeeds.Causes.Cause do
     ])
     |> validate_required([:name, :description, :end_date])
     |> validate_period
-    |> put_assoc(:artists, attrs.artists)
+    |> put_assoc(:artists, Enum.map(attrs.artists, fn artist_id -> Artists.get_artist!(artist_id) end))
   end
 
   @doc "validation for start_date < end_date"

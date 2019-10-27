@@ -22,6 +22,20 @@ defmodule SingForNeeds.Artists do
   end
 
   @doc """
+  list_artists/1 filters artists by given filter criteria
+  """
+  def list_artists(criteria) do
+    artists_query(criteria)
+  end
+
+  defp artists_query(criteria) do
+    Enum.reduce(criteria, Artist, fn
+      {:order, order}, query ->
+        order_by(query, {^order, :name})
+    end)
+  end
+
+  @doc """
   Gets a single artist.
 
   Raises `Ecto.NoResultsError` if the Artist does not exist.
@@ -100,5 +114,20 @@ defmodule SingForNeeds.Artists do
   """
   def change_artist(%Artist{} = artist) do
     Artist.changeset(artist, %{})
+  end
+
+  @doc """
+  Dataloader source
+  """
+  def datasource do
+    Dataloader.Ecto.new(Repo, query: &query/2)
+  end
+
+  def query(Artist, criteria) do
+    artists_query(criteria)
+  end
+
+  def query(queryable, _) do
+    queryable
   end
 end

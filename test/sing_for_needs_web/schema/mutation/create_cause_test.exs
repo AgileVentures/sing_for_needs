@@ -5,8 +5,8 @@ defmodule SingForNeedsWeb.Schema.Mutation.CreateCauseTest do
   use SingForNeedsWeb.ConnCase, async: true
 
   @query """
-  mutation ($description: String!, $endDate: Date!, $name: String!, $startDate: Date!, $amountRaised: Decimal!, $targetAmount: Decimal!, $sponsor: String! ) {
-    createCause(description: $description, endDate: $endDate, name: $name, startDate: $startDate, amountRaised: $amountRaised, targetAmount: $targetAmount, sponsor: $sponsor){
+  mutation ($description: String!, $endDate: Date!, $name: String!, $startDate: Date!, $amountRaised: Decimal!, $targetAmount: Decimal!, $sponsor: String!, $artists: [ID] ) {
+    createCause(description: $description, endDate: $endDate, name: $name, startDate: $startDate, amountRaised: $amountRaised, targetAmount: $targetAmount, sponsor: $sponsor, artists: $artists){
         description
         name
         startDate
@@ -19,7 +19,8 @@ defmodule SingForNeedsWeb.Schema.Mutation.CreateCauseTest do
   """
 
   test "createCause mutation creates a cause" do
-    _artists = artists_fixture()
+    artists = artists_fixture()
+    artist_ids = Enum.map(artists, fn artist -> artist.id end)
 
     input = %{
       description: "Awesome cause description",
@@ -28,7 +29,8 @@ defmodule SingForNeedsWeb.Schema.Mutation.CreateCauseTest do
       targetAmount: 30_000,
       amountRaised: 3000,
       sponsor: "unicef",
-      name: "Awesome cause"
+      name: "Awesome cause",
+      artists: artist_ids
     }
 
     conn = build_conn()

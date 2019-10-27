@@ -3,11 +3,26 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   Test all the queries for Cause schema
   """
   use SingForNeedsWeb.ConnCase, async: true
+  import SingForNeeds.Factory
 
+  @query_with_args """
+    query($limit: Int) {
+        causes(limit: $limit) {
+            name
+            artists {
+              name
+            }
+        }
+    }
+  """
   @query """
     query {
         causes {
+            id
             name
+            artists {
+              name
+            }
         }
     }
   """
@@ -23,10 +38,38 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     assert %{
              "data" => %{
                "causes" => [
-                 %{"name" => "Awesome cause 1"},
-                 %{"name" => "Awesome cause 2"}
+                 %{
+                   "name" => "Awesome cause 0",
+                   "artists" => [%{"name" => "Artist 1"}, %{"name" => "Artist 2"}]
+                 },
+                 %{
+                   "name" => "Awesome cause 1",
+                   "artists" => [
+                     %{"name" => "Artist 1"},
+                     %{"name" => "Artist 2"},
+                     %{"name" => "Artist 3"}
+                   ]
+                 },
+                 %{"name" => "Awesome cause 2", "artists" => [%{"name" => "Artist 1"}]}
                ]
              }
            } = json_response(conn, 200)
+  end
+
+  test "causes query can filter causes with limit" do
+    insert_list(5, :cause)
+    conn = build_conn()
+    conn = post conn, "/api", query: @query_with_args, variables: %{limit: 2}
+
+    expected_result = %{
+      "data" => %{
+        "causes" => [
+          %{"artists" => [], "name" => "Awesome Cause 0"},
+          %{"artists" => [], "name" => "Awesome Cause 2"}
+        ]
+      }
+    }
+
+    assert expected_result = json_response(conn, 200)
   end
 end
