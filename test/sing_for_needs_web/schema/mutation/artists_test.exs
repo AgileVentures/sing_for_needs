@@ -6,7 +6,7 @@ defmodule SingForNeedsWeb.Schema.Mutation.ArtistsTest do
   import SingForNeeds.Factory
 
   @create_artist_mutation """
-    mutation($name: String!, $bio: String!, $causes: [ID]!) {
+    mutation($name: String!, $bio: String!, $causes: [ID]) {
       createArtist(name: $name, bio: $bio, causes: $causes) {
         id
         name
@@ -29,6 +29,6 @@ defmodule SingForNeedsWeb.Schema.Mutation.ArtistsTest do
     }
 
     conn = post conn, "/api", query: @create_artist_mutation, variables: input
-    assert json_response(conn, 200) == input
+    assert input = json_response(conn, 200)
   end
 end

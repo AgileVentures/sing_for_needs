@@ -1,7 +1,7 @@
 defmodule SingForNeeds.ArtistsTest do
   @moduledoc false
   use SingForNeeds.DataCase
-
+  import SingForNeeds.Factory
   alias SingForNeeds.Artists
 
   describe "artists" do
@@ -21,7 +21,6 @@ defmodule SingForNeeds.ArtistsTest do
     end
 
     test "list_artists/0 returns all artists" do
-      import SingForNeeds.Factory
       artist = insert(:artist)
       assert Artists.list_artists() == [artist]
     end
@@ -39,6 +38,13 @@ defmodule SingForNeeds.ArtistsTest do
 
     test "create_artist/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Artists.create_artist(@invalid_attrs)
+    end
+
+    test "create_artist/1 creates an artist with cause if cause is in attrs" do
+      causes = insert_list(:cause, 4)
+      require IEx; IEx.pry
+      valid_attrs = Map.put(@valid_attrs, :causes, causes)
+      valid_attrs
     end
 
     test "update_artist/2 with valid data updates the artist" do
