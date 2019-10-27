@@ -44,7 +44,7 @@ defmodule SingForNeeds.Causes do
 
   defp causes_query(%{limit: limit}) do
     Cause
-    |>limit(^limit)
+    |> limit(^limit)
   end
 
   defp causes_query(criteria) do
