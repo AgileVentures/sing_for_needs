@@ -10,9 +10,6 @@ defmodule SingForNeeds.Factory do
 
   @doc """
   artist_factory/0 generates factories for for Artist object
-
-  ## Example
-  iex> artist_factory()
   """
   @spec artist_factory :: SingForNeeds.Artists.Artist.t()
   def artist_factory do
@@ -23,9 +20,9 @@ defmodule SingForNeeds.Factory do
 
   def cause_factory do
     %Cause{
-      name: sequence(:name, &"Awesome Cause #{&1}"),
-      description: sequence(:name, &"Awesome Cause #{&1} Description"),
-      start_date: ~D[2019-10-10]
+      name: sequence(:name, &"Awesome cause #{&1}"),
+      description: sequence(:name, &"Awesome cause #{&1} Description"),
+      start_date: ~D[2019-06-07]
     }
   end
 end

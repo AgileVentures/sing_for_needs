@@ -28,16 +28,4 @@ defmodule SingForNeedsWeb.Resolvers.Cause do
         {:ok, cause}
     end
   end
-
-  @doc """
-  artist_for_cause/3 gets a list of artist for each cause
-  """
-  def artists_for_cause(cause, _, %{context: %{loader: loader}}) do
-    loader
-    |> Dataloader.load_many(Causes, :causes, cause)
-    |> on_load(fn loader ->
-      artists = Dataloader.get_many(loader, Causes, :artists, cause)
-      {:ok, artists}
-    end)
-  end
 end
