@@ -6,9 +6,8 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   import SingForNeeds.Factory
 
   @query_with_args """
-    query($limit: ID) {
+    query($limit: Int) {
         causes(limit: $limit) {
-            id
             name
             artists {
               name
@@ -58,19 +57,19 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   end
 
   test "causes query can filter causes with limit" do
-    causes = insert_list(5, :cause)
+    insert_list(5, :cause)
     conn = build_conn()
     conn = post conn, "/api", query: @query_with_args, variables: %{limit: 2}
 
     expected_result = %{
       "data" => %{
         "causes" => [
-          %{"artists" => [], "id" => "1", "name" => "Awesome Cause 0"},
-          %{"artists" => [], "id" => "2", "name" => "Awesome Cause 2"}
+          %{"artists" => [], "name" => "Awesome Cause 0"},
+          %{"artists" => [], "name" => "Awesome Cause 2"}
         ]
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    assert expected_result = json_response(conn, 200)
   end
 end

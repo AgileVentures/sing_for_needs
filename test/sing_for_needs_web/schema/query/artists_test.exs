@@ -13,7 +13,7 @@ defmodule SingForNeeds.Schema.Query.ArtistsTest do
   }
   """
   test "artists query returns all artists" do
-    artists = artists_fixture()
+    artists_fixture()
     conn = build_conn()
     conn = get conn, "/api", query: @query
 
