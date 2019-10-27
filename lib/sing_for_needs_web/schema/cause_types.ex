@@ -3,7 +3,8 @@ defmodule SingForNeedsWeb.Schema.CauseTypes do
   All types for causes
   """
   use Absinthe.Schema.Notation
-  import_types(Absinthe.Type.Custom)
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+  alias SingForNeeds.Causes
 
   object :cause do
     field :id, :id
@@ -14,5 +15,6 @@ defmodule SingForNeedsWeb.Schema.CauseTypes do
     field :amount_raised, :decimal
     field :target_amount, :decimal
     field :sponsor, :string
+    field :artists, list_of(:artist), resolve: dataloader(Causes)
   end
 end

@@ -6,6 +6,9 @@ defmodule SingForNeeds.Schema.Query.ArtistsTest do
   {
     artists {
       name
+      causes {
+        name
+      }
     }
   }
   """
@@ -14,13 +17,14 @@ defmodule SingForNeeds.Schema.Query.ArtistsTest do
     conn = build_conn()
     conn = get conn, "/api", query: @query
 
-    assert %{"data" => %{
-      "artists" => [
-        %{"name" => "Artist 1"},
-        %{"name" => "Artist 2"},
-        %{"name" => "Artist 3"}
-      ]
-      }
-    } = json_response(conn, 200)
+    assert %{
+             "data" => %{
+               "artists" => [
+                 %{"name" => "Artist 1", "causes" => [%{"name" => "Awesome cause 0"}]},
+                 %{"name" => "Artist 2", "causes" => [%{"name" => "Awesome cause 0"}]},
+                 %{"name" => "Artist 3", "causes" => []}
+               ]
+             }
+           } = json_response(conn, 200)
   end
 end

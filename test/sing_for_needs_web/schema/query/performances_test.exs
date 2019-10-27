@@ -15,7 +15,7 @@ defmodule SingForNeeds.Schema.Query.PerformancesTest do
   """
 
   test "returns a list of all performances in the database" do
-    performances = performance_setup()
+    performance_setup()
     conn = build_conn()
     conn = get conn, "/api", query: @query
 
