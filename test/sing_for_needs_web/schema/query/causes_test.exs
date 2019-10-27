@@ -8,7 +8,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   @query_with_args """
     query($limit: Int) {
         causes(limit: $limit) {
-            name
+            startDate
             artists {
               name
             }
@@ -64,12 +64,12 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     expected_result = %{
       "data" => %{
         "causes" => [
-          %{"artists" => [], "name" => "Awesome Cause 0"},
-          %{"artists" => [], "name" => "Awesome Cause 2"}
+          %{"artists" => [], "startDate" => "2019-06-07"},
+          %{"artists" => [], "startDate" => "2019-06-07"}
         ]
       }
     }
 
-    assert expected_result = json_response(conn, 200)
+    assert expected_result == json_response(conn, 200)
   end
 end
