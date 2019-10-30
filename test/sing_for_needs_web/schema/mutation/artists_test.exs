@@ -10,8 +10,16 @@ defmodule SingForNeedsWeb.Schema.Mutation.ArtistsTest do
       createArtist(name: $name, bio: $bio, causes: $causes) {
         name
         causes{
-          name
+          startDate
         }
+        bio
+      }
+    }
+  """
+  @update_artist_mutation """
+    mutation($artistId: ID!, $name: String, $bio: String) {
+      updateArtist(artistID: $artist_id, name: $name, bio: $bio) {
+        name
         bio
       }
     }
@@ -30,7 +38,7 @@ defmodule SingForNeedsWeb.Schema.Mutation.ArtistsTest do
       "data" => %{
         "createArtist" => %{
           "bio" => "Greatest basketball player",
-          "causes" => [%{"name" => "Awesome cause 0"}],
+          "causes" => [%{"startDate" => "2019-06-07"}],
           "name" => "Lebron James"
         }
       }
