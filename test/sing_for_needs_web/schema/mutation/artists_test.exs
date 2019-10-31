@@ -18,7 +18,7 @@ defmodule SingForNeedsWeb.Schema.Mutation.ArtistsTest do
   """
   @update_artist_mutation """
     mutation($artistId: ID!, $name: String, $bio: String) {
-      updateArtist(artistID: $artist_id, name: $name, bio: $bio) {
+      updateArtist(artistId: $artistId, name: $name, bio: $bio) {
         name
         bio
       }
@@ -46,5 +46,18 @@ defmodule SingForNeedsWeb.Schema.Mutation.ArtistsTest do
 
     conn = post conn, "/api", query: @create_artist_mutation, variables: input
     assert expected_result == json_response(conn, 200)
+  end
+
+  test "update_artist/1 updates an artist" do
+    conn = build_conn()
+    artist = insert(:artist)
+    input = %{
+      artistId: artist.id,
+      name: "Stephen Curry",
+      bio: "Cheff curry with the pot"
+    }
+
+    conn = post conn, "/api", query: @update_artist_mutation, variables: input
+    assert input == json_response(conn, 200)
   end
 end

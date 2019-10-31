@@ -66,5 +66,15 @@ defmodule SingForNeedsWeb.Schema.Schema do
       arg(:causes, list_of(:id))
       resolve(&Artist.create_artist/3)
     end
+
+    @doc """
+    update_artist
+    """
+    field :update_artist, :artist do
+      arg(:artist_id, non_null(:id))
+      arg(:name, :string)
+      arg(:bio, :string)
+      resolve(&Artist.update_artist/3)
+    end
   end
 end

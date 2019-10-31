@@ -9,4 +9,8 @@ defmodule SingForNeedsWeb.Resolvers.Artist do
   def create_artist(_parent, args, _resolution) do
     Artists.create_artist(args)
   end
+
+  def update_artist(_parent, args, _resolution) do
+    {:ok, Artists.update_artist(args)}
+  end
 end
