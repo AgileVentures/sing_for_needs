@@ -11,6 +11,12 @@ defmodule SingForNeedsWeb.Resolvers.Artist do
   end
 
   def update_artist(_parent, args, _resolution) do
-    {:ok, Artists.update_artist(args)}
+    artist = Artists.get_artist(args[:artist_id])
+
+    if artist do
+      Artists.update_artist(artist, args)
+    else
+      {:error, "Record with id #{args[:artist_id]} missing in database"}
+    end
   end
 end
