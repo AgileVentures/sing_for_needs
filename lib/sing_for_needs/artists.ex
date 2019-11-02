@@ -52,6 +52,24 @@ defmodule SingForNeeds.Artists do
   def get_artist!(id), do: Repo.get!(Artist, id)
 
   @doc """
+  Get a single artist
+
+  Does not raise an Ecto.NoResultsError if record is missing
+
+  ## Examples 
+
+  iex> get_artist(123)
+    %Artist{}
+
+  iex> get_artist(456)
+
+  """
+
+  def get_artist(id) do
+    Repo.get(Artist, id)
+  end
+
+  @doc """
   Creates a artist.
 
   ## Examples
