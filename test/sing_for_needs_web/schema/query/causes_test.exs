@@ -103,4 +103,32 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
 
     assert expected_result == json_response(conn, 200)
   end
+
+  test "causes ending soon are ordered from the nearest end date" do
+    causes_ending_soon_query = """
+      query($scope: String) {
+          causes(scope: $scope) {
+              name
+          }
+      }
+    """
+
+    insert(:cause, %{name: "Cause ends second", end_date: ~D[2019-12-11]})
+    insert(:cause, %{name: "Cause ends third", end_date: ~D[2020-01-01]})
+    insert(:cause, %{name: "Cause ends first", end_date: ~D[2019-12-01]})
+    conn = build_conn()
+    conn = post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
+
+    expected_result = %{
+      "data" => %{
+        "causes" => [
+          %{"name" => "Cause ends first"},
+          %{"name" => "Cause ends second"},
+          %{"name" => "Cause ends third"}
+        ]
+      }
+    }
+
+    assert expected_result == json_response(conn, 200)
+  end
 end

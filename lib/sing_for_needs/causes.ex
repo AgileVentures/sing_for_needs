@@ -50,6 +50,9 @@ defmodule SingForNeeds.Causes do
     case scope do
       "trending" ->
         Cause |> order_by(desc: :amount_raised)
+
+      "ending_soon" ->
+        Cause |> order_by(asc: :end_date)
     end
   end
 
