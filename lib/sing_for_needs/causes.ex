@@ -46,6 +46,13 @@ defmodule SingForNeeds.Causes do
     limit(Cause, ^limit)
   end
 
+  defp causes_query(%{scope: scope}) do
+    case scope do
+      "trending" ->
+        Cause |> order_by(desc: :amount_raised)
+    end
+  end
+
   defp causes_query(criteria) do
     Enum.reduce(criteria, Cause, fn
       {:order, order}, query ->
