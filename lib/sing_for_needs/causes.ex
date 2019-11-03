@@ -53,10 +53,12 @@ defmodule SingForNeeds.Causes do
         Cause |> order_by(desc: :amount_raised)
 
       "ending_soon" ->
-        query = from(c in Cause,
-                where: c.end_date > ^Timex.now,
-                order_by: [asc: c.end_date],
-                select: c)
+        query =
+          from(c in Cause,
+            where: c.end_date > ^Timex.now(),
+            order_by: [asc: c.end_date],
+            select: c
+          )
     end
   end
 
