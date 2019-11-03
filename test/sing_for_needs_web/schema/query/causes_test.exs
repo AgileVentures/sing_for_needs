@@ -2,6 +2,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   @moduledoc """
   Test all the queries for Cause schema
   """
+  use Timex
   use SingForNeedsWeb.ConnCase, async: true
   import SingForNeeds.Factory
 
@@ -112,18 +113,21 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    insert(:cause, %{name: "Cause ends second", end_date: ~D[2019-12-11]})
-    insert(:cause, %{name: "Cause ends third", end_date: ~D[2020-01-01]})
-    insert(:cause, %{name: "Cause ends first", end_date: ~D[2019-12-01]})
+    ten_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(10))
+    twenty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(20))
+    thirty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(30))
+    insert(:cause, %{name: "Cause ends in 20 days", end_date: twenty_days_from_now})
+    insert(:cause, %{name: "Cause ends in 30 days", end_date: thirty_days_from_now})
+    insert(:cause, %{name: "Cause ends in 10 days", end_date: ten_days_from_now})
     conn = build_conn()
     conn = post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
 
     expected_result = %{
       "data" => %{
         "causes" => [
-          %{"name" => "Cause ends first"},
-          %{"name" => "Cause ends second"},
-          %{"name" => "Cause ends third"}
+          %{"name" => "Cause ends in 10 days"},
+          %{"name" => "Cause ends in 20 days"},
+          %{"name" => "Cause ends in 30 days"}
         ]
       }
     }
@@ -140,17 +144,20 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    insert(:cause, %{name: "Cause ends third", end_date: ~D[2020-01-01]})
-    insert(:cause, %{name: "Cause ends second", end_date: ~D[2019-12-11]})
-    insert(:cause, %{name: "Cause ends first", end_date: ~D[2018-12-01]})
+    twenty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(20))
+    thirty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(30))
+
+    insert(:cause, %{name: "Cause ends in 30 days", end_date: thirty_days_from_now})
+    insert(:cause, %{name: "Cause ends in 20 days", end_date: twenty_days_from_now})
+    insert(:cause, %{name: "Cause ends in the past", end_date: ~D[2018-12-01]})
     conn = build_conn()
     conn = post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
 
     expected_result = %{
       "data" => %{
         "causes" => [
-          %{"name" => "Cause ends second"},
-          %{"name" => "Cause ends third"}
+          %{"name" => "Cause ends in 20 days"},
+          %{"name" => "Cause ends in 30 days"}
         ]
       }
     }
