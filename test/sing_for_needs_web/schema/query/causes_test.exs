@@ -8,7 +8,6 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
   @query """
     query {
         causes {
-            id
             name
             artists {
               name
@@ -45,7 +44,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    assert expected_result = json_response(conn, 200)
+    assert expected_result == json_response(conn, 200)
   end
 
   test "causes query can filter causes with limit" do
