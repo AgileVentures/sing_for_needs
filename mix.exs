@@ -27,7 +27,7 @@ defmodule SingForNeeds.MixProject do
   def application do
     [
       mod: {SingForNeeds.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :timex]
     ]
   end
 
@@ -58,7 +58,8 @@ defmodule SingForNeeds.MixProject do
       {:dataloader, "~> 1.0.0"},
       {:distillery, "~> 2.0", runtime: false},
       {:ex_machina, "~> 2.3", only: :test},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:timex, "~> 3.5"}
     ]
   end
 
