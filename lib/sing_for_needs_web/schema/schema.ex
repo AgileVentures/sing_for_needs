@@ -32,6 +32,7 @@ defmodule SingForNeedsWeb.Schema.Schema do
     @desc "get list of all causes"
     field :causes, list_of(:cause) do
       arg(:limit, :integer)
+      arg(:scope, :string)
       resolve(&Cause.causes/3)
     end
 
