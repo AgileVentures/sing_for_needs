@@ -1,7 +1,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/AgileVentures/sing_for_needs/badge.svg?branch=develop)](https://coveralls.io/github/AgileVentures/sing_for_needs?branch=develop)
 
 # Sing For Needs
+Sing for Needs is a donation platform, meant to be a positive means for giving, inspired by music performances from artists, unknown and famous. The Artists get to see and choose the various causes to support with their performances, while getting a view of all the funds generated.
 
+The Sing for Needs project is currently under active developement by a team of volunteers at [Agileventures](https://www.agileventures.org), an official UK Charity (#1170963) dedicated to crowdsourced learning and project development. Under the umbrella of Championer projects. This Repo is the backend for the Sing For Needs project and uses the [Elixir/Phoenix](https://phoenixframework.org/) framework with GraphQL in the tech stack, while the [frontend](https://github.com/AgileVentures/sfn-client) uses [React](https://reactjs.org/) with [GraphQL React Apollo Client](https://github.com/apollographql/react-apollo) and [Redux](https://redux.js.org/), mainly to facilitate mentorship for the volunteers to learn these modern technologies.
+
+This is a guide, to help easily get set up and started with the frontend, for any voluteer who would like to contribute through code, PR reviews, mentorship, or in any other way.
 ## Collaborating - Clone Repo
 
 At the command prompt, type:
@@ -12,7 +16,7 @@ $ git clone https://github.com/AgileVentures/sing_for_needs.git && cd sing_for_n
 
 - Ask to be added as a collaborator:
   - Email [federico](mailto:federico@championer.org?Subject=I%20want%20to%20collaborate%20on%20ChampionerOne) with your Github username, OR
-  - Ask @lara-t or @federico in our [AgileVentures.org Slack channel](https://agileventures.slack.com/messages/phoenix_one)
+  - Ask @aonomike, @javpet, @lara-t or @federico in our [AgileVentures.org Slack channel](https://agileventures.slack.com/messages/phoenix_one)
 
 ## Install Erlang and Elixir
 
