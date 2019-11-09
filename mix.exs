@@ -59,7 +59,8 @@ defmodule SingForNeeds.MixProject do
       {:distillery, "~> 2.0", runtime: false},
       {:ex_machina, "~> 2.3", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
-      {:timex, "~> 3.5"}
+      {:timex, "~> 3.5"},
+      {:faker, "~> 0.13", only: :test}
     ]
   end
 
