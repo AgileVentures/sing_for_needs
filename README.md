@@ -1,4 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/AgileVentures/sing_for_needs/badge.svg?branch=develop)](https://coveralls.io/github/AgileVentures/sing_for_needs?branch=develop)
+[![Build Status](https://travis-ci.org/AgileVentures/sing_for_needs.svg?branch=develop)](https://travis-ci.org/AgileVentures/sing_for_needs)
 
 # Sing For Needs
 Sing for Needs is a donation platform, meant to be a positive means for giving, inspired by music performances from artists, unknown and famous. The Artists get to see and choose the various causes to support with their performances, while getting a view of all the funds generated.
