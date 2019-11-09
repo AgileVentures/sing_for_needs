@@ -50,14 +50,20 @@ defmodule SingForNeeds.Causes do
   defp causes_query(%{scope: scope}) do
     case scope do
       "trending" ->
-        order_by(Cause, desc: :amount_raised)
+        from(c in Cause,
+          left_join: a in assoc(c, :artists),
+          preload: [:artists],
+          order_by: [desc: :amount_raised, desc: count(a.id)],
+          group_by: c.id,
+          select: c
+        )
 
       "ending_soon" ->
         from(c in Cause,
-            where: c.end_date > ^Timex.now(),
-            order_by: [asc: c.end_date],
-            select: c
-          )
+          where: c.end_date > ^Timex.now(),
+          order_by: [asc: c.end_date],
+          select: c
+        )
     end
   end
 

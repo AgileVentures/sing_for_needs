@@ -85,9 +85,24 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    insert(:cause, %{name: "Cause with Medium Donation", amount_raised: 30_000})
+    artists = insert_list(4, :artist)
+
+    insert(:cause, %{
+      name: "Cause with Medium Donation",
+      amount_raised: 30_000,
+      artists: Enum.take(artists, 2)
+    })
+
     insert(:cause, %{name: "Cause with Least Donation", amount_raised: 10_000})
-    insert(:cause, %{name: "Cause with Highest Donation", amount_raised: 90_000})
+
+    insert(:cause, %{
+      name: "Cause with Least Donation and two artists",
+      amount_raised: 10_000,
+      artists: Enum.take(artists, -2)
+    })
+
+    insert(:cause, %{name: "Cause with Highest Donation", amount_raised: 90_000, artists: artists})
+
     conn = build_conn()
     conn = post conn, "/api", query: trending_causes_query, variables: %{scope: "trending"}
 
@@ -96,6 +111,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
         "causes" => [
           %{"name" => "Cause with Highest Donation"},
           %{"name" => "Cause with Medium Donation"},
+          %{"name" => "Cause with Least Donation and two artists"},
           %{"name" => "Cause with Least Donation"}
         ]
       }
