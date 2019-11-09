@@ -90,7 +90,8 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     insert(:cause, %{
       name: "Cause with Medium Donation",
       amount_raised: 30_000,
-      artists: Enum.take(artists, 2)
+      artists: Enum.take(artists, 2),
+      description: Faker.Lorem.paragraph()
     })
 
     insert(:cause, %{name: "Cause with Least Donation", amount_raised: 10_000})
