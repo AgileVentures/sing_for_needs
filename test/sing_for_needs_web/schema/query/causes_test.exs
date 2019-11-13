@@ -182,7 +182,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     assert expected_result == json_response(conn, 200)
   end
 
-  test "causes ending soon and limit passed to query query" do
+  test "causes ending soon and limit passed to causes query" do
     causes_ending_soon_with_limit_query = """
       query($scope: String, $limit: Int) {
           causes(scope: $scope, limit: $limit) {
@@ -215,6 +215,54 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
         "causes" => [
           %{"name" => "Cause ends in 15 days"},
           %{"name" => "Cause ends in 20 days"}
+        ]
+      }
+    }
+
+    assert expected_result == json_response(conn, 200)
+  end
+
+  test "scope: trending and limit:2 passed to causes query" do
+    trending_causes_with_limit_query = """
+      query($scope: String, $limit: Int) {
+          causes(scope: $scope, limit: $limit) {
+              name
+          }
+      }
+    """
+
+    artists = insert_list(4, :artist)
+
+    insert(:cause, %{
+      name: "Cause with Medium Donation",
+      amount_raised: 30_000,
+      artists: Enum.take(artists, 2),
+      description: Faker.Lorem.paragraph()
+    })
+
+    insert(:cause, %{name: "Cause with Least Donation", amount_raised: 10_000})
+
+    insert(:cause, %{
+      name: "Cause with Least Donation and two artists",
+      amount_raised: 10_000,
+      artists: Enum.take(artists, -2)
+    })
+
+    insert(:cause, %{name: "Cause with Highest Donation", amount_raised: 90_000, artists: artists})
+
+    conn = build_conn()
+
+    conn =
+      post conn, "/api",
+        query: trending_causes_with_limit_query,
+        variables: %{scope: "trending", limit: 3}
+
+    expected_result = %{
+      "data" => %{
+        "causes" => [
+          %{"name" => "Cause with Highest Donation"},
+          %{"name" => "Cause with Medium Donation"},
+          %{"name" => "Cause with Least Donation and two artists"}
         ]
       }
     }

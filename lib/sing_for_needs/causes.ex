@@ -51,6 +51,7 @@ defmodule SingForNeeds.Causes do
           preload: [:artists],
           order_by: [desc: :amount_raised, desc: count(a.id)],
           group_by: c.id,
+          limit: ^limit,
           select: c
         )
 
