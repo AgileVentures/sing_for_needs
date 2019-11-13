@@ -181,4 +181,44 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
 
     assert expected_result == json_response(conn, 200)
   end
+
+  test "causes ending soon and limit passed to query query" do
+    causes_ending_soon_with_limit_query = """
+      query($scope: String, $limit: Int) {
+          causes(scope: $scope, limit: $limit) {
+              name
+          }
+      }
+    """
+
+    twenty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(20))
+    thirty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(30))
+    fifteen_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(15))
+    five_days_ago = Timex.add(Timex.now(), Timex.Duration.from_days(-5))
+    nine_days_ago = Timex.add(Timex.now(), Timex.Duration.from_days(-9))
+
+    insert(:cause, %{name: "Cause ends in 30 days", end_date: thirty_days_from_now})
+    insert(:cause, %{name: "Cause ends in 20 days", end_date: twenty_days_from_now})
+    insert(:cause, %{name: "Cause ends in 15 days", end_date: fifteen_days_from_now})
+    insert(:cause, %{name: "Cause ended 5 days ago", end_date: five_days_ago})
+    insert(:cause, %{name: "Cause ended 9 days ago", end_date: nine_days_ago})
+
+    conn = build_conn()
+
+    conn =
+      post conn, "/api",
+        query: causes_ending_soon_with_limit_query,
+        variables: %{scope: "ending_soon", limit: 2}
+
+    expected_result = %{
+      "data" => %{
+        "causes" => [
+          %{"name" => "Cause ends in 15 days"},
+          %{"name" => "Cause ends in 20 days"}
+        ]
+      }
+    }
+
+    assert expected_result == json_response(conn, 200)
+  end
 end
