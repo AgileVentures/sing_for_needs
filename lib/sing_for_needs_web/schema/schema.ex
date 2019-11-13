@@ -32,6 +32,7 @@ defmodule SingForNeedsWeb.Schema.Schema do
     @desc "get list of all causes"
     field :causes, list_of(:cause) do
       arg(:limit, :integer)
+      arg(:scope, :string)
       resolve(&Cause.causes/3)
     end
 
@@ -65,6 +66,16 @@ defmodule SingForNeedsWeb.Schema.Schema do
       arg(:bio, non_null(:string))
       arg(:causes, list_of(:id))
       resolve(&Artist.create_artist/3)
+    end
+
+    @doc """
+    update_artist
+    """
+    field :update_artist, :artist do
+      arg(:artist_id, non_null(:id))
+      arg(:name, :string)
+      arg(:bio, :string)
+      resolve(&Artist.update_artist/3)
     end
   end
 end

@@ -25,6 +25,16 @@ defmodule SingForNeeds.ArtistsTest do
       assert Artists.list_artists() == [artist]
     end
 
+    test "get_artist/1 returns an %Artist{} if the artist exists" do
+      artist = insert(:artist)
+      assert artist == Artists.get_artist(artist.id)
+    end
+
+    test "get_artist/1 returns nil if not found" do
+      artist = insert(:artist)
+      assert Artists.get_artist(artist.id + 10_000) == nil
+    end
+
     test "get_artist!/1 returns the artist with given id" do
       artist = artist_fixture()
       assert Artists.get_artist!(artist.id) == artist
