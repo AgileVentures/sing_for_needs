@@ -4,6 +4,7 @@ defmodule SingForNeeds.Causes do
   """
 
   import Ecto.Query, warn: false
+  use Timex
   alias SingForNeeds.Repo
 
   alias SingForNeeds.Causes.Cause
@@ -44,6 +45,26 @@ defmodule SingForNeeds.Causes do
 
   defp causes_query(%{limit: limit}) do
     limit(Cause, ^limit)
+  end
+
+  defp causes_query(%{scope: scope}) do
+    case scope do
+      "trending" ->
+        from(c in Cause,
+          left_join: a in assoc(c, :artists),
+          preload: [:artists],
+          order_by: [desc: :amount_raised, desc: count(a.id)],
+          group_by: c.id,
+          select: c
+        )
+
+      "ending_soon" ->
+        from(c in Cause,
+          where: c.end_date > ^Timex.now(),
+          order_by: [asc: c.end_date],
+          select: c
+        )
+    end
   end
 
   defp causes_query(criteria) do
