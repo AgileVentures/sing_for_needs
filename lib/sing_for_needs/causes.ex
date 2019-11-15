@@ -43,26 +43,24 @@ defmodule SingForNeeds.Causes do
     |> Repo.all()
   end
 
-  defp causes_query(%{scope: scope, limit: limit}) do
-    case scope do
-      "trending" ->
-        from(c in Cause,
+  defp causes_query(%{scope: "trending", limit: limit}) do
+     from(c in Cause,
           left_join: a in assoc(c, :artists),
           preload: [:artists],
           order_by: [desc: :amount_raised, desc: count(a.id)],
           group_by: c.id,
           limit: ^limit,
           select: c
-        )
+      )
+  end
 
-      "ending_soon" ->
-        from(c in Cause,
-          where: c.end_date > ^Timex.now(),
-          order_by: [asc: c.end_date],
-          limit: ^limit,
-          select: c
-        )
-    end
+  defp causes_query(%{scope: "ending_soon", limit: limit}) do
+    from(c in Cause,
+      where: c.end_date > ^Timex.now(),
+      order_by: [asc: c.end_date],
+      limit: ^limit,
+      select: c
+    )
   end
 
   defp causes_query(%{limit: limit}) do
