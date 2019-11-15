@@ -25,7 +25,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     conn = build_conn()
     conn = get conn, "/api", query: @query
 
-    expected_result = %{
+    expected_response = %{
       "data" => %{
         "causes" => [
           %{
@@ -45,7 +45,8 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    json_response = json_response(conn, 200)
+    assert expected_response == json_response
   end
 
   test "causes query can filter causes with limit" do
@@ -64,7 +65,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     conn = build_conn()
     conn = post conn, "/api", query: causes_limit_query, variables: %{limit: 2}
 
-    expected_result = %{
+    expected_response = %{
       "data" => %{
         "causes" => [
           %{"artists" => [], "startDate" => "2019-06-07"},
@@ -73,10 +74,11 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    json_response = json_response(conn, 200)
+    assert expected_response == json_response
   end
 
-  test "trending causes are ordered by most amount donated" do
+  test "trending causes are ordered by most amount donated and number of artists" do
     trending_causes_query = """
       query($limit: Int, $scope: String) {
           causes(limit: $limit, scope: $scope) {
@@ -85,40 +87,24 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    artists = insert_list(4, :artist)
-
-    insert(:cause, %{
-      name: "Cause with Medium Donation",
-      amount_raised: 30_000,
-      artists: Enum.take(artists, 2),
-      description: Faker.Lorem.paragraph()
-    })
-
-    insert(:cause, %{name: "Cause with Least Donation", amount_raised: 10_000})
-
-    insert(:cause, %{
-      name: "Cause with Least Donation and two artists",
-      amount_raised: 10_000,
-      artists: Enum.take(artists, -2)
-    })
-
-    insert(:cause, %{name: "Cause with Highest Donation", amount_raised: 90_000, artists: artists})
-
+    setup_causes()
     conn = build_conn()
     conn = post conn, "/api", query: trending_causes_query, variables: %{scope: "trending"}
 
-    expected_result = %{
+    expected_response = %{
       "data" => %{
         "causes" => [
-          %{"name" => "Cause with Highest Donation"},
-          %{"name" => "Cause with Medium Donation"},
-          %{"name" => "Cause with Least Donation and two artists"},
-          %{"name" => "Cause with Least Donation"}
+          %{"name" => "Awesome Cause 3"},
+          %{"name" => "Awesome cause 5"},
+          %{"name" => "Awesome cause 1"},
+          %{"name" => "Awesome cause 4"},
+          %{"name" => "Awesome Cause 2"}
         ]
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    response = json_response(conn, 200)
+    assert expected_response == response
   end
 
   test "causes ending soon are ordered from the nearest end date" do
@@ -130,26 +116,22 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    ten_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(10))
-    twenty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(20))
-    thirty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(30))
-    insert(:cause, %{name: "Cause ends in 20 days", end_date: twenty_days_from_now})
-    insert(:cause, %{name: "Cause ends in 30 days", end_date: thirty_days_from_now})
-    insert(:cause, %{name: "Cause ends in 10 days", end_date: ten_days_from_now})
+    setup_causes()
     conn = build_conn()
     conn = post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
 
-    expected_result = %{
+    expected_response = %{
       "data" => %{
         "causes" => [
-          %{"name" => "Cause ends in 10 days"},
-          %{"name" => "Cause ends in 20 days"},
-          %{"name" => "Cause ends in 30 days"}
+          %{"name" => "Awesome Cause 3"},
+          %{"name" => "Awesome Cause 2"},
+          %{"name" => "Awesome cause 1"}
         ]
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    response = json_response(conn, 200)
+    assert expected_response == response
   end
 
   test "causes ending soon filters out causes with past end date" do
@@ -161,25 +143,22 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    twenty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(20))
-    thirty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(30))
-
-    insert(:cause, %{name: "Cause ends in 30 days", end_date: thirty_days_from_now})
-    insert(:cause, %{name: "Cause ends in 20 days", end_date: twenty_days_from_now})
-    insert(:cause, %{name: "Cause ends in the past", end_date: ~D[2018-12-01]})
+    setup_causes()
     conn = build_conn()
     conn = post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
 
-    expected_result = %{
+    expected_response = %{
       "data" => %{
         "causes" => [
-          %{"name" => "Cause ends in 20 days"},
-          %{"name" => "Cause ends in 30 days"}
+          %{"name" => "Awesome Cause 3"},
+          %{"name" => "Awesome Cause 2"},
+          %{"name" => "Awesome cause 1"}
         ]
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    response = json_response(conn, 200)
+    assert expected_response == response
   end
 
   test "causes ending soon and limit passed to causes query" do
@@ -191,18 +170,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    twenty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(20))
-    thirty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(30))
-    fifteen_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(15))
-    five_days_ago = Timex.add(Timex.now(), Timex.Duration.from_days(-5))
-    nine_days_ago = Timex.add(Timex.now(), Timex.Duration.from_days(-9))
-
-    insert(:cause, %{name: "Cause ends in 30 days", end_date: thirty_days_from_now})
-    insert(:cause, %{name: "Cause ends in 20 days", end_date: twenty_days_from_now})
-    insert(:cause, %{name: "Cause ends in 15 days", end_date: fifteen_days_from_now})
-    insert(:cause, %{name: "Cause ended 5 days ago", end_date: five_days_ago})
-    insert(:cause, %{name: "Cause ended 9 days ago", end_date: nine_days_ago})
-
+    setup_causes()
     conn = build_conn()
 
     conn =
@@ -212,10 +180,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
 
     expected_result = %{
       "data" => %{
-        "causes" => [
-          %{"name" => "Cause ends in 15 days"},
-          %{"name" => "Cause ends in 20 days"}
-        ]
+        "causes" => [%{"name" => "Awesome Cause 3"}, %{"name" => "Awesome Cause 2"}]
       }
     }
 
@@ -231,25 +196,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     """
 
-    artists = insert_list(4, :artist)
-
-    insert(:cause, %{
-      name: "Cause with Medium Donation",
-      amount_raised: 30_000,
-      artists: Enum.take(artists, 2),
-      description: Faker.Lorem.paragraph()
-    })
-
-    insert(:cause, %{name: "Cause with Least Donation", amount_raised: 10_000})
-
-    insert(:cause, %{
-      name: "Cause with Least Donation and two artists",
-      amount_raised: 10_000,
-      artists: Enum.take(artists, -2)
-    })
-
-    insert(:cause, %{name: "Cause with Highest Donation", amount_raised: 90_000, artists: artists})
-
+    setup_causes()
     conn = build_conn()
 
     conn =
@@ -257,16 +204,18 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
         query: trending_causes_with_limit_query,
         variables: %{scope: "trending", limit: 3}
 
-    expected_result = %{
+    expected_response = %{
       "data" => %{
         "causes" => [
-          %{"name" => "Cause with Highest Donation"},
-          %{"name" => "Cause with Medium Donation"},
-          %{"name" => "Cause with Least Donation and two artists"}
+          %{"name" => "Awesome Cause 3"},
+          %{"name" => "Awesome cause 5"},
+          %{"name" => "Awesome cause 1"}
         ]
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    response = json_response(conn, 200)
+
+    assert expected_response == response
   end
 end
