@@ -45,8 +45,8 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    json_response = json_response(conn, 200)
-    assert expected_response == json_response
+    response = json_response(conn, 200)
+    assert expected_response == response
   end
 
   test "causes query can filter causes with limit" do
@@ -74,8 +74,8 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    json_response = json_response(conn, 200)
-    assert expected_response == json_response
+    response = json_response(conn, 200)
+    assert expected_response == response
   end
 
   test "trending causes are ordered by most amount donated and number of artists" do
@@ -184,7 +184,8 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    assert expected_result == json_response(conn, 200)
+    response = json_response(conn, 200)
+    assert expected_result == response
   end
 
   test "scope: trending and limit:2 passed to causes query" do
