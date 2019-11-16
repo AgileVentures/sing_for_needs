@@ -43,55 +43,26 @@ defmodule SingForNeeds.Causes do
     |> Repo.all()
   end
 
-  defp causes_query(%{scope: "trending", limit: limit}) do
-     from(c in Cause,
-          left_join: a in assoc(c, :artists),
-          preload: [:artists],
-          order_by: [desc: :amount_raised, desc: count(a.id)],
-          group_by: c.id,
-          limit: ^limit,
-          select: c
-      )
-  end
-
-  defp causes_query(%{scope: "ending_soon", limit: limit}) do
-    from(c in Cause,
-      where: c.end_date > ^Timex.now(),
-      order_by: [asc: c.end_date],
-      limit: ^limit,
-      select: c
-    )
-  end
-
-  defp causes_query(%{limit: limit}) do
-    limit(Cause, ^limit)
-  end
-
-  defp causes_query(%{scope: scope}) do
-    case scope do
-      "trending" ->
-        from(c in Cause,
-          left_join: a in assoc(c, :artists),
-          preload: [:artists],
-          order_by: [desc: :amount_raised, desc: count(a.id)],
-          group_by: c.id,
-          select: c
-        )
-
-      "ending_soon" ->
-        from(c in Cause,
-          where: c.end_date > ^Timex.now(),
-          order_by: [asc: c.end_date],
-          select: c
-        )
-    end
-  end
-
   defp causes_query(criteria) do
-    Enum.reduce(criteria, Cause, fn
-      {:order, order}, query ->
-        order_by(query, {^order, :name})
-    end)
+    query = from c in Cause, preload: [:artists], select: c
+    Enum.reduce(criteria, query, &compose_query/2)
+  end
+
+  defp compose_query({:scope, "trending"}, query) do
+    from c in query,
+      left_join: a in assoc(c, :artists),
+      order_by: [desc: :amount_raised, desc: count(a.id)],
+      group_by: c.id
+  end
+
+  defp compose_query({:scope, "ending_soon"}, query) do
+    from c in query,
+      where: c.end_date > ^Timex.now(),
+      order_by: [asc: c.end_date]
+  end
+
+  defp compose_query({:limit, limit}, query) do
+    limit(query, ^limit)
   end
 
   @doc """
