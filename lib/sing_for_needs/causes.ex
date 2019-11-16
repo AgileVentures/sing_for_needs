@@ -44,12 +44,13 @@ defmodule SingForNeeds.Causes do
   end
 
   defp causes_query(criteria) do
-    query = from c in Cause, preload: [:artists], select: c
+    query = from c in Cause, select: c
     Enum.reduce(criteria, query, &compose_query/2)
   end
 
   defp compose_query({:scope, "trending"}, query) do
     from c in query,
+      preload: [:artists],
       left_join: a in assoc(c, :artists),
       order_by: [desc: :amount_raised, desc: count(a.id)],
       group_by: c.id
@@ -57,6 +58,7 @@ defmodule SingForNeeds.Causes do
 
   defp compose_query({:scope, "ending_soon"}, query) do
     from c in query,
+      preload: [:artists],
       where: c.end_date > ^Timex.now(),
       order_by: [asc: c.end_date]
   end
