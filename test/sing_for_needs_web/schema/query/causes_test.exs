@@ -63,7 +63,9 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
 
     insert_list(5, :cause)
     conn = build_conn()
-    conn = post conn, "/api", query: causes_limit_query, variables: %{limit: 2}
+
+    conn_after_posting_causes_limit_query =
+      post conn, "/api", query: causes_limit_query, variables: %{limit: 2}
 
     expected_response = %{
       "data" => %{
@@ -74,7 +76,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    response = json_response(conn, 200)
+    response = json_response(conn_after_posting_causes_limit_query, 200)
     assert expected_response == response
   end
 
@@ -89,7 +91,9 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
 
     setup_causes()
     conn = build_conn()
-    conn = post conn, "/api", query: trending_causes_query, variables: %{scope: "trending"}
+
+    conn_after_posting_trending_causes_query =
+      post conn, "/api", query: trending_causes_query, variables: %{scope: "trending"}
 
     expected_response = %{
       "data" => %{
@@ -103,7 +107,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    response = json_response(conn, 200)
+    response = json_response(conn_after_posting_trending_causes_query, 200)
     assert expected_response == response
   end
 
@@ -118,7 +122,9 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
 
     setup_causes()
     conn = build_conn()
-    conn = post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
+
+    conn_after_posting_causes_ending_soon_query =
+      post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
 
     expected_response = %{
       "data" => %{
@@ -130,7 +136,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    response = json_response(conn, 200)
+    response = json_response(conn_after_posting_causes_ending_soon_query, 200)
     assert expected_response == response
   end
 
@@ -145,7 +151,9 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
 
     setup_causes()
     conn = build_conn()
-    conn = post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
+
+    conn_after_posting_causes_ending_soon_query =
+      post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
 
     expected_response = %{
       "data" => %{
@@ -157,7 +165,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    response = json_response(conn, 200)
+    response = json_response(conn_after_posting_causes_ending_soon_query, 200)
     assert expected_response == response
   end
 
@@ -175,7 +183,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     insert(:cause, %{name: "Awesome Cause 100", end_date: one_hundred_days_from_now})
     conn = build_conn()
 
-    conn_after_post =
+    conn_after_posting_causes_ending_soon_query =
       post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
 
     expected_response = %{
@@ -188,7 +196,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    response = json_response(conn_after_post, 200)
+    response = json_response(conn_after_posting_causes_ending_soon_query, 200)
     assert expected_response == response
   end
 
@@ -204,7 +212,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     setup_causes()
     conn = build_conn()
 
-    conn =
+    conn_after_posting_causes_ending_soon_with_limit_query =
       post conn, "/api",
         query: causes_ending_soon_with_limit_query,
         variables: %{scope: "ending_soon", limit: 2}
@@ -215,7 +223,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    response = json_response(conn, 200)
+    response = json_response(conn_after_posting_causes_ending_soon_with_limit_query, 200)
     assert expected_result == response
   end
 
@@ -231,7 +239,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     setup_causes()
     conn = build_conn()
 
-    conn =
+    conn_after_posting_trending_causes_with_limit_query =
       post conn, "/api",
         query: trending_causes_with_limit_query,
         variables: %{scope: "trending", limit: 3}
@@ -246,7 +254,7 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
       }
     }
 
-    response = json_response(conn, 200)
+    response = json_response(conn_after_posting_trending_causes_with_limit_query, 200)
 
     assert expected_response == response
   end
