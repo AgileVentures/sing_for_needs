@@ -161,6 +161,37 @@ defmodule SingForNeeds.Schema.Query.CauseTest do
     assert expected_response == response
   end
 
+  test "causes ending soon does not include causes with end dates beyond 3 months from now" do
+    causes_ending_soon_query = """
+      query($scope: String) {
+          causes(scope: $scope) {
+              name
+          }
+      }
+    """
+
+    setup_causes()
+    one_hundred_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(100))
+    insert(:cause, %{name: "Awesome Cause 100", end_date: one_hundred_days_from_now})
+    conn = build_conn()
+
+    conn_after_post =
+      post conn, "/api", query: causes_ending_soon_query, variables: %{scope: "ending_soon"}
+
+    expected_response = %{
+      "data" => %{
+        "causes" => [
+          %{"name" => "Awesome Cause 3"},
+          %{"name" => "Awesome Cause 2"},
+          %{"name" => "Awesome cause 1"}
+        ]
+      }
+    }
+
+    response = json_response(conn_after_post, 200)
+    assert expected_response == response
+  end
+
   test "causes ending soon and limit passed to causes query" do
     causes_ending_soon_with_limit_query = """
       query($scope: String, $limit: Int) {

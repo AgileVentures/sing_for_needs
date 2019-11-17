@@ -57,9 +57,11 @@ defmodule SingForNeeds.Causes do
   end
 
   defp compose_query({:scope, "ending_soon"}, query) do
+    ninety_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(90))
+
     from c in query,
       preload: [:artists],
-      where: c.end_date > ^Timex.now(),
+      where: c.end_date > ^Timex.now() and c.end_date <= ^ninety_days_from_now,
       order_by: [asc: c.end_date]
   end
 
