@@ -6,9 +6,10 @@ defmodule SingForNeeds.Repo.Migrations.CreatePerformanceTable do
 
   def change do
     create table(:performances) do
-      add :name, :string
-      add :detail, :string
-      add :amount_raised, :decimal
+      add :title, :string
+      add :description, :string
+      add :image_url, :string
+      add :cause_id, references(:causes)
       references(:artists)
       timestamps()
     end

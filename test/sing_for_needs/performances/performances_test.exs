@@ -4,8 +4,9 @@ defmodule SingForNeeds.PerformancesTest do
   """
   use SingForNeeds.DataCase
 
+  import SingForNeeds.Factory
   alias SingForNeeds.Artists
-  alias SingForNeeds.Performances
+  alias SingForNeeds.{Artists, Causes, Performances}
   alias SingForNeeds.Performances.Performance
 
   @valid_attrs %{
@@ -59,10 +60,9 @@ defmodule SingForNeeds.PerformancesTest do
   get_performance/:id gets a performance by id
   """
   test "get_performance/:id gets a performance by id" do
-    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
-    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
-    valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-    performance = performance_setup(valid_attrs_with_artists)
+    insert_list(2, :artist)
+    cause = insert(:cause)
+    performance = insert(:performance, %{artists: Artists.list_artists(), cause: Causes.get_cause!(cause.id)})
     assert %Performance{id: id} = performance
     assert performance == Performances.get_performance(id)
   end

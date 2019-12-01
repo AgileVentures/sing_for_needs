@@ -18,6 +18,7 @@ defmodule SingForNeeds.Performances do
     Performance
     |> Repo.get(performance_id)
     |> Repo.preload(:artists)
+    |> Repo.preload(:cause)
   end
 
   @doc """

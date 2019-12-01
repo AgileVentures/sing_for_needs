@@ -7,6 +7,7 @@ defmodule SingForNeeds.Factory do
 
   alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
+  alias SingForNeeds.Performances.Performance
 
   @doc """
   artist_factory/0 generates factories for for Artist object
@@ -23,6 +24,14 @@ defmodule SingForNeeds.Factory do
       name: sequence(:name, &"Awesome cause #{&1}"),
       description: sequence(:name, &"Awesome cause #{&1} Description"),
       start_date: ~D[2019-06-07]
+    }
+  end
+
+  def performance_factory do
+    %Performance{
+      title: sequence(:name, &"Awesome performance #{&1}"),
+      description: Faker.Lorem.paragraph(1),
+      image_url: Faker.Avatar.image_url()
     }
   end
 end
