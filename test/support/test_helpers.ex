@@ -4,6 +4,7 @@ defmodule SingForNeeds.TestHelpers do
   import SingForNeeds.Factory
   alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
+  alias SingForNeeds.Performances
   alias SingForNeeds.Performances.Performance
   alias SingForNeeds.Repo
 

@@ -10,12 +10,14 @@ defmodule SingForNeeds.PerformancesTest do
   alias SingForNeeds.Performances.Performance
 
   @valid_attrs %{
-    name: "Awesome Performance A",
-    detail: "Details about an awesome performance",
-    amount_raised: 50
+    title: "Awesome Performance A",
+    description: "Details about an awesome performance",
+    performance_date: ~D[2020-01-01],
+    location: "Madison square garden",
+    image_url: "https://image.url"
   }
-  @invalid_attrs %{name: nil, detail: nil, amount_raised: nil}
-  @update_attrs %{name: "Updated Awesome Performance", amount_raised: Decimal.new(100)}
+  @invalid_attrs %{title: nil, description: nil, amount_raised: nil}
+  @update_attrs %{title: "Updated Awesome Performance", amount_raised: Decimal.new(100)}
 
   @doc """
   performance_fixture/0 creates samlple performences in the database
@@ -27,9 +29,9 @@ defmodule SingForNeeds.PerformancesTest do
 
   test "create_performance/1 creates a new performance" do
     {:ok, %Performance{} = performance} = Performances.create_performance(@valid_attrs)
-    assert performance.name == "Awesome Performance A"
-    assert performance.detail == "Details about an awesome performance"
-    assert performance.amount_raised == Decimal.new(50)
+    assert performance.title == "Awesome Performance A"
+    assert performance.description == "Details about an awesome performance"
+    assert performance.performance_date == ~D[2020-01-01]
   end
 
   test "create_performance/2 can create a performance with many artists" do
@@ -62,7 +64,10 @@ defmodule SingForNeeds.PerformancesTest do
   test "get_performance/:id gets a performance by id" do
     insert_list(2, :artist)
     cause = insert(:cause)
-    performance = insert(:performance, %{artists: Artists.list_artists(), cause: Causes.get_cause!(cause.id)})
+
+    performance =
+      insert(:performance, %{artists: Artists.list_artists(), cause: Causes.get_cause!(cause.id)})
+
     assert %Performance{id: id} = performance
     assert performance == Performances.get_performance(id)
   end

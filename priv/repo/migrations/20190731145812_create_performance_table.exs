@@ -9,6 +9,8 @@ defmodule SingForNeeds.Repo.Migrations.CreatePerformanceTable do
       add :title, :string
       add :description, :string
       add :image_url, :string
+      add :perfomance_date, :date
+      add :location, :string
       add :cause_id, references(:causes)
       references(:artists)
       timestamps()

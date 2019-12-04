@@ -12,6 +12,8 @@ defmodule SingForNeeds.Performances.Performance do
     field :title, :string
     field :description, :string
     field :image_url, :string
+    field :performance_date, :date
+    field :location, :string
     belongs_to :cause, Cause
     many_to_many(:artists, Artist, join_through: "artists_performances", on_replace: :delete)
 
@@ -23,17 +25,15 @@ defmodule SingForNeeds.Performances.Performance do
   """
   def changeset(performance, attrs) do
     performance
-    |> cast(attrs, [:title, :description])
+    |> cast(attrs, [:title, :description, :image_url, :performance_date, :location])
     |> validate_required([:title, :description])
 
     case attrs do
       %{artists: artists} = attrs ->
-        performance
-        |> put_assoc(:artists, artists)
+        put_assoc(performance, :artists, artists)
 
       %{cause_id: cause_id} = attrs ->
-        performance
-        |> build_cause_assoc(cause_id)
+        build_cause_assoc(performance, cause_id)
 
       _ ->
         performance
@@ -53,9 +53,7 @@ defmodule SingForNeeds.Performances.Performance do
 
   defp build_cause_assoc(performance, cause_id) do
     cause = Causes.get_cause(cause_id)
-
-    performance
-    |> Ecto.build_assoc(cause, :performances)
+    Ecto.build_assoc(performance, cause, :performances)
   end
 
   defp put_artists_assoc(performance, artist_ids) do
@@ -64,7 +62,6 @@ defmodule SingForNeeds.Performances.Performance do
         Artists.get_artist(artist_id)
       end)
 
-    performance
-    |> Ecto.put_assoc(artists)
+    Ecto.put_assoc(performance, artists)
   end
 end

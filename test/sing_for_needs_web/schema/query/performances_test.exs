@@ -3,27 +3,35 @@ defmodule SingForNeeds.Schema.Query.PerformancesTest do
   Test all the queries for Performance schema
   """
   use SingForNeedsWeb.ConnCase, async: true
+  import SingForNeeds.Factory
 
   @query """
       query {
           performances {
-              id
-              detail
-              amount_raised
+              description
           }
       }
   """
 
   test "returns a list of all performances in the database" do
-    performance_setup()
+    insert(:performance, %{
+      title: "Awesome performance 1",
+      description: "Details about an awesome performance 1"
+    })
+
+    insert(:performance, %{
+      title: "Awesome performance 1",
+      description: "Details about an awesome performance 2"
+    })
+
     conn = build_conn()
     conn = get conn, "/api", query: @query
 
     assert %{
              "data" => %{
                "performances" => [
-                 %{"detail" => "Details about an awesome performance 1"},
-                 %{"detail" => "Details about an awesome performance 2"}
+                 %{"description" => "Details about an awesome performance 1"},
+                 %{"description" => "Details about an awesome performance 2"}
                ]
              }
            } = json_response(conn, 200)
