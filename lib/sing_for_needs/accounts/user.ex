@@ -1,4 +1,7 @@
 defmodule SingForNeeds.Accounts.User do
+  @moduledoc """
+  User schema
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

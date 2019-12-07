@@ -4,8 +4,8 @@ defmodule SingForNeedsWeb.Schema.Schema do
   """
   use Absinthe.Schema
   import_types(Absinthe.Type.Custom)
-  import_types(SingForNeedsWeb.Schema.{ArtistTypes, CauseTypes, PerformanceTypes})
-  alias SingForNeedsWeb.Resolvers.{Artist, Cause, Performance}
+  import_types(SingForNeedsWeb.Schema.{ArtistTypes, CauseTypes, PerformanceTypes, UserTypes})
+  alias SingForNeedsWeb.Resolvers.{Artist, Cause, Performance, User}
 
   def dataloader do
     alias SingForNeeds.{Artists, Causes}
@@ -76,6 +76,17 @@ defmodule SingForNeedsWeb.Schema.Schema do
       arg(:name, :string)
       arg(:bio, :string)
       resolve(&Artist.update_artist/3)
+    end
+
+    @doc """
+      signup mutation
+    """
+    field :signup, :user do
+      arg(:username, non_null(:string))
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
+      arg(:avatar_url, :string)
+      resolve(&User.create_user/3)
     end
   end
 end
