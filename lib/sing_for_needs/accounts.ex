@@ -38,6 +38,11 @@ defmodule SingForNeeds.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  returns {:ok, user}
+  """
+  def get_user(id), do: Repo.get!(User, id)
+
+  @doc """
   Creates a user.
 
   ## Examples

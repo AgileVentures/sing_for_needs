@@ -33,6 +33,6 @@ defmodule SingForNeedsWeb.Schema.Mutation.SignupTest do
              }
            } = json_response(conn, 200)
 
-    assert %{"user" => %{"username" => "tests"}} == session
+    assert %{"user" => %{"username" => "test"}} == session
   end
 end
