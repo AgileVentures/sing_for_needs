@@ -7,11 +7,12 @@ defmodule SingForNeedsWeb.Schema.Mutation.SignupTest do
   @query """
   mutation signup($username: String!, $email: String!, $password: String!, $avatar_url: String) {
     signup(username: $username, email: $email, password: $password, avatar_url: $avatar_url) {
-      signup {
+      user {
         username
       }
     }
   }
+
   """
   test "signing up" do
     input = %{
@@ -32,6 +33,6 @@ defmodule SingForNeedsWeb.Schema.Mutation.SignupTest do
              }
            } = json_response(conn, 200)
 
-    assert %{"user" => %{"username" => "test"}} == session
+    assert %{"user" => %{"username" => "tests"}} == session
   end
 end

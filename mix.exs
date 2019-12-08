@@ -60,7 +60,8 @@ defmodule SingForNeeds.MixProject do
       {:ex_machina, "~> 2.3", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
       {:timex, "~> 3.5"},
-      {:faker, "~> 0.13", only: :test}
+      {:faker, "~> 0.13", only: :test},
+      {:pbkdf2_elixir, "~> 1.0"}
     ]
   end
 
