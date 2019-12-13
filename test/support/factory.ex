@@ -5,8 +5,8 @@ defmodule SingForNeeds.Factory do
   # with Ecto
   use ExMachina.Ecto, repo: SingForNeeds.Repo
 
-  alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Accounts.User
+  alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
 
   @doc """
