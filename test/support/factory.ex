@@ -5,6 +5,7 @@ defmodule SingForNeeds.Factory do
   # with Ecto
   use ExMachina.Ecto, repo: SingForNeeds.Repo
 
+  alias SingForNeeds.Accounts.User
   alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
 
@@ -23,6 +24,15 @@ defmodule SingForNeeds.Factory do
       name: sequence(:name, &"Awesome cause #{&1}"),
       description: sequence(:name, &"Awesome cause #{&1} Description"),
       start_date: ~D[2019-06-07]
+    }
+  end
+
+  def user_factory do
+    %User{
+      username: "awesome",
+      email: "awesome@user.com",
+      avatar_url: Faker.Avatar.image_url(),
+      password: "supersecret"
     }
   end
 end

@@ -23,6 +23,11 @@ defmodule SingForNeedsWeb.ConnCase do
       import SingForNeeds.TestHelpers
       # The default endpoint for testing
       @endpoint SingForNeedsWeb.Endpoint
+
+      defp auth_user(conn, user) do
+        token = SingForNeedsWeb.AuthToken.sign(user)
+        put_req_header(conn, "authorization", "Bearer #{token}")
+      end
     end
   end
 
