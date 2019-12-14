@@ -1,5 +1,7 @@
 defmodule SingForNeeds.TestHelpers do
   @moduledoc false
+  use Timex
+  import SingForNeeds.Factory
   alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
   alias SingForNeeds.Performances.Performance
@@ -71,6 +73,45 @@ defmodule SingForNeeds.TestHelpers do
       |> Repo.insert!()
 
     [cause_1, cause_2]
+  end
+
+  def setup_causes do
+    artists = insert_list(4, :artist)
+    twenty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(20))
+    thirty_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(30))
+    fifteen_days_from_now = Timex.add(Timex.now(), Timex.Duration.from_days(15))
+    five_days_ago = Timex.add(Timex.now(), Timex.Duration.from_days(-5))
+    nine_days_ago = Timex.add(Timex.now(), Timex.Duration.from_days(-9))
+
+    insert(:cause, %{
+      name: "Awesome cause 1",
+      end_date: thirty_days_from_now,
+      amount_raised: 30_000,
+      artists: Enum.take(artists, 2),
+      description: Faker.Lorem.paragraph(1)
+    })
+
+    insert(:cause, %{
+      name: "Awesome Cause 2",
+      end_date: twenty_days_from_now,
+      amount_raised: 10_000
+    })
+
+    insert(:cause, %{name: "Awesome Cause 3", end_date: fifteen_days_from_now})
+
+    insert(:cause, %{
+      name: "Awesome cause 4",
+      end_date: five_days_ago,
+      amount_raised: 10_000,
+      artists: Enum.take(artists, -2)
+    })
+
+    insert(:cause, %{
+      name: "Awesome cause 5",
+      end_date: nine_days_ago,
+      amount_raised: 90_000,
+      artists: artists
+    })
   end
 
   def performance_setup do
