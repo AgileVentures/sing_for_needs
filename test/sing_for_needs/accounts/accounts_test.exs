@@ -5,10 +5,9 @@ defmodule SingForNeeds.AccountsTest do
   use SingForNeeds.DataCase
   import SingForNeeds.Factory
   alias SingForNeeds.Accounts
+  alias SingForNeeds.Accounts.User
 
   describe "users" do
-    alias SingForNeeds.Accounts.User
-
     @valid_attrs %{
       avatar_url: "some avatar_url",
       email: "some email",
@@ -99,6 +98,30 @@ defmodule SingForNeeds.AccountsTest do
     test "change_user/1 returns a user changeset" do
       user = user_fixture()
       assert %Ecto.Changeset{} = Accounts.change_user(user)
+    end
+  end
+
+  describe "authenticate/2" do
+    @username "awesome"
+    @password "secret"
+    @avatar_url "http://avatar.url"
+
+    defp set_password(user, password) do
+      password_hash = Pbkdf2.hash_pwd_salt(password)
+      %{user | password_hash: password_hash}
+    end
+
+    def setup do
+      user = build(:user, %{username: @username, avatar_url: @avatar_url})
+      user = set_password(user, @password)
+      insert(user)
+    end
+
+    test "with valid username and password returns the user" do
+      setup()
+
+      assert %User{username: username, email: email, avatar_url: avatar_url} =
+               Accounts.authenticate(@username, @password)
     end
   end
 end
