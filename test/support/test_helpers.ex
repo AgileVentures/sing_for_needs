@@ -130,4 +130,20 @@ defmodule SingForNeeds.TestHelpers do
     performance_2 = Repo.insert!(performance_2_attrs)
     [performance_1, performance_2]
   end
+
+  @doc """
+  creates hashed password and adds it to user struct
+  ## parameters 
+  - user
+  - password
+
+  Returns user struct
+  ## Examples
+  iex> set_password(user, password)
+  %User{password_hash: r^8s8d7f6g6-@fsdfseshwewqwd}
+  """
+  def set_password(user, password) do
+    password_hash = Pbkdf2.hash_pwd_salt(password)
+    %{user | password_hash: password_hash}
+  end
 end

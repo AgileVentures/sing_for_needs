@@ -3,7 +3,7 @@ defmodule SingForNeeds.AccountsTest do
   Tests for the Accounts contest
   """
   use SingForNeeds.DataCase
-
+  import SingForNeeds.Factory
   alias SingForNeeds.Accounts
 
   describe "users" do

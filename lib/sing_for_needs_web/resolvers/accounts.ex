@@ -4,6 +4,23 @@ defmodule SingForNeedsWeb.Resolvers.Accounts do
   """
   alias SingForNeeds.Accounts
 
+  @doc """
+  signin 3 calls the authenticate method that returns a logged in user
+  """
+  def signin(_parent, %{username: username, password: password}, _resolution) do
+    case Accounts.authenticate(username, password) do
+      {:error, error} ->
+        require IEx
+        IEx.pry()
+        {:error, %{error: "Some error message"}}
+
+      {:ok, user} ->
+        require IEx
+        IEx.pry()
+        {:ok, user}
+    end
+  end
+
   def signup(_parent, args, _resolution) do
     case Accounts.create_user(args) do
       {:error, _changeset} ->

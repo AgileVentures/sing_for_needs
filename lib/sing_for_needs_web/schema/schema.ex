@@ -92,6 +92,15 @@ defmodule SingForNeedsWeb.Schema.Schema do
     end
 
     @doc """
+    signin mutation
+    """
+    field :signin, :session do
+      arg(:username, non_null(:string))
+      arg(:password, non_null(:string))
+      resolve(&Accounts.signin/3)
+    end
+
+    @doc """
       signup mutation
     """
     field :signup, :session do
