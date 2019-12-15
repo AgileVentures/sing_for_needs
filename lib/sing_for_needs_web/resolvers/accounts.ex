@@ -3,14 +3,14 @@ defmodule SingForNeedsWeb.Resolvers.Accounts do
   Resolvers for User
   """
   alias SingForNeeds.Accounts
+  alias SingForNeedsWeb.Schema.ChangesetErrors
 
   def signup(_parent, args, _resolution) do
     case Accounts.create_user(args) do
-      {:error, _changeset} ->
+      {:error, changeset} ->
         {
           :error,
-          message: "Could not create account"
-          # details: SingForNeedsWeb.Schema.ChangesetErrors.error_details(changeset)
+          message: "Could not create account", details: ChangesetErrors.error_details(changeset)
         }
 
       {:ok, user} ->
