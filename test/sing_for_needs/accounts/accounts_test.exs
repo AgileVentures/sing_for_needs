@@ -104,6 +104,7 @@ defmodule SingForNeeds.AccountsTest do
   describe "authenticate/2" do
     @username "awesome"
     @password "secret"
+    @email "awesome@email.com"
     @avatar_url "http://avatar.url"
 
     defp set_password(user, password) do
@@ -112,16 +113,25 @@ defmodule SingForNeeds.AccountsTest do
     end
 
     def setup do
-      user = build(:user, %{username: @username, avatar_url: @avatar_url})
+      user = build(:user, %{username: @username, avatar_url: @avatar_url, email: @email})
       user = set_password(user, @password)
       insert(user)
     end
 
     test "with valid username and password returns the user" do
       setup()
+      assert {:ok, user = %User{}} = Accounts.authenticate(@username, @password)
+      %User{username: username, email: email, avatar_url: avatar_url} = user
+      assert username == @username
+      assert email == @email
+      assert avatar_url == @avatar_url
+    end
 
-      assert %User{username: username, email: email, avatar_url: avatar_url} =
-               Accounts.authenticate(@username, @password)
+    test "with invalid username or password returns error" do
+      setup()
+      assert :error == Accounts.authenticate("invalid_username", "invalid_password")
+      assert :error == Accounts.authenticate(@username, "invalid_password")
+      assert :error == Accounts.authenticate("invalid_username", @password)
     end
   end
 end

@@ -106,4 +106,31 @@ defmodule SingForNeeds.Accounts do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  @doc """
+  authenticate/2
+  Takes username and password and return user
+
+  ## Parameters
+  - username, :string
+  - password, :string
+
+  ## Examples
+  iex> authenticate("valid_user", "valid_user_password")
+  %User{}
+  iex> authenticate("invalid_user", "invalid_user_password")
+  nil
+
+  """
+
+  def authenticate(username, password) do
+    user = Repo.get_by(User, username: username)
+
+    with %{password_hash: password_hash} <- user,
+         true <- Pbkdf2.verify_pass(password, password_hash) do
+      {:ok, user}
+    else
+      _ -> :error
+    end
+  end
 end
