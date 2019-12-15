@@ -33,8 +33,8 @@ defmodule SingForNeedsWeb.Schema.Mutation.SigninTest do
       })
 
     assert %{
-             "data" => %{
-               "signup" => session
+              "data" => %{
+              "signin" => session
              }
            } = json_response(conn, 200)
   end
