@@ -3,6 +3,7 @@ defmodule SingForNeedsWeb.Resolvers.Accounts do
   Resolvers for User
   """
   alias SingForNeeds.Accounts
+  alias SingForNeedsWeb.Schema.ChangesetErrors
 
   @doc """
   signin 3 calls the authenticate method that returns a logged in user
@@ -23,11 +24,10 @@ defmodule SingForNeedsWeb.Resolvers.Accounts do
 
   def signup(_parent, args, _resolution) do
     case Accounts.create_user(args) do
-      {:error, _changeset} ->
+      {:error, changeset} ->
         {
           :error,
-          message: "Could not create account"
-          # details: SingForNeedsWeb.Schema.ChangesetErrors.error_details(changeset)
+          message: "Could not create account", details: ChangesetErrors.error_details(changeset)
         }
 
       {:ok, user} ->

@@ -35,4 +35,31 @@ defmodule SingForNeedsWeb.Schema.Mutation.SignupTest do
 
     assert %{"user" => %{"username" => "test"}} == session
   end
+
+  test "signup with invalid args returns error and details" do
+    input = %{
+      username: nil,
+      email: "test@example.com",
+      password: "sec"
+    }
+
+    conn =
+      post(build_conn(), "/api", %{
+        query: @query,
+        variables: input
+      })
+
+    expected_result = %{
+      "errors" => [
+        %{
+          "message" => "Argument \"username\" has invalid value $username."
+        },
+        %{
+          "message" => "Variable \"username\": Expected non-null, found null."
+        }
+      ]
+    }
+
+    assert expected_result = json_response(conn, 200)
+  end
 end
