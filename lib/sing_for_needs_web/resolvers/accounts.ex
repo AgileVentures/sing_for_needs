@@ -6,12 +6,13 @@ defmodule SingForNeedsWeb.Resolvers.Accounts do
   alias SingForNeedsWeb.Schema.ChangesetErrors
 
   @doc """
-  signin 3 calls the authenticate method that returns a logged in user
+  signin/3 calls the authenticate method that returns a logged in user and a token
+  Returns an error if the username or password do not match to any user
   """
   def signin(_parent, %{username: username, password: password}, _resolution) do
     case Accounts.authenticate(username, password) do
-      {:error, error} ->
-        {:error, %{error: "Some error message"}}
+      :error ->
+        {:error, "Whoops, Invalid credentials"}
 
       {:ok, user} ->
         token = SingForNeedsWeb.AuthToken.sign(user)
