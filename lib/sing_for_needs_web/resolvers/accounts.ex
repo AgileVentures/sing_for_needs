@@ -11,14 +11,11 @@ defmodule SingForNeedsWeb.Resolvers.Accounts do
   def signin(_parent, %{username: username, password: password}, _resolution) do
     case Accounts.authenticate(username, password) do
       {:error, error} ->
-        require IEx
-        IEx.pry()
         {:error, %{error: "Some error message"}}
 
       {:ok, user} ->
-        require IEx
-        IEx.pry()
-        {:ok, user}
+        token = SingForNeedsWeb.AuthToken.sign(user)
+        {:ok, %{token: token, user: user}}
     end
   end
 

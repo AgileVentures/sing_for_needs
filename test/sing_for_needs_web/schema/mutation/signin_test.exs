@@ -33,9 +33,14 @@ defmodule SingForNeedsWeb.Schema.Mutation.SigninTest do
       })
 
     assert %{
-              "data" => %{
-              "signin" => session
+             "data" => %{
+               "signin" => session
              }
            } = json_response(conn, 200)
+
+    assert %{"token" => token, "user" => user_data} = session
+    %User{username: username, avatar_url: avatar_url, email: email, id: user_id} = user
+    assert %{"username" => username, "email" => email, "avatar_url" => avatar_url} == user_data
+    assert {:ok, %{id: user_id}} == SingForNeedsWeb.AuthToken.verify(token)
   end
 end
