@@ -66,8 +66,7 @@ defmodule SingForNeeds.PerformancesTest do
     cause = insert(:cause)
 
     performance =
-      insert(:performance, %{artists: Artists.list_artists(), cause: Causes.get_cause!(cause.id)})
-
+    insert(:performance, %{artists: Artists.list_artists(), cause_id: cause.id}) 
     assert %Performance{id: id} = performance
     assert performance == Performances.get_performance(id)
   end
