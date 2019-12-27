@@ -34,18 +34,6 @@ defmodule SingForNeeds.PerformancesTest do
     assert performance.performance_date == ~D[2020-01-01]
   end
 
-  test "create_performance/2 can create a performance with many artists" do
-    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist 1", bio: "Awesome Artist 1"})
-    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist 2", bio: "Awesome Artist 2"})
-    valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-
-    {:ok, %Performance{artists: related_artists}} =
-      Performances.create_performance_with_artist(valid_attrs_with_artists)
-
-    assert Enum.count(related_artists) == 2
-    assert related_artists == [artist_1, artist_2]
-  end
-
   @doc """
   list_performence/0 gets list of all the performences in the database
   """
@@ -74,19 +62,15 @@ defmodule SingForNeeds.PerformancesTest do
   @doc """
   update_performance/2 returns an updated Performance
   """
-  test "update_performance/2 updates name and amount_raised" do
-    {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
-    {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
-    valid_attrs_with_artists = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
-    performance = performance_setup(valid_attrs_with_artists)
-    update_performance_with_artist = Map.put(@update_attrs, :artists, [artist_1, artist_2])
-
+  test "update_performance/2 updates name and description" do
+    artists = insert_list(2, :artist)
+    performance = insert(:performance, %{title: "Performance to be updated", description: "Performance to be updated description", artists: artists })
+    update_performance_attrs = %{title: "Performance has been updated", description: "Performance description has been updated"}
     {:ok, updated_performance} =
-      Performances.update_performance(performance, update_performance_with_artist)
-
+      Performances.update_performance(performance, update_performance_attrs)
     assert performance.id == updated_performance.id
-    assert updated_performance.name == "Updated Awesome Performance"
-    assert updated_performance.amount_raised == Decimal.new(100)
+    assert updated_performance.title == "Performance has been updated"
+    assert updated_performance.description == "Performance description has been updated"
   end
 
   @doc """
