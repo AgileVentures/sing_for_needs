@@ -55,8 +55,7 @@ defmodule SingForNeeds.Performances do
     iex> Performances.update_performance(%Performance{}, %{field: bad_value})
     {:error: %Ecto.Changeset{}}
   """
-  def update_performance(%Performance{} = performance, attrs ) do
-    # require IEx; IEx.pry
+  def update_performance(%Performance{} = performance, attrs) do
     performance
     |> Performance.changeset(attrs)
     |> Repo.update()

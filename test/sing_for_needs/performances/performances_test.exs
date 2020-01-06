@@ -23,8 +23,8 @@ defmodule SingForNeeds.PerformancesTest do
   performance_fixture/0 creates samlple performences in the database
   """
   def performance_setup(attrs \\ %{}) do
-    {:ok, performance} = Performances.create_performance_with_artist(attrs)
-    performance
+    {:ok, performance} = Performances.create_performance(attrs)
+    Repo.preload(performance, :artists)
   end
 
   test "create_performance/1 creates a new performance" do
@@ -40,9 +40,11 @@ defmodule SingForNeeds.PerformancesTest do
   test "list_performances/0 returns a list of all performances" do
     {:ok, artist_1} = Artists.create_artist(%{name: "Awesome Artist1", bio: "Awesome Artist One"})
     {:ok, artist_2} = Artists.create_artist(%{name: "Awesome Artist2", bio: "Awesome Artist Two"})
+    artists_list = [artist_1, artist_2]
     valid_attrs_with_artist = Map.put(@valid_attrs, :artists, [artist_1, artist_2])
     created_performances = performance_setup(valid_attrs_with_artist)
     performances = Performances.list_performances()
+    assert [%Performance{artists: ^artists_list}] = performances
     assert [created_performances] == performances
   end
 
@@ -53,8 +55,7 @@ defmodule SingForNeeds.PerformancesTest do
     insert_list(2, :artist)
     cause = insert(:cause)
 
-    performance =
-    insert(:performance, %{artists: Artists.list_artists(), cause_id: cause.id}) 
+    performance = insert(:performance, %{artists: Artists.list_artists(), cause_id: cause.id})
     assert %Performance{id: id} = performance
     assert performance == Performances.get_performance(id)
   end
@@ -62,12 +63,24 @@ defmodule SingForNeeds.PerformancesTest do
   @doc """
   update_performance/2 returns an updated Performance
   """
-  test "update_performance/2 updates name and description" do
+  test "update_performance/2 updates title and description" do
     artists = insert_list(2, :artist)
-    performance = insert(:performance, %{title: "Performance to be updated", description: "Performance to be updated description", artists: artists })
-    update_performance_attrs = %{title: "Performance has been updated", description: "Performance description has been updated"}
+
+    performance =
+      insert(:performance, %{
+        title: "Performance to be updated",
+        description: "Performance to be updated description",
+        artists: artists
+      })
+
+    update_performance_attrs = %{
+      title: "Performance has been updated",
+      description: "Performance description has been updated"
+    }
+
     {:ok, updated_performance} =
       Performances.update_performance(performance, update_performance_attrs)
+
     assert performance.id == updated_performance.id
     assert updated_performance.title == "Performance has been updated"
     assert updated_performance.description == "Performance description has been updated"

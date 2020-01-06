@@ -23,15 +23,16 @@ Enum.each(1..10, fn number ->
     end_date: ~D[2020-12-30],
     amount_raised: 4_545_76,
     target_amount: 4_545_767,
-    sponsor: 'UNICEF'
+    sponsor: "UNICEF"
   })
 end)
-
 
 Enum.each(1..3, fn number ->
   Performances.create_performance(%{
     title: "Awesome Performance #{number}",
-    detail: "Awesome Performance#{number}'s description",
-    amount_raised: 4_545_767
+    description: "Awesome Performance#{number}'s description",
+    image_url: "https://image#{number}.url",
+    performance_date: ~D[2020-10-10],
+    location: "Madison Square Garden"
   })
 end)

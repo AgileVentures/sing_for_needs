@@ -24,22 +24,29 @@ defmodule SingForNeeds.Performances.Performance do
   changeset to create performance
   """
   def changeset(performance, attrs) do
-    performance
-    |> cast(attrs, [:title, :description, :image_url, :performance_date, :location])
-    |> validate_required([:title, :description])
+    performance =
+      performance
+      |> cast(attrs, [:title, :description, :image_url, :performance_date, :location])
+      |> validate_required([:title, :description])
 
-    case attrs do
-      %{artists: artists} = attrs ->
-        put_assoc(performance, :artists, artists)
-
-      %{cause_id: cause_id} = attrs ->
-        build_cause_assoc(performance, cause_id)
-
-      _ ->
-        performance
+    if attrs[:artists] do
+      performance = put_assoc(performance, :artists, attrs[:artists])
+    else
+      performance
     end
 
-    performance
+    # cond attrs do
+    #   %{artists: artists} = attrs ->
+    #     put_assoc(performance, :artists, artists)
+
+    #   %{cause_id: cause_id} = attrs ->
+    #     build_cause_assoc(performance, cause_id)
+
+    #   _ ->
+    #     performance
+    # end
+
+    # performance
   end
 
   @doc """
