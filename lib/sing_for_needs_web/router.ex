@@ -12,6 +12,7 @@ defmodule SingForNeedsWeb.Router do
   pipeline :api do
     plug CORSPlug, origin: ["http://localhost:3000", "http://127.0.0.1:3000"]
     plug :accepts, ["json"]
+    plug SingForNeedsWeb.Plugs.SetCurrentUser
   end
 
   scope "/" do

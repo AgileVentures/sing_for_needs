@@ -4,8 +4,16 @@ defmodule SingForNeedsWeb.Schema.Schema do
   """
   use Absinthe.Schema
   import_types(Absinthe.Type.Custom)
-  import_types(SingForNeedsWeb.Schema.{ArtistTypes, CauseTypes, PerformanceTypes})
-  alias SingForNeedsWeb.Resolvers.{Artist, Cause, Performance}
+
+  import_types(SingForNeedsWeb.Schema.{
+    ArtistTypes,
+    CauseTypes,
+    PerformanceTypes,
+    SessionTypes,
+    UserTypes
+  })
+
+  alias SingForNeedsWeb.Resolvers.{Accounts, Artist, Cause, Performance}
 
   def dataloader do
     alias SingForNeeds.{Artists, Causes}
@@ -39,6 +47,11 @@ defmodule SingForNeedsWeb.Schema.Schema do
     @desc "get list of all performances"
     field :performances, list_of(:performance) do
       resolve(&Performance.performances/3)
+    end
+
+    @desc "get my user details"
+    field :me, :user do
+      resolve(&Accounts.me/3)
     end
   end
 
@@ -76,6 +89,26 @@ defmodule SingForNeedsWeb.Schema.Schema do
       arg(:name, :string)
       arg(:bio, :string)
       resolve(&Artist.update_artist/3)
+    end
+
+    @doc """
+    signin mutation
+    """
+    field :signin, :session do
+      arg(:username, non_null(:string))
+      arg(:password, non_null(:string))
+      resolve(&Accounts.signin/3)
+    end
+
+    @doc """
+      signup mutation
+    """
+    field :signup, :session do
+      arg(:username, non_null(:string))
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
+      arg(:avatar_url, :string)
+      resolve(&Accounts.signup/3)
     end
   end
 end

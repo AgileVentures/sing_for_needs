@@ -1,4 +1,5 @@
 use Timex
+alias SingForNeeds.Accounts.User
 alias SingForNeeds.Artists
 alias SingForNeeds.Artists.Artist
 alias SingForNeeds.Causes
