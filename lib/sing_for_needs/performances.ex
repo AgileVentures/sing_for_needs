@@ -38,21 +38,6 @@ defmodule SingForNeeds.Performances do
   end
 
   @doc """
-  Create new performance with artists
-  ## Parameters
-    - attrs: a map that represents the attributes
-
-  ## Examples
-    iex> Performances.create_performance(%{name: "Awesome Performance", detail: "some detail", amount_raised: 59, artists: [id: 1, name: "awesome artist", bio: "awesone"]})
-    %Performance{id: 1, name: "Awesome Performance", detail: "some detail", amount_raised: 59, artists: [id: 1, name: "awesome artist", bio: "awesone"]}
-  """
-  def create_performance_with_artist(attrs \\ %{}) do
-    %Performance{}
-    |> Performance.changeset_update_artists(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
    gets a list of all Performances
   """
   def list_performances do
@@ -70,9 +55,9 @@ defmodule SingForNeeds.Performances do
     iex> Performances.update_performance(%Performance{}, %{field: bad_value})
     {:error: %Ecto.Changeset{}}
   """
-  def update_performance(performance \\ %Performance{}, attrs \\ %{}) do
+  def update_performance(%Performance{} = performance, attrs) do
     performance
-    |> Performance.changeset_update_artists(attrs)
+    |> Performance.changeset(attrs)
     |> Repo.update()
   end
 

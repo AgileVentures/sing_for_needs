@@ -4,6 +4,7 @@ defmodule SingForNeeds.TestHelpers do
   import SingForNeeds.Factory
   alias SingForNeeds.Artists.Artist
   alias SingForNeeds.Causes.Cause
+  alias SingForNeeds.Performances
   alias SingForNeeds.Performances.Performance
   alias SingForNeeds.Repo
 
@@ -115,20 +116,8 @@ defmodule SingForNeeds.TestHelpers do
   end
 
   def performance_setup do
-    performance_1_attrs = %Performance{
-      detail: "Details about an awesome performance 1",
-      amount_raised: 50
-    }
-
-    performance_1 = Repo.insert!(performance_1_attrs)
-
-    performance_2_attrs = %Performance{
-      detail: "Details about an awesome performance 2",
-      amount_raised: 60
-    }
-
-    performance_2 = Repo.insert!(performance_2_attrs)
-    [performance_1, performance_2]
+    insert_list(2, :performance)
+    Performances.list_performances()
   end
 
   @doc """

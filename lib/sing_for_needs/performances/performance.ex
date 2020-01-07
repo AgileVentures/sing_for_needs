@@ -5,11 +5,16 @@ defmodule SingForNeeds.Performances.Performance do
   use Ecto.Schema
   import Ecto.Changeset
   alias SingForNeeds.Artists.Artist
+  alias SingForNeeds.Causes
+  alias SingForNeeds.Causes.Cause
 
   schema "performances" do
-    field :name, :string
-    field :detail, :string
-    field :amount_raised, :decimal
+    field :title, :string
+    field :description, :string
+    field :image_url, :string
+    field :performance_date, :date
+    field :location, :string
+    belongs_to :cause, Cause
     many_to_many(:artists, Artist, join_through: "artists_performances", on_replace: :delete)
 
     timestamps()
@@ -19,9 +24,29 @@ defmodule SingForNeeds.Performances.Performance do
   changeset to create performance
   """
   def changeset(performance, attrs) do
-    performance
-    |> cast(attrs, [:name, :detail, :amount_raised])
-    |> validate_required([:name, :detail])
+    performance =
+      performance
+      |> cast(attrs, [:title, :description, :image_url, :performance_date, :location])
+      |> validate_required([:title, :description])
+
+    if attrs[:artists] do
+      performance = put_assoc(performance, :artists, attrs[:artists])
+    else
+      performance
+    end
+
+    # cond attrs do
+    #   %{artists: artists} = attrs ->
+    #     put_assoc(performance, :artists, artists)
+
+    #   %{cause_id: cause_id} = attrs ->
+    #     build_cause_assoc(performance, cause_id)
+
+    #   _ ->
+    #     performance
+    # end
+
+    # performance
   end
 
   @doc """
@@ -29,7 +54,21 @@ defmodule SingForNeeds.Performances.Performance do
   """
   def changeset_update_artists(performance, attrs) do
     performance
-    |> cast(attrs, [:name, :detail, :amount_raised])
+    |> cast(attrs, [:title, :description])
     |> put_assoc(:artists, attrs.artists)
+  end
+
+  defp build_cause_assoc(performance, cause_id) do
+    cause = Causes.get_cause(cause_id)
+    Ecto.build_assoc(performance, cause, :performances)
+  end
+
+  defp put_artists_assoc(performance, artist_ids) do
+    artists =
+      Enum.map(artist_ids, fn artist_id ->
+        Artists.get_artist(artist_id)
+      end)
+
+    Ecto.put_assoc(performance, artists)
   end
 end

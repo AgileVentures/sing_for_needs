@@ -6,7 +6,10 @@ defmodule SingForNeedsWeb.Schema.PerformanceTypes do
 
   object :performance do
     field :id, :id
-    field :detail, :string
-    field :amount_raised, :decimal
+    field :description, :string
+    field :performance_date, :date
+    field :title, :string
+    field :image_url, :string
+    field :location, :string
   end
 end

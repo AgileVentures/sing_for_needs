@@ -6,6 +6,7 @@ defmodule SingForNeeds.Causes.Cause do
   import Ecto.Changeset
   alias SingForNeeds.Artists
   alias SingForNeeds.Artists.Artist
+  alias SingForNeeds.Performances.Performance
 
   schema "causes" do
     field :description, :string
@@ -15,6 +16,7 @@ defmodule SingForNeeds.Causes.Cause do
     field :amount_raised, :decimal
     field :target_amount, :decimal
     field :sponsor, :string
+    has_many :performances, Performance
     many_to_many :artists, Artist, join_through: "artists_causes"
     timestamps()
   end
@@ -51,7 +53,10 @@ defmodule SingForNeeds.Causes.Cause do
     ])
     |> validate_required([:name, :description, :end_date])
     |> validate_period
-    |> put_assoc(:artists, Enum.map(attrs.artists, fn artist_id -> Artists.get_artist!(artist_id) end))
+    |> put_assoc(
+      :artists,
+      Enum.map(attrs.artists, fn artist_id -> Artists.get_artist!(artist_id) end)
+    )
   end
 
   @doc "validation for start_date < end_date"
