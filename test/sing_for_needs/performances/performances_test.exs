@@ -34,6 +34,27 @@ defmodule SingForNeeds.PerformancesTest do
     assert performance.performance_date == ~D[2020-01-01]
   end
 
+  test "create_performance/1 creates a performance with artists" do
+    artists = insert_list(2, :artist)
+    valid_attrs_with_artists = Map.put(@valid_attrs, :artists, artists)
+
+    assert {:ok, %Performance{} = performance} =
+             Performances.create_performance(valid_attrs_with_artists)
+
+    assert performance.artists == artists
+  end
+
+  test "create_performance/1 creates a performance with a related cause" do
+    cause = insert(:cause)
+    valid_attrs_with_cause_id = Map.put(@valid_attrs, :cause_id, cause.id)
+
+    assert {:ok, %Performance{} = performance} =
+             Performances.create_performance(valid_attrs_with_cause_id)
+
+    assert performance.title == valid_attrs_with_cause_id.title
+    assert performance.cause_id == cause.id
+  end
+
   @doc """
   list_performence/0 gets list of all the performences in the database
   """

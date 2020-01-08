@@ -32,7 +32,11 @@ defmodule SingForNeeds.Performances.Performance do
     if attrs[:artists] do
       performance = put_assoc(performance, :artists, attrs[:artists])
     else
-      performance
+      if attrs[:cause_id] do
+        performance = build_cause_assoc(performance, attrs[:cause_id])
+      else
+        performance
+      end
     end
 
     # cond attrs do
@@ -52,15 +56,10 @@ defmodule SingForNeeds.Performances.Performance do
   @doc """
     change set insert performance with artist (while creating the relationship)
   """
-  def changeset_update_artists(performance, attrs) do
-    performance
-    |> cast(attrs, [:title, :description])
-    |> put_assoc(:artists, attrs.artists)
-  end
 
   defp build_cause_assoc(performance, cause_id) do
-    cause = Causes.get_cause(cause_id)
-    Ecto.build_assoc(performance, cause, :performances)
+    cause = Causes.get_cause!(cause_id)
+    Ecto.build_assoc(cause, :performances, performance)
   end
 
   defp put_artists_assoc(performance, artist_ids) do
